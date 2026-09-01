@@ -16,8 +16,9 @@ live, from a 25-ZIP pilot to national.
 4. **Pipeline** — named tools, quality gates and the self-healing loop, on self-hosted or AWS
 5. **Scalability** — coverage against cost, broken down by component
 6. **Build vs buy** — priced per source, with the fair objections to building answered
-7. **What moves the bill** — page weight, and the tier mix that controls it
-8. **Next step** — the pilot
+7. **Supply chain** — the named vendor behind every line of the build cost, and the AI-assisted self-healing loop that comes next
+8. **What moves the bill** — page weight, and the tier mix that controls it
+9. **Next step** — the pilot
 
 ## Notes on the numbers
 
@@ -30,5 +31,8 @@ captures (0.97–1.45 MB). Deep sources are costed at 25% incremental coverage
 because their inventory overlaps the lighter sources.
 
 Buy-side rates are an independent August 2026 benchmark, not a vendor claim.
+Supply-side rates on sheet 7 are each vendor's published price at the tier the
+model actually buys at, checked August 2026. Three of the seven layers are
+open source and cost nothing.
 
 Prepared by Asad Ikram — [web-scraping-guide.com](https://web-scraping-guide.com)

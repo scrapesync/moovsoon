@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Moovsoon Listings Engine</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%229%22%20fill%3D%22%2300214C%22%2F%3E%3Cg%20stroke%3D%22%23EFEBE4%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M32%208.5v47M8.5%2032h47%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2214.5%22%20fill%3D%22%2300214C%22%20stroke%3D%22%23EFEBE4%22%20stroke-width%3D%223.4%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%225.6%22%20fill%3D%22%23A02021%22%2F%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%229%22%20fill%3D%22%2300214C%22%2F%3E%3Cg%20stroke%3D%22%23EFEBE4%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%3E%3Cpath%20d%3D%22M32%208.5v47M8.5%2032h47%22%2F%3E%3C%2Fg%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2214.5%22%20fill%3D%22%2300214C%22%20stroke%3D%22%23EFEBE4%22%20stroke-width%3D%223.4%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%225.6%22%20fill%3D%22%23A02021%22%2F%3E%3C%2Fsvg%3E">
+<meta name="theme-color" content="#00214C">
+<meta name="description" content="A costed, source-by-source plan for a US residential listing feed — six sources, one schema, priced from first principles.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Moovsoon Listings Engine">
+<meta property="og:description" content="Six sources, one schema, priced from first principles. Drag the controls to reprice every sheet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@144,300..700,0,0..1&family=Public+Sans:wght@300..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
@@ -314,15 +321,20 @@ input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6
   letter-spacing:-.03em;line-height:1.05;margin-top:5px;font-variant-numeric:tabular-nums}
 .twocost .ts{font-family:var(--f-mono);font-size:8.5px;color:var(--ink-3);margin-top:4px}
 /* per-component bars. BLOCK elements: a span cannot take width or height. */
-.comp{display:flex;flex-direction:column;gap:7px;margin-top:2px}
-.crow{display:grid;grid-template-columns:112px 1fr 70px;gap:11px;align-items:center}
-.crow .cn{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ink-3)}
-.crow .ct{display:block;height:13px;background:var(--paper-2);overflow:hidden}
-.crow .cf{display:block;height:100%;width:0;transition:width .45s var(--e-out)}
-.crow .cv2{font-family:var(--f-mono);font-size:11.5px;text-align:right;
-  font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.comp{display:flex;flex-direction:column;gap:10px;margin-top:2px}
+.crow{display:grid;grid-template-columns:190px 1fr 108px;gap:16px;align-items:center}
+.crow .cn{font-family:var(--f-mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);transition:color .3s}
+.crow .ct{display:block;height:26px;background:var(--paper-2);overflow:hidden;position:relative}
+.crow .cf{display:block;height:100%;width:0;transition:width .55s var(--e-out)}
+/* the leading component is the point of the chart, so it is marked, not just longest */
+.crow.lead .ct{box-shadow:inset 0 0 0 1.5px var(--flag)}
+.crow .cv2{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:19px;
+  letter-spacing:-.025em;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink)}
 .crow.lead .cn{color:var(--flag);font-weight:600}
+.crow.lead .cv2{color:var(--flag)}
+/* the slider that sits directly under the map */
+.mapslider{display:flex;align-items:center;gap:14px;margin-top:14px}
 .verdict{background:var(--accent-a);border-left:2px solid var(--accent);padding:12px 15px;
   margin-top:13px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
 .verdict b{color:var(--ink)}
@@ -381,6 +393,53 @@ tr.build td{background:rgba(31,107,74,.05)}
   letter-spacing:.18em;text-transform:uppercase;padding:4px 9px;border:1.5px solid var(--accent);
   color:var(--accent);rotate:-4deg}
 
+/* ===== SUPPLY CHAIN + SELF-HEALING ===== */
+.provt td{padding-top:4px;padding-bottom:4px}
+.provt td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+.provt td.rate{font-family:var(--f-mono);font-size:11.5px;color:var(--ink);white-space:nowrap}
+.provt td.sub{font-size:12px;color:var(--ink-2)}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:7.5px;letter-spacing:.16em;
+  text-transform:uppercase;padding:2px 6px;border:1px solid currentColor;margin-left:7px;
+  vertical-align:1px}
+.tag.free{color:var(--good)} .tag.paid{color:var(--ink-3)} .tag.rung{color:var(--accent)}
+.supnotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:9px}
+@media(max-width:860px){.supnotes{grid-template-columns:1fr}}
+.supnotes>div{background:var(--white);padding:9px 15px}
+.supnotes h4{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);margin:0 0 6px;font-weight:500}
+.supnotes p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+
+/* the healing chain: a track that draws once the sheet lands, steps lighting along it */
+.heal{position:relative;margin-top:7px}
+.healsteps{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.hstep{position:relative}
+/* connector runs node-to-node, drawn once the sheet lands */
+.hstep::before,.hstep::after{content:"";position:absolute;left:44px;top:19px;height:1px;
+  width:calc(100% - 28px)}
+.hstep::before{background:var(--rule-2)}
+.hstep::after{background:var(--accent);transform:scaleX(0);transform-origin:left center;
+  transition:transform .55s var(--e-out);transition-delay:calc(.5s + var(--s,0)*.33s)}
+.slide.on .hstep::after{transform:scaleX(1)}
+.hstep.last::before,.hstep.last::after{display:none}
+@media(max-width:860px){.healsteps{grid-template-columns:1fr 1fr}
+  .hstep::before,.hstep::after{display:none}}
+.hstep .hn{display:flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border-radius:50%;background:var(--paper);border:1px solid var(--rule);
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;color:var(--ink-3);
+  transition:background .45s var(--e-out),border-color .45s var(--e-out),color .45s var(--e-out);
+  transition-delay:calc(.35s + var(--s,0)*.33s)}
+.slide.on .hstep .hn{background:var(--accent);border-color:var(--accent);color:var(--white)}
+.slide.on .hstep.last .hn{background:var(--good);border-color:var(--good)}
+.hstep b{display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink);margin:8px 0 4px;font-weight:500}
+.hstep p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
+.healrule{display:flex;gap:13px;align-items:flex-start;margin-top:9px;padding:8px 15px;
+  background:var(--accent-a);border-left:2px solid var(--accent)}
+.healrule .hk{font-family:var(--f-mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--accent);flex:none;padding-top:2px;width:88px}
+.healrule p{margin:0;font-size:13px;line-height:1.55;color:var(--ink)}
+
 /* ===== COST ===== */
 .stackbar{display:flex;height:56px;overflow:hidden;border:1px solid var(--rule)}
 .stackbar div{transition:flex-grow .6s var(--e-out);min-width:2px}
@@ -421,7 +480,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
     <span class="sw" style="background:var(--mv-amber)"></span>
     <span class="sw" style="background:var(--accent)"></span>
     <span>Moovsoon &nbsp;/&nbsp; Asad Ikram</span>
-    <span style="color:var(--ink-3)">Sheet 1 of 8</span>
+    <span style="color:var(--ink-3)">Sheet 1 of 9</span>
   </div>
   <h1 data-r style="--i:1;margin:18px 0 20px">Six national listing sources, into your schema, <span class="wk">daily</span></h1>
   <div class="briefgrid">
@@ -510,6 +569,18 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
           <span class="mapkey"><i style="background:#4E9FD1"></i>dot size = listings in that ZIP &nbsp;&nbsp;<i style="background:#E8C46A"></i>dense metro</span></div>
         <canvas id="usmap" width="1000" height="560" aria-label="United States, ZIP coverage growing with the slider"></canvas>
       </div>
+      <!-- a second handle, right under the map it drives -->
+      <div class="mapslider">
+        <span class="ctrllab">Coverage</span>
+        <span class="zipwrap"><input type="range" class="zipslider" min="0" max="100" value="0"
+          aria-label="Number of ZIP codes covered">
+          <span class="draghint"></span><span class="draglabel">Drag</span></span>
+        <span class="ctrllab zipval" style="min-width:104px;text-align:right"></span>
+      </div>
+      <div class="ticks" style="margin-top:2px">
+        <span style="left:0">25 &middot; pilot</span><span style="left:47%">500</span>
+        <span style="left:76%">3,000</span><span style="left:100%">14,000 &middot; national</span>
+      </div>
     </div>
     <div>
       <div class="twocost">
@@ -518,12 +589,13 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
         <div><div class="tc">If you went national</div><div class="tv" id="k5one" style="color:var(--ink-3)">$0</div>
           <div class="ts" id="k5ones">&mdash;</div></div>
       </div>
-      <div class="label" style="margin:0 0 9px">Monthly cost, by component</div>
-      <div class="comp" id="compRows"></div>
       <div class="verdict" id="scaleNote"></div>
     </div>
   </div>
- </div>
+  <div data-r style="--i:4;margin-top:16px">
+    <div class="label" style="margin-bottom:10px">Monthly cost, by component &mdash; drag the handle and watch which one moves</div>
+    <div class="comp" id="compRows"></div>
+  </div>
 </section>
 
 <!-- ========== 6 ========== -->
@@ -573,9 +645,68 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 </section>
 
 <!-- ========== 7 ========== -->
+<section class="slide" data-t="Supply chain">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What the build is made of</span><b>Named vendors, published rates</b></div>
+  <h2 data-r style="--i:1">Every line of that cost has a vendor behind it.</h2>
+  <p class="dek" data-r style="--i:2">Sheet 6 says building wins. This is what building actually buys. The two hardest pieces &mdash; TLS impersonation and a fingerprint-clean browser &mdash; are open source; the paid layer under them is commodity bandwidth and compute, opened in Moovsoon's name.</p>
+  <div class="tw" data-r style="--i:3"><table class="provt">
+    <thead><tr><th>Layer</th><th>What we&rsquo;d start on</th><th>Rate at our tier</th><th>If it fails or prices up</th></tr></thead>
+    <tbody>
+      <tr class="oss"><td>TLS &amp; HTTP client<span class="tag rung">Rung 1</span></td>
+        <td>curl_cffi <span class="tag free">Open source</span></td><td class="rate">$0</td>
+        <td class="sub">hrequests, tls-client &mdash; same impersonation surface</td></tr>
+      <tr class="oss"><td>Browser engine<span class="tag rung">Rung 2</span></td>
+        <td>Camoufox <span class="tag free">Open source</span></td><td class="rate">$0</td>
+        <td class="sub">Patchright, rebrowser-playwright</td></tr>
+      <tr><td>Residential bandwidth</td><td>Webshare</td>
+        <td class="rate">$3.50/GB &rarr; $1.40/GB at 3&nbsp;TB</td>
+        <td class="sub">Decodo $4.00&rarr;$2.00/GB &middot; Rayobyte $3.50&rarr;$0.50/GB at 5&nbsp;TB</td></tr>
+      <tr><td>Premium residential</td><td>Oxylabs <span class="tag paid">Escalation only</span></td>
+        <td class="rate">$6.00/GB &rarr; $2.50/GB at 1&nbsp;TB</td>
+        <td class="sub">Massive $4.90/GB at 100&nbsp;GB &middot; Bright Data &asymp;$8/GB list</td></tr>
+      <tr><td>Compute</td><td>Hostinger KVM&nbsp;4 &middot; 4&nbsp;vCPU / 16&nbsp;GB</td>
+        <td class="rate">$29/mo</td>
+        <td class="sub">Hetzner at comparable spec &middot; AWS Fargate $0.0405/vCPU-hr for bursts</td></tr>
+      <tr><td>Delivery &amp; storage</td><td>Cloudflare R2</td>
+        <td class="rate">$0.015/GB-mo, no egress fee</td>
+        <td class="sub">AWS S3 at $0.023/GB-mo plus egress &mdash; or straight to your ms-pool bucket</td></tr>
+      <tr class="oss"><td>State &amp; scheduling</td><td>Postgres + cron, self-hosted <span class="tag free">Open source</span></td>
+        <td class="rate">$0</td><td class="sub">Any managed Postgres; the state store is a table, not a product</td></tr>
+    </tbody></table></div>
+  <div class="supnotes" data-r style="--i:4">
+    <div><h4>In your name</h4><p>Each account is contracted by Moovsoon directly. We operate them; we never resell them. There is no margin hidden inside a per-request rate.</p></div>
+    <div><h4>Three of seven are free</h4><p>The pieces that are hardest to get right are the open-source ones. What you actually pay for is bandwidth and CPU &mdash; commodities with many sellers.</p></div>
+    <div><h4>No single vendor</h4><p>Every paid row has a named substitute at a comparable rate. Switching proxy vendor is a config change and a re-run, not a rebuild.</p></div>
+  </div>
+
+  <div data-r style="--i:6;margin-top:10px">
+    <div class="label" style="margin-bottom:9px">The gap we close next &mdash; AI-assisted self-healing</div>
+    <p class="dek" style="margin:0 0 11px;max-width:none">The healing is deterministic today, and it works: the schema gate holds any batch where a field breaks its null-rate baseline &mdash; the 200 OK with empty <span style="font-family:var(--f-mono);font-size:13px">realtoremail</span> that no HTTP check catches. What it does not do is write the fix. The next layer does, under the same proof.</p>
+    <div class="heal">
+      <div class="healsteps">
+        <div class="hstep" style="--s:0"><span class="hn">01</span><b>Detect</b>
+          <p>A gate trips: a field breaks its null-rate baseline, or <span style="font-family:var(--f-mono);font-size:11.5px">propertyStatus</span> returns a value outside the enum.</p></div>
+        <div class="hstep" style="--s:1"><span class="hn">02</span><b>Diagnose</b>
+          <p>The failing page and the last-good extraction contract go to the model. It proposes a new parse path &mdash; not a new pipeline.</p></div>
+        <div class="hstep" style="--s:2"><span class="hn">03</span><b>Prove</b>
+          <p>Replayed against frozen golden fixtures and the same baselines. A fix that cannot reproduce the last-good output is rejected.</p></div>
+        <div class="hstep last" style="--s:3"><span class="hn">04</span><b>Promote</b>
+          <p>Only a proposal that passes ships, with the diff attached. Anything that fails pages a human &mdash; exactly as it does today.</p></div>
+      </div>
+    </div>
+    <div class="healrule" data-r style="--i:8">
+      <span class="hk">The rule</span>
+      <p>The model never deploys anything it cannot prove against a fixture. That is the difference between a crawler that heals itself and one simply left unattended &mdash; and it is why 70 spiders across 44 domains have not turned an overnight break into a morning call-out.</p>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ========== 8 ========== -->
 <section class="slide" data-t="Cost">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What moves the bill</span><b>Drag the tier dial</b></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; What moves the bill</span><b>Drag the tier dial</b></div>
   <h2 data-r style="--i:1">The lever is not the browser. It is page weight.</h2>
   <div class="ctrlhost" data-r style="--i:2"></div>
   <p class="dek" data-r style="--i:3;margin:0 0 12px">A rung-1 JSON response is about 45 KB. A rendered rung-2 page measured between 0.97 and 1.45 MB in our own captures &mdash; roughly 25 times the traffic for the same listing. That weight is charged on every request and does not amortise, which is why moving a source down a tier beats every other optimisation.</p>
@@ -609,10 +740,10 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
  </div>
 </section>
 
-<!-- ========== 8 ========== -->
+<!-- ========== 9 ========== -->
 <section class="slide" data-t="Next">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; Where this goes</span></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 9 &middot; Where this goes</span></div>
   <h2 data-r style="--i:1">Six sources proven. Twenty-five ZIP codes to prove the price.</h2>
   <div class="closegrid" data-r style="--i:2;margin:20px 0 16px">
     <div><div class="stat" style="color:var(--accent)" data-count="6">0</div>
@@ -795,11 +926,16 @@ function buildControls(){
         SEL[n]=on; refresh();
       };
     });
-    var sl=host.querySelector(".zipslider");
+  });
+  /* Every handle on the page drives the same state - the control bars and the
+     one under the map. Wiring them together beats duplicating the model. */
+  [].forEach.call(document.querySelectorAll(".zipslider"),function(sl){
+    if(sl.dataset.wired) return;
+    sl.dataset.wired="1";
     sl.addEventListener("input",function(){
       ZIPS=zipsFromSlider(+sl.value);
-      host.querySelector(".draghint").classList.add("gone");
-      host.querySelector(".draglabel").classList.add("gone");
+      [].forEach.call(document.querySelectorAll(".draghint,.draglabel"),
+        function(h){h.classList.add("gone")});
       refresh();
     });
   });
@@ -811,12 +947,14 @@ function refresh(){
       var on=!!SEL[c.dataset.site];
       c.classList.toggle("on",on); c.setAttribute("aria-pressed",on?"true":"false");
     });
-    var sl=host.querySelector(".zipslider"); sl.value=sliderFromZips(ZIPS);
-    host.querySelector(".zipval").textContent=ZIPS.toLocaleString()+
-      (ZIPS>=14000?" - national":(ZIPS<=25?" - pilot":""));
     host.querySelector(".oL").textContent=fmt(m.listings);
     host.querySelector(".oC").textContent=money(m.all);
-    var hint=host.querySelector(".draghint");
+  });
+  var label=ZIPS.toLocaleString()+(ZIPS>=14000?" - national":(ZIPS<=25?" - pilot":""));
+  [].forEach.call(document.querySelectorAll(".zipval"),function(v){v.textContent=label});
+  [].forEach.call(document.querySelectorAll(".zipslider"),function(sl){
+    sl.value=sliderFromZips(ZIPS);
+    var hint=sl.parentNode.querySelector(".draghint");
     if(hint&&!hint.classList.contains("gone")){
       var r=sl.getBoundingClientRect();
       hint.style.left=((+sl.value/100)*(r.width-17)+8.5)+"px";
