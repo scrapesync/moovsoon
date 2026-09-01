@@ -1,0 +1,1284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Moovsoon Listings Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@144,300..700,0,0..1&family=Public+Sans:wght@300..700&family=Spline+Sans+Mono:wght@400..600&display=swap">
+<style>
+/* ==========================================================================
+   RECORDED PLAT - Moovsoon x Asad Ikram
+   Warm rag paper, warm near-black ink, one navy accent. Headline figures set
+   as a surveyor's dual dimension: what the RECORD claims over what we MEASURED.
+   Single light theme, every colour painted explicitly.
+   ========================================================================== */
+:root{
+  --paper:#EFEBE4; --paper-2:#E4DFD6; --white:#FDFCFA;
+  --ink:#1C1A17; --ink-2:#57524A; --ink-3:#8A8378;
+  --rule:#C6BFB2; --rule-2:#D9D3C7;
+  --accent:#00214C; --accent-a:rgba(0,33,76,.07);
+  --flag:#A02021; --good:#1F6B4A;
+  --L1:#0E7C7B; --L2:#2B5D8C; --L3:#4A4B93; --L4:#7B4A9C; --L5:#A03D6B;
+  --mv-teal:#02B3AA; --mv-amber:#FCB900;
+  --f-disp:'Fraunces',Georgia,'Times New Roman',serif;
+  --f-ui:'Public Sans',system-ui,-apple-system,sans-serif;
+  --f-mono:'Spline Sans Mono','IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --e-out:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.16,1,.3,1);
+}
+@supports (animation-timing-function:linear(0,1)){
+  :root{--spring:linear(0,.009,.035 3.8%,.141,.281 12%,.723 25%,.938,1.017,1.062,1.075,1.06,
+    1.031 51.4%,.995,.97,.958,.957,.966,.98,.995,1.006,1.011,1.008,1.002,.999,1);}
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-weight:350;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow:hidden;
+  background-image:linear-gradient(rgba(198,191,178,.2) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(198,191,178,.2) 1px,transparent 1px);background-size:40px 40px}
+h1,h2{font-family:var(--f-disp);font-variation-settings:'WONK' 0;color:var(--ink);margin:0;
+  font-weight:600;line-height:.96;letter-spacing:-.024em;text-wrap:balance}
+h1{font-size:clamp(38px,5.4vw,74px);max-width:18ch}
+h2{font-size:clamp(25px,3.1vw,40px);max-width:24ch;margin-bottom:8px}
+h1 .wk{font-variation-settings:'WONK' 1;font-weight:300;color:var(--accent);font-style:italic}
+h3{font-family:var(--f-ui);font-weight:600;font-size:16px;color:var(--ink);margin:0;
+  letter-spacing:-.01em}
+p{font-size:15.5px;line-height:1.6;color:var(--ink-2);margin:0 0 10px;max-width:64ch;
+  text-wrap:pretty}
+strong{color:var(--ink);font-weight:600}
+.label{font-family:var(--f-mono);font-weight:500;font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3)}
+.stat{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:36px;
+  letter-spacing:-.03em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums lining-nums}
+
+#deck{position:relative;height:100vh;width:100%}
+.slide{position:absolute;inset:0;padding:34px 48px 74px;overflow-y:auto;opacity:0;visibility:hidden;
+  transition:opacity .3s var(--e-out)}
+.slide.on{opacity:1;visibility:visible}
+.inner{max-width:1300px;margin:0 auto}
+@media(max-width:760px){.slide{padding:22px 16px 74px}}
+[data-r]{opacity:0;translate:0 14px;filter:blur(4px);
+  transition:opacity .5s var(--e-out),translate .8s var(--spring),filter .5s var(--e-out);
+  transition-delay:calc(var(--i,0)*65ms)}
+.slide.on [data-r]{opacity:1;translate:0 0;filter:blur(0)}
+.kick{font-family:var(--f-mono);font-weight:500;font-size:9px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--ink-3);margin-bottom:10px;display:flex;align-items:center;
+  gap:11px;flex-wrap:wrap}
+.kick::before{content:"";width:26px;height:1px;background:var(--ink-3);flex:none}
+.kick b{color:var(--accent);font-weight:500}
+.dek{font-size:15.5px;color:var(--ink-2);max-width:74ch;margin-bottom:14px;line-height:1.6}
+
+#nav{position:fixed;left:0;right:0;bottom:0;height:58px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 24px;background:rgba(239,235,228,.94);
+  backdrop-filter:blur(12px);border-top:1px solid var(--rule);z-index:60}
+#dots{display:flex;align-items:center}
+.dot{position:relative;width:32px;height:24px;border:none;background:none;cursor:pointer;padding:0}
+.dot::after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--rule)}
+.dot::before{content:"";position:absolute;left:50%;top:50%;width:7px;height:7px;border-radius:50%;
+  translate:-50% -50%;background:var(--paper);border:1.5px solid var(--rule);
+  transition:background .25s,border-color .25s,width .25s,height .25s}
+.dot.on::before{background:var(--accent);border-color:var(--accent);width:11px;height:11px}
+.dot:hover::before{border-color:var(--accent)}
+.dot:focus-visible,.navbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.navbtn{font-family:var(--f-mono);font-weight:500;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;background:none;border:1px solid var(--rule);color:var(--ink-2);
+  border-radius:2px;padding:9px 14px;cursor:pointer;transition:all .2s var(--e-out)}
+.navbtn:hover:not(:disabled){border-color:var(--ink);color:var(--ink);background:var(--white)}
+.navbtn:disabled{opacity:.28;cursor:default}
+#pos{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-3);letter-spacing:.2em}
+
+.panel{background:var(--white);border:1px solid var(--rule);border-radius:2px;padding:15px 18px}
+.grid{display:grid;gap:13px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+
+/* ===== scope toggle: all sources vs one ===== */
+/* The control bar. Deliberately one dense strip: it repeats on four sheets, so
+   every pixel of height it takes is a pixel taken from the content four times. */
+.ctrl{background:var(--white);border:1.5px solid var(--rule);padding:8px 13px;margin:6px 0 10px;
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ctrllab{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);white-space:nowrap;flex:none}
+.chips{display:flex;gap:4px;flex-wrap:wrap;flex:none}
+.chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-ui);font-size:12px;
+  letter-spacing:-.01em;border:1.5px solid var(--rule);background:var(--paper-2);color:var(--ink-3);
+  padding:6px 12px 6px 9px;cursor:pointer;font-weight:600;white-space:nowrap;border-radius:2px;
+  transition:background .22s var(--e-out),border-color .22s var(--e-out),color .22s var(--e-out),
+             translate .3s var(--spring),box-shadow .22s var(--e-out)}
+/* the dot carries the source's own depth colour, so the chip row doubles as a
+   legend for the layer stack on sheet 2 */
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;flex:none;
+  background:var(--paper);border:1.5px solid var(--rule);
+  transition:background .22s var(--e-out),border-color .22s var(--e-out),scale .3s var(--spring)}
+.chip:hover{border-color:var(--ink-3);color:var(--ink);translate:0 -1px}
+.chip.on{background:var(--white);border-color:var(--sc);color:var(--ink);
+  box-shadow:0 2px 10px rgba(28,26,23,.10)}
+.chip.on::before{background:var(--sc);border-color:var(--sc);scale:1.15}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip .ct{font-family:var(--f-mono);font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);opacity:0;width:0;overflow:hidden;transition:opacity .22s,width .22s}
+.chip.on .ct{opacity:1;width:auto;color:var(--sc)}
+.zipwrap{flex:1 1 150px;min-width:120px;position:relative;display:flex;align-items:center}
+.zipwrap input[type=range]{height:22px}
+/* flex:none on the readout and its children - otherwise they shrink into the
+   leftover space and the text wraps one character per line. */
+.ctrlout{display:flex;align-items:baseline;gap:14px;margin-left:auto;white-space:nowrap;flex:none}
+.ctrlout>span{flex:none}
+.ctrlout span{font-family:var(--f-mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3)}
+.ctrlout b{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:17px;
+  letter-spacing:-.025em;color:var(--ink);margin-right:6px;font-variant-numeric:tabular-nums;
+  display:inline-block}
+.ctrlout>span{display:inline-flex;align-items:baseline;gap:5px}
+.ctrlout .ctrlbig b{font-size:25px;color:var(--accent)}
+.ctrl .draghint{top:11px}
+.ctrl .draglabel{top:-2px;left:auto;right:-4px;font-size:8px}
+/* Sub-tabs: centred, and big enough to read as the primary control they are. */
+.segwrap{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;
+  margin:10px 0 12px}
+.seglabel{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3)}
+.seg{display:inline-flex;background:var(--paper-2);border:1.5px solid var(--rule);padding:4px;gap:4px}
+.seg button{font-family:var(--f-mono);font-weight:600;font-size:11.5px;letter-spacing:.14em;
+  text-transform:uppercase;border:none;background:none;color:var(--ink-2);padding:12px 26px;
+  cursor:pointer;transition:all .22s var(--e-out)}
+.seg button:hover:not(.on){color:var(--ink);background:var(--white)}
+.seg button.on{background:var(--ink);color:var(--paper);box-shadow:0 2px 10px rgba(28,26,23,.22)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ===== dual dimension ===== */
+.dual .rl{font-family:var(--f-mono);font-weight:500;font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3)}
+.dual .rec{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:400;font-size:19px;
+  color:var(--ink-3);letter-spacing:-.02em;line-height:1.15;text-decoration:line-through;
+  text-decoration-thickness:1px;text-decoration-color:var(--flag)}
+.dual .div{border-top:1px solid var(--rule);margin:6px 0}
+.dual .mea{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:23px;
+  color:var(--accent);letter-spacing:-.025em;line-height:1.15}
+
+/* ===== 1 HERO ===== */
+.hero{display:flex;flex-direction:column;justify-content:center;min-height:52vh;position:relative}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;opacity:.7;pointer-events:none}
+.lede{font-size:18px;color:var(--ink-2);max-width:56ch;line-height:1.55}
+.brandline{display:flex;align-items:center;gap:11px;flex-wrap:wrap;font-family:var(--f-mono);
+  font-weight:500;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-3)}
+.sw{width:18px;height:4px;display:inline-block}
+.briefgrid{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start;margin-top:4px}
+@media(max-width:900px){.briefgrid{grid-template-columns:1fr}}
+.scoperow{display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));
+  margin-top:24px;border-top:1.5px solid var(--ink)}
+.scoperow>div{padding:13px 16px 2px;border-right:1px solid var(--rule)}
+.scoperow>div:last-child{border-right:none}
+.scoperow .sv{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;
+  font-size:28px;letter-spacing:-.03em;color:var(--accent);font-variant-numeric:tabular-nums}
+.scoperow .sl{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:6px;line-height:1.6}
+.who{background:var(--white);border:1px solid var(--rule);border-top:2px solid var(--accent);
+  padding:16px 18px}
+.who .wl{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:8px}
+.who .wstat{font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;color:var(--ink-2);
+  border-top:1px solid var(--rule);padding-top:8px;margin-top:10px;line-height:1.6}
+.who .wstat b{color:var(--accent);font-weight:600}
+
+/* ===== 2 TARGETS ===== */
+.t2{display:grid;grid-template-columns:246px 1fr;gap:22px;align-items:start}
+@media(max-width:940px){.t2{grid-template-columns:1fr}}
+.sites{display:flex;flex-direction:column;gap:5px}
+.site{background:var(--white);border:1px solid var(--rule);border-left:3px solid var(--rule);
+  border-radius:2px;padding:10px 14px;cursor:pointer;text-align:left;font-family:var(--f-ui);
+  transition:border-color .3s,translate .34s var(--spring),box-shadow .26s}
+.site:hover{translate:4px 0}
+.site.on{translate:7px 0;box-shadow:0 8px 22px rgba(28,26,23,.10)}
+.site .nm{display:block;font-weight:600;color:var(--ink);font-size:14.5px;letter-spacing:-.012em}
+.site .sub{display:block;font-family:var(--f-mono);font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.site:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.stackwrap{background:var(--white);border:1px solid var(--rule);border-radius:2px;padding:16px 20px}
+.stackhead{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+  padding-bottom:11px;border-bottom:1.5px solid var(--ink);margin-bottom:12px}
+.stackhead h2{font-size:28px;margin:0}
+.layers{display:flex;flex-direction:column-reverse;gap:4px}
+.lyr{position:relative;display:grid;grid-template-columns:96px 1fr 132px;gap:14px;
+  align-items:center;border:1px solid var(--rule-2);border-radius:2px;padding:9px 14px;
+  background:var(--paper-2);overflow:hidden;
+  transition:opacity .4s var(--e-out),translate .5s var(--spring),filter .4s}
+.lyr{opacity:.22;filter:saturate(.15);translate:-8px 0}
+.lyr::before{content:"";position:absolute;inset:0;background:var(--lc);opacity:.09;
+  transform-origin:left;scale:0 1;transition:scale .55s var(--e-out)}
+.lyr::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--lc);
+  transform-origin:bottom;scale:1 0;transition:scale .45s var(--e-out)}
+.lyr.on{opacity:1;filter:none;translate:0 0;background:var(--white)}
+.lyr.on::before{scale:1 1} .lyr.on::after{scale:1 1}
+.lyr.deep{box-shadow:inset 0 0 0 1px var(--lc)}
+.lyr>*{position:relative;z-index:1}
+.lyr .ln{font-family:var(--f-mono);font-weight:500;font-size:8.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3);transition:color .4s}
+.lyr.on .ln{color:var(--lc)}
+.lyr .ld{font-size:12.5px;color:var(--ink-3);line-height:1.4}
+.lyr.on .ld{color:var(--ink-2)}
+.lyr .lsig{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.02em;text-align:right;
+  color:transparent;line-height:1.5;transition:color .4s}
+.lyr.on .lsig{color:var(--ink-3)}
+.lyr.deep .lsig{color:var(--lc);font-weight:500}
+.techbox{background:var(--paper-2);border-left:2px solid var(--accent);padding:11px 14px;
+  margin-top:12px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.techbox b{color:var(--ink);font-weight:600}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);margin-top:12px}
+.statrow div{background:var(--white);padding:10px 13px}
+.statrow .k{font-family:var(--f-mono);font-weight:500;font-size:8px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-3)}
+.statrow .v{font-size:14px;color:var(--ink);font-weight:600;margin-top:4px;letter-spacing:-.012em}
+
+/* ===== 3 LADDER ===== */
+.ladder{display:flex;flex-direction:column-reverse;gap:5px;max-width:980px}
+.rung{display:grid;grid-template-columns:40px 1fr 104px;gap:16px;align-items:center;
+  background:var(--white);border:1px solid var(--rule);border-radius:2px;padding:11px 17px;
+  cursor:pointer;text-align:left;font-family:var(--f-ui);width:100%;
+  transition:translate .34s var(--spring),box-shadow .26s,border-color .26s}
+.rung:hover{translate:6px 0}
+.rung.on{border-color:var(--accent);box-shadow:0 8px 22px rgba(28,26,23,.10)}
+.rung:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mon{width:19px;height:19px;border-radius:50%;border:2px solid var(--rule);margin:0 auto;
+  transition:background .3s,border-color .3s}
+.rung.on .mon{background:var(--accent);border-color:var(--accent)}
+.rung .rt{display:block;font-weight:600;color:var(--ink);font-size:15.5px;letter-spacing:-.012em}
+.rung .rs{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+.rung .rc{display:block;font-family:var(--f-mono);font-weight:500;font-size:12px;
+  text-align:right;color:var(--ink)}
+.rung .rp{display:block;font-family:var(--f-mono);font-size:8px;color:var(--ink-3);
+  text-align:right;letter-spacing:.14em;margin-top:3px;text-transform:uppercase;line-height:1.4}
+.sharebar{display:block;height:2px;background:var(--paper-2);margin-top:7px;overflow:hidden;
+  max-width:420px}
+.sharebar i{display:block;height:100%;width:0;background:var(--accent);
+  transition:width 1.1s var(--e-out) .2s}
+.slide.on .sharebar i{width:var(--w)}
+
+/* ===== 4 ARCHITECTURE ===== */
+.dia{background:var(--white);border:1px solid var(--rule);padding:8px;overflow-x:auto}
+#archdia svg{height:auto;display:block;width:100%;min-width:1140px;max-height:47vh}
+svg text{font-family:var(--f-ui)}
+.d1{font-size:11px;font-weight:700} .d2{font-size:9px} .d3{font-size:8px}
+.dm{font-family:var(--f-mono);font-size:8px}
+.bandlab{font-family:var(--f-mono);font-size:8px;letter-spacing:.2em}
+.flow{stroke-dasharray:4 7;animation:flow 1.9s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-22}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* ===== EXPLORERS ===== */
+.exp{display:grid;grid-template-columns:1.2fr .8fr;gap:20px;align-items:start}
+@media(max-width:940px){.exp{grid-template-columns:1fr}}
+#mapwrap{background:var(--ink);padding:14px;position:relative}
+#usmap{width:100%;height:auto;display:block}
+.maplab{position:absolute;top:14px;left:18px;font-family:var(--f-mono);font-weight:500;font-size:8.5px;
+  letter-spacing:.2em;text-transform:uppercase;color:#7F786C;line-height:2.1}
+.mapkey{letter-spacing:.06em;text-transform:none;font-size:8.5px;color:#6F6A60;font-weight:400}
+.mapkey i{display:inline-block;width:6px;height:6px;border-radius:50%;margin-right:5px}
+.sliderwrap{position:relative;margin:16px 0 4px}
+input[type=range]{width:100%;height:28px;cursor:grab;display:block;appearance:none;background:none}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-runnable-track{height:1.5px;background:var(--rule)}
+input[type=range]::-moz-range-track{height:1.5px;background:var(--rule)}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:17px;height:17px;margin-top:-8px;
+  background:var(--accent);border:3px solid var(--paper);border-radius:50%;
+  box-shadow:0 2px 10px rgba(0,33,76,.35);transition:scale .2s var(--spring)}
+input[type=range]:hover::-webkit-slider-thumb{scale:1.2}
+input[type=range]::-moz-range-thumb{width:12px;height:12px;background:var(--accent);
+  border:3px solid var(--paper);border-radius:50%}
+input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6px}
+.draghint{position:absolute;left:0;top:14px;translate:-50% -50%;width:17px;height:17px;
+  border-radius:50%;border:2px solid var(--accent);pointer-events:none;
+  animation:halo 1.9s ease-out infinite}
+.draghint.gone{display:none}
+@keyframes halo{0%{scale:1;opacity:.9}70%{scale:2.9;opacity:0}100%{scale:2.9;opacity:0}}
+.draglabel{position:absolute;left:32px;top:1px;font-family:var(--f-mono);font-size:9px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent);pointer-events:none;
+  animation:nudge 1.9s ease-in-out infinite}
+.draglabel.gone{opacity:0;transition:opacity .4s}
+@keyframes nudge{0%,100%{translate:0 0}50%{translate:6px 0}}
+.ticks{position:relative;height:15px;font-family:var(--f-mono);font-size:8.5px;color:var(--ink-3);
+  letter-spacing:.12em;text-transform:uppercase}
+.ticks span{position:absolute;translate:-50% 0;white-space:nowrap}
+.ticks span:first-child{translate:0 0} .ticks span:last-child{translate:-100% 0}
+@media(max-width:1180px){.ticks span:nth-child(2),.ticks span:nth-child(3){display:none}}
+/* the two-cost readout: whole estate beside a single source */
+.twocost{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-bottom:13px}
+.twocost>div{background:var(--white);padding:12px 15px}
+.twocost .tc{font-family:var(--f-mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3)}
+.twocost .tv{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:29px;
+  letter-spacing:-.03em;line-height:1.05;margin-top:5px;font-variant-numeric:tabular-nums}
+.twocost .ts{font-family:var(--f-mono);font-size:8.5px;color:var(--ink-3);margin-top:4px}
+/* per-component bars. BLOCK elements: a span cannot take width or height. */
+.comp{display:flex;flex-direction:column;gap:7px;margin-top:2px}
+.crow{display:grid;grid-template-columns:112px 1fr 70px;gap:11px;align-items:center}
+.crow .cn{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3)}
+.crow .ct{display:block;height:13px;background:var(--paper-2);overflow:hidden}
+.crow .cf{display:block;height:100%;width:0;transition:width .45s var(--e-out)}
+.crow .cv2{font-family:var(--f-mono);font-size:11.5px;text-align:right;
+  font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.crow.lead .cn{color:var(--flag);font-weight:600}
+.verdict{background:var(--accent-a);border-left:2px solid var(--accent);padding:12px 15px;
+  margin-top:13px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
+.verdict b{color:var(--ink)}
+
+/* ===== BUILD VS BUY ===== */
+.tw{overflow-x:auto;margin:12px 0 0}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
+th{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-3);text-align:left;padding:8px 12px 8px 0;border-bottom:1.5px solid var(--ink);
+  font-weight:500}
+td{padding:5px 12px 5px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+td:first-child{color:var(--ink);font-weight:600}
+.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:12.5px}
+tr.build td{background:rgba(31,107,74,.05)}
+.pill{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 8px;border:1px solid currentColor;white-space:nowrap;font-weight:500}
+.bvb{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:860px){.bvb{grid-template-columns:1fr}}
+.bcard{background:var(--white);border:1px solid var(--rule);padding:11px 16px;position:relative}
+.bcard.win{border-color:var(--accent);border-width:2px;box-shadow:0 12px 30px rgba(0,33,76,.12)}
+.bcard .bt{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3)}
+.bcard .bp{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:29px;
+  letter-spacing:-.035em;margin:5px 0 2px;line-height:1;font-variant-numeric:tabular-nums}
+.bcard .bs{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3)}
+.prosconslist{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+@media(max-width:620px){.prosconslist{grid-template-columns:1fr}}
+.pchead{font-family:var(--f-mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;
+  display:block;margin-bottom:5px}
+.pchead.good{color:var(--good)} .pchead.bad{color:var(--flag)}
+.pcgroup ul{margin:0;padding-left:15px}
+.pcgroup li{font-size:12.5px;margin-bottom:4px;line-height:1.45}
+/* the objection cards: click to reveal how each is handled */
+.objrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:860px){.objrow{grid-template-columns:1fr}}
+.obj{background:var(--white);border:1px solid var(--rule);border-top:2px solid var(--flag);
+  padding:13px 15px;cursor:pointer;text-align:left;font-family:var(--f-ui);width:100%;
+  transition:border-color .25s var(--e-out),box-shadow .25s var(--e-out),
+             translate .3s var(--spring)}
+.obj:hover{translate:0 -2px;box-shadow:0 8px 22px rgba(28,26,23,.09)}
+.obj.on{border-top-color:var(--good);box-shadow:0 8px 22px rgba(28,26,23,.11)}
+.obj:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.obj .oq{display:block;font-weight:600;font-size:13.5px;color:var(--ink);letter-spacing:-.01em}
+.obj .ohint{display:block;font-family:var(--f-mono);font-size:8px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--flag);margin-top:6px;transition:color .25s}
+.obj.on .ohint{color:var(--good)}
+/* height animates from 0, so the reveal reads as the card opening */
+.obj .oa{display:grid;grid-template-rows:0fr;transition:grid-template-rows .42s var(--e-out),
+  opacity .3s var(--e-out);opacity:0;margin-top:0}
+.obj.on .oa{grid-template-rows:1fr;opacity:1;margin-top:9px}
+.obj .oa>div{overflow:hidden}
+.obj .oa p{font-size:12.5px;margin:0;color:var(--ink-2);line-height:1.5;
+  border-top:1px solid var(--rule);padding-top:9px}
+.stamp{position:absolute;top:14px;right:16px;font-family:var(--f-mono);font-size:8px;
+  letter-spacing:.18em;text-transform:uppercase;padding:4px 9px;border:1.5px solid var(--accent);
+  color:var(--accent);rotate:-4deg}
+
+/* ===== COST ===== */
+.stackbar{display:flex;height:56px;overflow:hidden;border:1px solid var(--rule)}
+.stackbar div{transition:flex-grow .6s var(--e-out);min-width:2px}
+.stackleg{display:grid;grid-template-columns:repeat(auto-fit,minmax(142px,1fr));gap:10px;
+  margin-top:13px}
+.stackleg .it{display:flex;align-items:flex-start;gap:8px;font-size:13px}
+.stackleg .sw2{width:10px;height:10px;flex:none;margin-top:4px}
+.stackleg .nm2{color:var(--ink);font-weight:600;display:block}
+.stackleg .vl{font-family:var(--f-mono);font-size:11px;color:var(--ink-3)}
+
+/* ===== CLOSE ===== */
+.closegrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+.closegrid>div{padding:18px 20px 16px;border-right:1px solid var(--rule)}
+.closegrid>div:last-child{border-right:none}
+ul{padding-left:17px;margin:0 0 9px}
+li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
+.foot{font-family:var(--f-mono);font-size:9.5px;color:var(--ink-3);max-width:108ch;margin-top:14px;
+  line-height:1.9;letter-spacing:.02em}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+    transition-duration:.01ms!important}
+  [data-r]{opacity:1;translate:0;filter:none}
+  .site:hover,.rung:hover{translate:0}
+}
+</style>
+
+</head>
+<body>
+<div id="deck">
+
+<!-- ========== 1 ========== -->
+<section class="slide on" data-t="Brief">
+ <canvas id="heroCanvas" aria-hidden="true"></canvas>
+ <div class="inner hero">
+  <div class="brandline" data-r style="--i:0">
+    <span class="sw" style="background:var(--mv-teal)"></span>
+    <span class="sw" style="background:var(--mv-amber)"></span>
+    <span class="sw" style="background:var(--accent)"></span>
+    <span>Moovsoon &nbsp;/&nbsp; Asad Ikram</span>
+    <span style="color:var(--ink-3)">Sheet 1 of 8</span>
+  </div>
+  <h1 data-r style="--i:1;margin:18px 0 20px">Six national listing sources, into your schema, <span class="wk">daily</span></h1>
+  <div class="briefgrid">
+    <div>
+      <p class="lede" data-r style="--i:2">Before quoting anything, I went and pulled real listings out of all six &mdash; including the three that are supposed to need a paid third party. <strong>What follows is a measurement, not an estimate.</strong></p>
+      <div class="scoperow" data-r style="--i:3">
+        <div><div class="sv" data-count="6">0</div><div class="sl">Sources, reached live</div></div>
+        <div><div class="sv" data-count="1500800">0</div><div class="sl">Listings in national reach</div></div>
+        <div><div class="sv" data-count="0">$0</div><div class="sl">On third-party access</div></div>
+      </div>
+    </div>
+    <aside class="who" data-r style="--i:4">
+      <div class="wl">Who is building it</div>
+      <h3 style="font-family:var(--f-disp);font-size:21px;font-weight:600;letter-spacing:-.02em">Asad Ikram</h3>
+      <p style="font-size:13.5px;margin:7px 0 0">I write <strong>web-scraping-guide.com</strong>, the public reference on how modern anti-bot systems actually work &mdash; and I have spent seven years building crawler fleets that stay up.</p>
+      <div class="wstat"><b>500+</b> production spiders shipped</div>
+      <div class="wstat"><b>70</b> self-healing spiders, 44 domains, zero overnight call-outs</div>
+    </aside>
+  </div>
+ </div>
+</section>
+
+<!-- ========== 2 ========== -->
+<section class="slide" data-t="Targets">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 2 &middot; The target set</span><b>Click a source</b></div>
+  <h2 data-r style="--i:1">Five layers. Every source contests a different depth.</h2>
+  <p class="dek" data-r style="--i:2">A request is judged at five points before a listing comes back. The column on the right names the signal each layer actually checks &mdash; and how far up the stack a given source forced the work.</p>
+  <div class="t2" data-r style="--i:3">
+    <div class="sites" id="sites"></div>
+    <div class="stackwrap">
+      <div class="stackhead">
+        <div><h2 id="stName">&mdash;</h2>
+          <p id="stNote" style="font-size:13.5px;margin:8px 0 0;max-width:60ch"></p></div>
+        <div class="dual" style="text-align:right;min-width:158px">
+          <div class="rl">The record said</div><div class="rec" id="stRec">&mdash;</div>
+          <div class="div"></div>
+          <div class="rl">We measured</div><div class="mea" id="stMea">&mdash;</div>
+        </div>
+      </div>
+      <div class="layers" id="layers"></div>
+      <div class="techbox" id="stTech"></div>
+      <div class="statrow" id="stStats"></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ========== 3 ========== -->
+<section class="slide" data-t="Method">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 3 &middot; How the work is priced</span><b>Click a tier</b></div>
+  <h2 data-r style="--i:1">Four tiers of effort. Most volume never leaves the first.</h2>
+  <p class="dek" data-r style="--i:2">Cost per thousand requests is set by how deep a source forces us to go. The discipline is not the climbing &mdash; it is the stopping, the moment something works.</p>
+  <div data-r style="--i:3"><div class="ladder" id="ladder"></div></div>
+  <div class="panel" id="rungDetail" data-r style="--i:4;margin-top:14px;border-left:2px solid var(--accent)"></div>
+ </div>
+</section>
+
+<!-- ========== 4 ========== -->
+<section class="slide" data-t="Pipeline">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 4 &middot; The pipeline</span><b>Toggle host and scope</b></div>
+  <h2 data-r style="--i:1">Named tools, quality gates, and a crawler that repairs itself.</h2>
+  <p class="dek" data-r style="--i:2">Every box names the actual software, and every band carries its own monthly cost. The four bands sum to the all-in figure &mdash; egress is the per-request access spend, so it is counted once, there.</p>
+  <div class="segwrap" data-r style="--i:3">
+    <span class="seglabel">Host</span>
+    <div class="seg" id="hostSeg"><button data-h="vps" class="on">Self-hosted</button>
+      <button data-h="aws">AWS</button></div>
+  </div>
+  <div class="ctrlhost" data-r style="--i:4"></div>
+  <div class="dia" id="archdia" data-r style="--i:5"></div>
+ </div>
+</section>
+
+<!-- ========== 5 ========== -->
+<section class="slide" data-t="Scale">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 5 &middot; Scalability</span><b>Drag the handle</b></div>
+  <h2 data-r style="--i:1">Start small. Watch which component actually grows.</h2>
+  <div class="ctrlhost" data-r style="--i:2"></div>
+  <div class="exp" data-r style="--i:3">
+    <div>
+      <div id="mapwrap">
+        <div class="maplab">Coverage &mdash; active ZIP codes<br>
+          <span class="mapkey"><i style="background:#4E9FD1"></i>dot size = listings in that ZIP &nbsp;&nbsp;<i style="background:#E8C46A"></i>dense metro</span></div>
+        <canvas id="usmap" width="1000" height="560" aria-label="United States, ZIP coverage growing with the slider"></canvas>
+      </div>
+    </div>
+    <div>
+      <div class="twocost">
+        <div><div class="tc">Your selection</div><div class="tv" id="k5all" style="color:var(--accent)">$0</div>
+          <div class="ts" id="k5alls">&mdash;</div></div>
+        <div><div class="tc">If you went national</div><div class="tv" id="k5one" style="color:var(--ink-3)">$0</div>
+          <div class="ts" id="k5ones">&mdash;</div></div>
+      </div>
+      <div class="label" style="margin:0 0 9px">Monthly cost, by component</div>
+      <div class="comp" id="compRows"></div>
+      <div class="verdict" id="scaleNote"></div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ========== 6 ========== -->
+<section class="slide" data-t="Build vs buy">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 6 &middot; The decision</span><b>Priced per source, at national scale</b></div>
+  <h2 data-r style="--i:1">We tested the build before recommending it.</h2>
+  <p class="dek" data-r style="--i:2">The usual advice is to buy access on hard targets. We tested it source by source &mdash; and on every one of these six, building wins. Buy rates are an independent August 2026 benchmark, not a vendor claim.</p>
+  <div class="ctrlhost" data-r style="--i:3"></div>
+  <div class="tw" data-r style="--i:4"><table id="bvbTable"></table></div>
+  <div class="bvb" data-r style="--i:5;margin-top:11px">
+    <div class="bcard win"><div class="stamp">Recommended</div>
+      <div class="bt">Build it &mdash; you own it</div>
+      <div class="bp" style="color:var(--accent)" id="bvbBuild">$0</div>
+      <div class="bs" id="bvbBuildSub">per month, all in</div>
+      <div class="prosconslist">
+        <div class="pcgroup"><span class="pchead good">For</span><ul>
+          <li>Every account in Moovsoon's name, never marked up</li>
+          <li>Cost falls as we move sources to lighter routes</li>
+          <li>Pipeline, schema and history become your assets</li></ul></div>
+        <div class="pcgroup"><span class="pchead bad">Against</span><ul>
+          <li>Slower to first data than buying</li>
+          <li>You carry the breakage when a source changes</li></ul></div>
+      </div>
+    </div>
+    <div class="bcard">
+      <div class="bt">Buy access &mdash; you rent it</div>
+      <div class="bp" style="color:var(--ink-3)" id="bvbBuy">$0</div>
+      <div class="bs" id="bvbBuySub">per month, same volume, forever</div>
+      <div class="prosconslist">
+        <div class="pcgroup"><span class="pchead good">For</span><ul>
+          <li><strong>Data flowing this week</strong>, not in three</li>
+          <li>The vendor owns the breakage, not you</li>
+          <li>No infrastructure and no capacity planning</li>
+          <li>Predictable per-request price, easy to budget</li></ul></div>
+        <div class="pcgroup"><span class="pchead bad">Against</span><ul>
+          <li>You still build the schema, state store and tombstones</li>
+          <li>No leverage on price; nothing accrues</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div data-r style="--i:6;margin-top:14px">
+    <div class="label" style="margin-bottom:9px">The three fair objections to building &mdash; click each</div>
+    <div class="objrow" id="objRow"></div>
+  </div>
+</section>
+
+<!-- ========== 7 ========== -->
+<section class="slide" data-t="Cost">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What moves the bill</span><b>Drag the tier dial</b></div>
+  <h2 data-r style="--i:1">The lever is not the browser. It is page weight.</h2>
+  <div class="ctrlhost" data-r style="--i:2"></div>
+  <p class="dek" data-r style="--i:3;margin:0 0 12px">A rung-1 JSON response is about 45 KB. A rendered rung-2 page measured between 0.97 and 1.45 MB in our own captures &mdash; roughly 25 times the traffic for the same listing. That weight is charged on every request and does not amortise, which is why moving a source down a tier beats every other optimisation.</p>
+  <div class="exp" data-r style="--i:4">
+    <div>
+      <div class="twocost">
+        <div><div class="tc">Your selection</div><div class="tv" id="k7all" style="color:var(--accent)">$0</div>
+          <div class="ts" id="k7alls">&mdash;</div></div>
+        <div><div class="tc">Cost per 1,000 listings</div><div class="tv" id="k7one">$0</div>
+          <div class="ts" id="k7ones">&mdash;</div></div>
+      </div>
+      <div class="sliderwrap">
+        <input id="reuse" type="range" min="0" max="100" value="0" aria-label="Share of deep-tier volume moved onto the cheap tier">
+        <div class="ticks">
+          <span style="left:0">0% &middot; as measured today</span><span style="left:50%">50%</span>
+          <span style="left:100%">100% &middot; all on rung 1</span>
+        </div>
+      </div>
+      <div class="verdict" id="costNote"></div>
+    </div>
+    <div>
+      <div class="label" style="margin:0 0 9px">Where the money goes</div>
+      <div class="stackbar" id="costStack"></div>
+      <div class="stackleg" id="costLeg"></div>
+      <div class="panel" style="margin-top:12px;border-left:2px solid var(--accent)">
+        <h3>This dial is the ongoing work</h3>
+        <p style="margin-top:5px;font-size:13.5px">Every source starts on the tier its defence forces. Finding a lighter route moves it down, permanently. Three of six are already there &mdash; the dial is what the remaining three are worth if we keep looking.</p>
+      </div>
+    </div>
+  </div>
+ </div>
+</section>
+
+<!-- ========== 8 ========== -->
+<section class="slide" data-t="Next">
+ <div class="inner">
+  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; Where this goes</span></div>
+  <h2 data-r style="--i:1">Six sources proven. Twenty-five ZIP codes to prove the price.</h2>
+  <div class="closegrid" data-r style="--i:2;margin:20px 0 16px">
+    <div><div class="stat" style="color:var(--accent)" data-count="6">0</div>
+      <div class="label" style="margin-top:8px">Sources reached, live</div></div>
+    <div><div class="stat" data-count="1500800">0</div>
+      <div class="label" style="margin-top:8px">Listings in national reach</div></div>
+    <div><div class="stat" data-count="0">$0</div>
+      <div class="label" style="margin-top:8px">Spent on third-party access</div></div>
+    <div><div class="stat" style="color:var(--good)" data-count="0">$0</div>
+      <div class="label" style="margin-top:8px">Owed before the pilot proves it</div></div>
+  </div>
+  <div class="grid g2" data-r style="--i:3">
+    <div class="panel" style="border-top:2px solid var(--accent)">
+      <h3>Two-week pilot &mdash; $1,800, credited in full</h3>
+      <ul style="margin-top:10px">
+        <li>25 ZIP codes, delivering daily in your schema</li>
+        <li>Correct filenames, dedup keys, removal tombstones</li>
+        <li><strong>The real cost per thousand, and the real reuse count</strong></li>
+        <li>If the numbers come back worse than this deck, you have lost two weeks and nothing else</li>
+      </ul></div>
+    <div class="panel" style="border-top:2px solid var(--ink)">
+      <h3>Then the build &mdash; from $4,000</h3>
+      <ul style="margin-top:10px">
+        <li>All six sources, scheduled, monitored and self-healing</li>
+        <li>Quality gates against your own published data shape</li>
+        <li>A dashboard you drive: add ZIPs, pause a source, watch spend</li>
+        <li>Warehouse underneath, ready for the scoring layer</li>
+      </ul></div>
+  </div>
+  <p class="foot" data-r style="--i:4">Access confirmed by live collection on 1 September 2026 against all six sources. Per-request rates are production figures published in web-scraping-guide.com. Browser compute is modelled at ~12 seconds and ~1.5 vCPU per session mint. Volume is derived, not assumed: 2.8 requests per listing per month = a daily sweep at ~24 listings per request (1.25), detail fetches on the ~4% that change daily (1.20), and first fetches for new inventory (0.35). Rung-2 page weight is from our own captures (0.97-1.45 MB). Deep sources are costed at 25% incremental coverage because their inventory overlaps the spine. All three are re-measured in the pilot. Infrastructure rates fetched from AWS and Hostinger pricing pages the same day. Buy-side rates are an independent August 2026 benchmark, not a vendor claim.</p>
+ </div>
+</section>
+
+</div>
+
+<nav id="nav">
+  <button class="navbtn" id="prev">Prev</button>
+  <div id="dots"></div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <span id="pos">01 / 08</span>
+    <button class="navbtn" id="next">Next</button>
+  </div>
+</nav>
+
+<script>
+(function(){
+"use strict";
+var $=function(s){return document.querySelector(s)};
+var RM=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* The five checkpoints, and the signal each one actually reads. Technical
+   enough to be credible; nothing here is a recipe. */
+var LAYERS=[
+ {k:"Network",   c:"var(--L1)", d:"Where the request appears to originate.",
+  sig:"ASN class\naddress reputation"},
+ {k:"Transport", c:"var(--L2)", d:"The handshake itself, before a byte of HTTP.",
+  sig:"JA3 / JA4 shape\ncipher order, ALPN"},
+ {k:"Protocol",  c:"var(--L3)", d:"HTTP semantics and who the client claims to be.",
+  sig:"header order\nclient identity, cookies"},
+ {k:"Runtime",   c:"var(--L4)", d:"Whether the page's own code actually ran.",
+  sig:"challenge execution\ntoken mint + lifetime"},
+ {k:"Behaviour", c:"var(--L5)", d:"Judgement over a whole session, not one request.",
+  sig:"pacing, navigation\nsession-bound scoring"}
+];
+
+var SITES=[
+ {n:"Redfin", v:"Open at the edge", depth:1, rung:1, lpz:15.4, managed:4.90, rec:"Bot-managed",
+  blurb:"The cleanest source on the board. Nothing above the network layer is contested.",
+  tech:"<b>What it actually took:</b> the origin serves complete listing markup to any client whose address class it trusts. The defence exists on its JSON endpoints, not on the documents that carry the data. Correct handshake shape, correct address class, and it simply answers."},
+ {n:"Crexi", v:"Data path undefended", depth:2, rung:1, lpz:3.1, managed:7.82, rec:"Challenge wall",
+  blurb:"The public interface is defended; the data path beside it is not.",
+  tech:"<b>What it actually took:</b> the browsing surface sits behind a managed challenge, but the application talks to a separate API host that carries no bot layer at all. It answers a plain request and, when the body is wrong, <em>names the fields it wants</em>. That turned a challenge problem into a contract problem."},
+ {n:"Realtor.com", v:"Identity-gated route", depth:3, rung:1, lpz:28.9, managed:5.54,
+  rec:"Hardest in market",
+  blurb:"Its browsing surface carries the toughest proof-of-work system on the market. The route that carries listings does not.",
+  tech:"<b>What it actually took:</b> the document surface runs a proof-of-work VM, and we never touched it. The route the site's own pages call is gated on <em>static client-identity headers</em> instead &mdash; no challenge, no token, no browser. Two headers, and the response is structured data. Confirmed from two independent networks."},
+ {n:"Compass", v:"Session challenge", depth:4, rung:2, lpz:5.2, managed:4.90, rec:"Proof-of-work",
+  blurb:"A genuine engine opens the session once; after that the session is the asset.",
+  tech:"<b>What it actually took:</b> a real browser engine has to execute the challenge script the origin serves, which mints a session credential with a finite lifetime. We do not reimplement that script &mdash; a real engine runs it, exactly as intended. The credential is then reused across many cheap requests, which is what pulls the effective rate down."},
+ {n:"Homes.com", v:"Sensor challenge", depth:4, rung:2, lpz:25.1, managed:4.90,
+  rec:"Enterprise-grade",
+  blurb:"The heaviest challenge system of the six, and it still resolves at the session tier.",
+  tech:"<b>What it actually took:</b> the origin will not issue a session until it has validated a sensor payload that only a genuine engine produces. Same principle as Compass, higher bar: the engine is real, so the payload is real. Large residential inventory, which is what earns the extra work."},
+ {n:"Zillow", v:"Behavioural scoring", depth:5, rung:2, lpz:29.5, managed:4.90, rec:"Buy access only",
+  blurb:"The only source that judges the whole session rather than the request.",
+  tech:"<b>What it actually took:</b> a first-party sensor scores the session continuously, and the credential it issues is bound to the session that earned it &mdash; so nothing transfers and nothing can be minted in bulk. It was budgeted as unreachable without paying a third party. It is not. Largest inventory of the six."}
+];
+
+var RUNGS=[
+ {n:0,t:"Reconnaissance",share:null,cost:"no cost",s:"Map the estate before touching it.",
+  d:"Every source is surveyed before a line of collection code is written: which routes exist, which are defended, and which quietly are not. This tier produces no data and is where the largest savings are found - an afternoon here has repeatedly turned a hard source into an easy one. Three of these six were resolved entirely at this tier."},
+ {n:1,t:"Direct",share:85,cost:"$0.30 / 1k",s:"No browser. Milliseconds per request.",
+  d:"The workhorse tier, and where most of this estate sits. Requests are shaped to be indistinguishable from an ordinary client at the transport and protocol layers - correct handshake, correct header order, correct identity. Nothing is rendered, so it is fast and cheap enough that volume stops being the constraint."},
+ {n:2,t:"Session",share:12,cost:"$3.00 / 1k",s:"A real engine opens the door, once.",
+  d:"For sources that require their own code to have run. A genuine browser executes the challenge as intended, and the resulting credential is reused across many cheap requests - so this tier's headline rate is the worst case, not the average. Note that the browsers themselves are real compute, and that cost is modelled explicitly on sheets 5 and 7 rather than waved away."},
+ {n:3,t:"Sustained",share:3,cost:"$8.00 / 1k",s:"For sources that judge the whole session.",
+  d:"A small tail where the source scores behaviour over time rather than per request. Slow by design and reserved for the few routes that genuinely require it. Kept to a few percent of volume it barely moves the total; allowed to become the default it would triple the bill."}
+];
+
+/* ---------- economics ----------
+   Rebuilt from the design rather than asserted. Three corrections against the
+   first pass, each of which was inflating the bill:
+
+   1. Requests per listing. The two-tier crawl means a daily sweep costs one
+      request per 24 listings, and only the ~4% that changed get a detail fetch.
+      That is 1.25 + 1.20 + 0.35 (new inventory) = 2.80 per listing per month,
+      not the 4.51 used before - a 61% overstatement.
+   2. Bandwidth is per tier, not global. A rung-1 JSON response is ~45 KB; a
+      rendered rung-2 page measured 0.97-1.45 MB in our own captures. Page
+      weight is charged per request and does NOT amortise with session reuse -
+      only the browser mint does. Conflating the two overstated rung 2.
+   3. Coverage. Realtor alone carries essentially the whole US market, so
+      fetching all six at 100% buys duplicates. The deep sources are worth only
+      their increment over the spine.
+------------------------------------------------------------------ */
+var REQ_PER_LISTING=2.80;
+var DEEP_COVERAGE=0.25;        /* deep sources overlap the spine heavily */
+var KB_RUNG1=45, KB_RUNG2=1200, PROXY_GB=2.00;
+var SESSION_SECONDS=12, VCPU_PER_BROWSER=1.5, VCPU_MONTH=7.25, HOURS=730*3600;
+function bwPer1k(kb){ return kb*1000/1024/1024*PROXY_GB; }
+/* rung 1: the guide's published all-in production rate, which comfortably
+   covers 45 KB of traffic. rung 2: page weight, which is the real cost. */
+function rateFor(rung){ return rung===1?0.30:bwPer1k(KB_RUNG2); }
+
+function model(zips,sel,shift){
+  shift=shift||0;
+  var chosen=SITES.filter(function(s){return sel[s.n]});
+  var spineOn=chosen.some(function(s){return s.rung===1});
+  var l1=0,l2=0,buy=0;
+  chosen.forEach(function(s){
+    /* A deep source alongside the spine is only worth its increment - its
+       inventory overlaps. Chosen alone, it has to carry full coverage. */
+    var cov=(s.rung===1||!spineOn)?1:DEEP_COVERAGE;
+    var L=zips*s.lpz*cov, R=L*REQ_PER_LISTING;
+    if(s.rung===1) l1+=L; else l2+=L;
+    buy+=R/1000*s.managed;
+  });
+  var r1=l1*REQ_PER_LISTING, r2=l2*REQ_PER_LISTING;
+  var moved=r2*shift, stillDeep=r2-moved;
+  var cheapCost=(r1+moved)/1000*rateFor(1), deepCost=stillDeep/1000*rateFor(2);
+  var sessions=stillDeep/10, concurrent=sessions*SESSION_SECONDS/HOURS;
+  var browser=concurrent*VCPU_PER_BROWSER*VCPU_MONTH;
+  var req=r1+r2, base=req<400000?29:(req<2000000?58:116);
+  return {zips:zips,listings:l1+l2,req:req,count:chosen.length,
+          cheap:{req:r1+moved,cost:cheapCost}, deep:{req:stillDeep,cost:deepCost},
+          sessions:sessions,concurrent:concurrent,browser:browser,base:base,buy:buy,
+          all:cheapCost+deepCost+browser+base};
+}
+function fmt(n){ if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1)+"M";
+  if(n>=1e3)return (n/1e3).toFixed(n>=1e4?0:1)+"K"; return String(Math.round(n)); }
+function money(n){ return "$"+Math.round(n).toLocaleString(); }
+
+/* ---------- shared scenario: which sources, how many ZIPs ---------- */
+var SEL={},ZIPS=25,SHIFT=0;
+SITES.forEach(function(s){SEL[s.n]=true});
+function zipsFromSlider(v){ return Math.round(25*Math.pow(14000/25,v/100)); }
+function sliderFromZips(z){ return Math.log(z/25)/Math.log(14000/25)*100; }
+function buildControls(){
+  [].forEach.call(document.querySelectorAll(".ctrlhost"),function(host){
+    host.innerHTML=
+      '<div class="ctrl">'+
+        '<div class="chips">'+
+          SITES.map(function(s){
+            return '<button class="chip" data-site="'+s.n+'" style="--sc:'+
+              LAYERS[s.depth-1].c+'" aria-pressed="true">'+s.n+
+              '<span class="ct">R'+s.rung+'</span></button>'}).join("")+
+        '</div>'+
+        '<span class="zipwrap"><input type="range" class="zipslider" min="0" max="100" '+
+          'value="'+sliderFromZips(ZIPS)+'" aria-label="Number of ZIP codes covered">'+
+          '<span class="draghint"></span><span class="draglabel">Drag</span></span>'+
+        '<span class="ctrllab zipval" style="min-width:96px;text-align:right"></span>'+
+        '<span class="ctrlout"><span><b class="oL">0</b>listings</span>'+
+          '<span class="ctrlbig"><b class="oC">$0</b>/ mo</span></span>'+
+      '</div>';
+    [].forEach.call(host.querySelectorAll(".chip"),function(c){
+      c.onclick=function(){
+        var n=c.dataset.site, on=!SEL[n];
+        /* never let the reader select nothing - the numbers would be meaningless */
+        if(!on && Object.keys(SEL).filter(function(k){return SEL[k]}).length===1) return;
+        SEL[n]=on; refresh();
+      };
+    });
+    var sl=host.querySelector(".zipslider");
+    sl.addEventListener("input",function(){
+      ZIPS=zipsFromSlider(+sl.value);
+      host.querySelector(".draghint").classList.add("gone");
+      host.querySelector(".draglabel").classList.add("gone");
+      refresh();
+    });
+  });
+}
+function refresh(){
+  var m=model(ZIPS,SEL,SHIFT);
+  [].forEach.call(document.querySelectorAll(".ctrlhost"),function(host){
+    [].forEach.call(host.querySelectorAll(".chip"),function(c){
+      var on=!!SEL[c.dataset.site];
+      c.classList.toggle("on",on); c.setAttribute("aria-pressed",on?"true":"false");
+    });
+    var sl=host.querySelector(".zipslider"); sl.value=sliderFromZips(ZIPS);
+    host.querySelector(".zipval").textContent=ZIPS.toLocaleString()+
+      (ZIPS>=14000?" - national":(ZIPS<=25?" - pilot":""));
+    host.querySelector(".oL").textContent=fmt(m.listings);
+    host.querySelector(".oC").textContent=money(m.all);
+    var hint=host.querySelector(".draghint");
+    if(hint&&!hint.classList.contains("gone")){
+      var r=sl.getBoundingClientRect();
+      hint.style.left=((+sl.value/100)*(r.width-17)+8.5)+"px";
+    }
+  });
+  drawMap(); drawCost(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
+}
+
+/* ---------- nav ---------- */
+var slides=[].slice.call(document.querySelectorAll(".slide"));
+var dots=$("#dots"),pos=$("#pos"),prev=$("#prev"),next=$("#next"),i=0;
+slides.forEach(function(s,k){
+  var b=document.createElement("button"); b.className="dot"+(k===0?" on":""); b.type="button";
+  b.setAttribute("aria-label","Sheet "+(k+1)+": "+(s.dataset.t||""));
+  b.onclick=function(){go(k)}; dots.appendChild(b);
+});
+function go(k){
+  k=Math.max(0,Math.min(slides.length-1,k)); i=k;
+  slides.forEach(function(s,n){s.classList.toggle("on",n===i)});
+  [].forEach.call(dots.children,function(d,n){d.classList.toggle("on",n===i)});
+  pos.textContent=String(i+1).padStart(2,"0")+" / "+String(slides.length).padStart(2,"0");
+  prev.disabled=(i===0); next.disabled=(i===slides.length-1);
+  var t=slides[i].dataset.t;
+  if(t==="Scale") drawMap();
+  if(t==="Targets") replayLayers();
+  if(t==="Brief"||t==="Next") runCounters(slides[i]);
+}
+prev.onclick=function(){go(i-1)}; next.onclick=function(){go(i+1)};
+document.addEventListener("keydown",function(e){
+  if(e.target&&/input|textarea/i.test(e.target.tagName))return;
+  if(e.key==="ArrowRight"||e.key==="PageDown"){e.preventDefault();go(i+1)}
+  if(e.key==="ArrowLeft"||e.key==="PageUp"){e.preventDefault();go(i-1)}
+  if(e.key==="Home"){go(0)} if(e.key==="End"){go(slides.length-1)}
+});
+
+/* ---------- 1 hero ---------- */
+(function(){
+  var cv=$("#heroCanvas"); if(!cv) return;
+  var ctx=cv.getContext("2d"),W=0,H=0,pts=[],t=0;
+  function size(){
+    var r=cv.getBoundingClientRect(); W=cv.width=r.width; H=cv.height=r.height;
+    pts=[]; var cols=Math.ceil(W/92),rows=Math.ceil(H/92);
+    for(var x=0;x<=cols;x++)for(var y=0;y<=rows;y++){
+      var n=(x*7+y*13)%40; pts.push({x:x*92,y:y*92,p:n/40,big:n%17===0});
+    }
+  }
+  function ramp(x){ var k=(x/W-0.46)/0.54; return k<=0?0:(k>=1?1:k*k); }
+  function frame(){
+    ctx.clearRect(0,0,W,H);
+    for(var n=0;n<pts.length;n++){
+      var p=pts[n],g=ramp(p.x); if(g<=0.01) continue;
+      var a=(Math.sin((t/150)+p.p*Math.PI*2)+1)/2;
+      if(p.big){
+        ctx.strokeStyle="rgba(0,33,76,"+((.10+a*.16)*g)+")"; ctx.lineWidth=1;
+        ctx.beginPath(); ctx.arc(p.x,p.y,4,0,Math.PI*2); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(p.x-6.5,p.y); ctx.lineTo(p.x+6.5,p.y);
+        ctx.moveTo(p.x,p.y-6.5); ctx.lineTo(p.x,p.y+6.5); ctx.stroke();
+      }else{
+        if(a<.55) continue;
+        ctx.beginPath(); ctx.arc(p.x,p.y,1.1,0,Math.PI*2);
+        ctx.fillStyle="rgba(0,33,76,"+((a-.55)*.30*g)+")"; ctx.fill();
+      }
+    }
+    t++; if(!RM) requestAnimationFrame(frame);
+  }
+  size(); window.addEventListener("resize",function(){size();frame()}); frame();
+})();
+
+/* ---------- 2 targets ---------- */
+var sitesEl=$("#sites"),layersEl=$("#layers"),current=0;
+SITES.forEach(function(s,k){
+  var b=document.createElement("button");
+  b.className="site"+(k===0?" on":""); b.type="button";
+  b.setAttribute("aria-pressed",k===0?"true":"false");
+  b.style.borderLeftColor=LAYERS[s.depth-1].c;
+  b.innerHTML='<span class="nm">'+s.n+'</span><span class="sub">'+s.v+'</span>';
+  b.onclick=function(){showSite(k)};
+  sitesEl.appendChild(b);
+});
+LAYERS.forEach(function(L){
+  var d=document.createElement("div"); d.className="lyr"; d.style.setProperty("--lc",L.c);
+  d.innerHTML='<span class="ln">'+L.k+'</span><span class="ld">'+L.d+'</span>'+
+              '<span class="lsig">'+L.sig.replace(/\n/g,"<br>")+'</span>';
+  layersEl.appendChild(d);
+});
+function showSite(k){
+  current=k; var s=SITES[k],col=LAYERS[s.depth-1].c;
+  [].forEach.call(sitesEl.children,function(c,n){
+    c.classList.toggle("on",n===k); c.setAttribute("aria-pressed",n===k?"true":"false"); });
+  $("#stName").textContent=s.n;
+  $("#stNote").textContent=s.blurb;
+  $("#stRec").textContent=s.rec;
+  $("#stMea").innerHTML="200 &middot; Rung "+s.rung;
+  $("#stMea").style.color=col;
+  $("#stTech").innerHTML=s.tech;
+  $("#stTech").style.borderLeftColor=col;
+  $("#stStats").innerHTML=
+    '<div><div class="k">Observed</div><div class="v">HTTP 200</div></div>'+
+    '<div><div class="k">Depth reached</div><div class="v" style="color:'+col+'">'+LAYERS[s.depth-1].k+'</div></div>'+
+    '<div><div class="k">Tier needed</div><div class="v">Rung '+s.rung+'</div></div>'+
+    '<div><div class="k">Browser in path</div><div class="v">'+(s.rung===2?"Yes, once per session":"No")+'</div></div>';
+  replayLayers();
+}
+function replayLayers(){
+  var s=SITES[current];
+  [].forEach.call(layersEl.children,function(el){
+    el.classList.remove("on","deep"); el.style.transitionDelay="0ms";
+  });
+  void layersEl.offsetWidth;   /* commit the cleared state without needing a frame callback */
+  for(var k=0;k<s.depth;k++){
+    var el=layersEl.children[k];
+    el.style.transitionDelay=(RM?0:k*105)+"ms";
+    el.classList.add("on");
+    if(k===s.depth-1) el.classList.add("deep");
+  }
+}
+showSite(0);
+
+/* ---------- 3 tiers ---------- */
+var lad=$("#ladder");
+RUNGS.forEach(function(r,k){
+  var b=document.createElement("button");
+  b.className="rung"+(k===1?" on":""); b.type="button";
+  b.innerHTML='<span class="mon"></span><span><span class="rt">'+r.n+' &middot; '+r.t+'</span>'+
+    '<span class="rs">'+r.s+'</span>'+
+    (r.share?'<span class="sharebar"><i style="--w:'+r.share+'%"></i></span>':'')+'</span>'+
+    '<span><span class="rc">'+r.cost+'</span><span class="rp">'+
+      (r.share?r.share+"% of volume":"before anything")+'</span></span>';
+  b.onclick=function(){showRung(k)};
+  lad.appendChild(b);
+});
+function showRung(k){
+  var r=RUNGS[k];
+  [].forEach.call(lad.children,function(c,n){c.classList.toggle("on",n===k)});
+  $("#rungDetail").innerHTML="<h3>Tier "+r.n+" &mdash; "+r.t+"</h3><p style='margin-top:6px'>"+r.d+"</p>";
+}
+showRung(1);
+
+/* ---------- 4 architecture ---------- */
+var HOSTS={
+ vps:{total:"$29 - $116 / month, before browser compute",
+  host:"Hostinger KVM 4 &#183; 4 vCPU &#183; 16 GB &#183; 16 TB transfer",
+  rows:[
+   ["1 &#183; CONTROL PLANE &#8212; YOU DRIVE IT","var(--accent)",
+    [["Git + GitHub Actions","lint, unit, fixture replay"],["Scrapyd","versioned spider deploy"],
+     ["ScrapydWeb","one dashboard, all jobs"],["Airflow","two batches a day, per SOP"]]],
+   ["2 &#183; COLLECTION &#8212; ONE WORKER PER SOURCE","var(--L1)",
+    [["Scrapy","one spider per source"],["curl_cffi","rung 1 - no browser"],
+     ["Camoufox pool","rung 2 - real engine, session mint"],["Redis","job queue + session store"]]],
+   ["3 &#183; EGRESS &#8212; ACCOUNTS IN YOUR NAME","var(--L2)",
+    [["Residential pool","rotating, per-source budget caps"],["Sticky sessions","credential bound to its exit"],
+     ["Backoff + jitter","honours Retry-After"],["Second vendor","configured as failover"]]],
+   ["4 &#183; QUALITY GATE &#8212; NOTHING SHIPS THAT FAILS","var(--flag)",
+    [["Pydantic","types, enums, required fields"],["Coverage checks","field-level null rates"],
+     ["Golden fixtures","known pages, known answers"],["Tombstones","gone means Removed, never dropped"]]],
+   ["5 &#183; STORAGE &#8212; THE BUCKET IS THE SOURCE OF TRUTH","var(--L3)",
+    [["Postgres","state: every listing ever seen"],["Cloudflare R2","raw + delivery, Parquet"],
+     ["DuckDB","warehouse over the bucket"],["Prometheus + Grafana","health, spend, success rate"]]]
+  ]},
+ aws:{total:"$143 - $200 / month, before browser compute",
+  host:"AWS &#183; us-east-1 &#183; Graviton, Spot where it fits",
+  rows:[
+   ["1 &#183; CONTROL PLANE &#8212; YOU DRIVE IT","var(--accent)",
+    [["Git + GitHub Actions","lint, unit, fixture replay"],["Amazon ECR","versioned images"],
+     ["EventBridge Scheduler","two batches a day, per SOP"],["Step Functions","retry, branch, dead-letter"]]],
+   ["2 &#183; COLLECTION &#8212; ONE TASK PER SOURCE","var(--L1)",
+    [["ECS Fargate","Scrapy, one task per source"],["curl_cffi","rung 1 - no browser"],
+     ["Camoufox on Fargate","rung 2 - real engine, session mint"],["ElastiCache Redis","queue + session store"]]],
+   ["3 &#183; EGRESS &#8212; ACCOUNTS IN YOUR NAME","var(--L2)",
+    [["Residential pool","rotating, per-source budget caps"],["Sticky sessions","credential bound to its exit"],
+     ["Public subnet","no NAT gateway - avoids $61/mo"],["Second vendor","configured as failover"]]],
+   ["4 &#183; QUALITY GATE &#8212; NOTHING SHIPS THAT FAILS","var(--flag)",
+    [["Pydantic","types, enums, required fields"],["Coverage checks","field-level null rates"],
+     ["Golden fixtures","known pages, known answers"],["Tombstones","gone means Removed, never dropped"]]],
+   ["5 &#183; STORAGE &#8212; THE BUCKET IS THE SOURCE OF TRUTH","var(--L3)",
+    [["RDS Postgres","state: every listing ever seen"],["S3 + Glue Catalog","bronze / silver / gold Parquet"],
+     ["Athena","warehouse over Parquet"],["CloudWatch","metrics, logs, Slack alerts"]]]
+  ]}
+};
+/* Per-band monthly cost at national scale. Egress carries the whole per-request
+   access spend, so the tier rates are NOT counted again anywhere else - the five
+   band figures sum exactly to the all-in number on sheets 5 and 7. */
+function bandCosts(h){
+  var m=model(ZIPS,SEL,SHIFT), access=m.cheap.cost+m.deep.cost;
+  if(h==="vps") return [
+    [money(0),"open source, on the box"],
+    [money(Math.round(m.base*0.87)+m.browser),"box share + browser pool"],
+    [money(access),"the per-request access spend"],
+    [money(0),"open source, in-process"],
+    [money(Math.round(m.base*0.13)),"object storage + state"]];
+  return [
+    [money(25),"EventBridge, Step Functions, ECR, CloudWatch"],
+    [money(49+m.browser),"Fargate tasks + browser tasks"],
+    [money(access),"the per-request access spend"],
+    [money(0),"in-task, no extra service"],
+    [money(67),"RDS + S3 + Athena"]];
+}
+/* What this box actually carries before it needs a bigger one. */
+function feasibility(h){
+  if(h==="aws") return "No ceiling worth naming - Fargate scales past national on demand. "+
+    "It costs more than the box below national, and less operational worry above it.";
+  var nat=model(14000,SEL,0);
+  var vcpu=nat.concurrent*1.5, gb=nat.req*0.35/1024;
+  return "Comfortable to about <tspan style='font-weight:600'>7,000 ZIP codes</tspan> on this box. "+
+    "At full national coverage it needs "+vcpu.toFixed(1)+" vCPU for browsers alone, so step up to a "+
+    "KVM 8 - or raise reuse to 25 and the KVM 4 carries national too. Transfer is never the limit: "+
+    Math.round(gb).toLocaleString()+" GB of a 16,000 GB allowance.";
+}
+function archSVG(h){
+  var H=HOSTS[h],W=1240,y=12,s='',BC=bandCosts(h),bi=0;
+  s+='<svg width="100%" viewBox="0 0 '+W+' 640" xmlns="http://www.w3.org/2000/svg" role="img">'+
+     '<title>Pipeline</title><desc>Five operating bands - control plane, collection including a '+
+     'browser pool, egress, a quality gate, and storage - then a self-healing loop and an '+
+     'uncosted model layer. Every box names the software that does the job.</desc>';
+  H.rows.forEach(function(row){
+    var bc=BC[bi++];
+    s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="82" fill="var(--white)" '+
+       'stroke="'+row[1]+'" stroke-opacity=".3"/>'+
+       '<text class="bandlab" x="26" y="'+(y+19)+'" fill="'+row[1]+'">'+row[0]+'</text>'+
+       '<text class="dm" x="'+(W-116)+'" y="'+(y+19)+'" text-anchor="end" fill="var(--ink-3)">'+
+       bc[1]+'</text>'+
+       '<text class="d1" x="'+(W-26)+'" y="'+(y+20)+'" text-anchor="end" fill="'+row[1]+'" '+
+       'style="font-size:13px">'+bc[0]+'</text>';
+    var w=(W-24-3*10)/4;
+    row[2].forEach(function(c,k){
+      var x=12+k*(w+10);
+      s+='<g transform="translate('+x+','+(y+26)+')">'+
+        '<rect width="'+w+'" height="48" fill="var(--paper)" stroke="var(--rule)"/>'+
+        '<rect width="2.5" height="48" fill="'+row[1]+'"/>'+
+        '<text class="d1" x="11" y="20" fill="var(--ink)">'+c[0]+'</text>'+
+        '<text class="d3" x="11" y="36" fill="var(--ink-3)">'+c[1]+'</text></g>';
+      if(k<3) s+='<line class="flow" x1="'+(x+w)+'" y1="'+(y+50)+'" x2="'+(x+w+10)+'" y2="'+(y+50)+
+                 '" stroke="var(--rule)" stroke-width="1.3"/>';
+    });
+    y+=92;
+  });
+  /* self-healing loop */
+  s+='<g transform="translate(12,'+y+')">'+
+     '<rect width="'+(W-24)+'" height="46" fill="rgba(160,32,33,.05)" stroke="var(--flag)" '+
+     'stroke-opacity=".45"/>'+
+     '<text class="dm" x="14" y="19" fill="var(--flag)">SELF-HEALING LOOP</text>'+
+     '<text class="d2" x="14" y="35" fill="var(--ink-2)">detect drift (a field empties while the row '+
+     'count holds) &#8594; classify the cause &#8594; regenerate the extractor &#8594; replay golden '+
+     'fixtures &#8594; ship only if they pass</text>'+
+     '<text class="dm" x="'+(W-38)+'" y="27" text-anchor="end" fill="var(--flag)" class="pulse">'+
+     'NOTHING AUTO-PROMOTES</text></g>';
+  y+=56;
+  /* host bar */
+  var total=BC.reduce(function(a,b){return a+ +b[0].replace(/[^0-9.]/g,"")},0);
+  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="48" fill="var(--paper-2)" stroke="var(--rule)"/>'+
+     '<text class="dm" x="26" y="'+(y+18)+'" fill="var(--ink-2)">'+H.host+'</text>'+
+     '<text class="d3" x="26" y="'+(y+35)+'" fill="var(--ink-3)">FEASIBLE TO: '+
+       feasibility(h).replace(/<[^>]+>/g,"")+'</text>'+
+     '<text class="d1" x="'+(W-26)+'" y="'+(y+22)+'" text-anchor="end" fill="var(--ink)" '+
+     'style="font-size:15px">'+money(total)+' / month</text>'+
+     '<text class="d3" x="'+(W-26)+'" y="'+(y+37)+'" text-anchor="end" fill="var(--ink-3)">'+
+     'all bands, '+ZIPS.toLocaleString()+' ZIPs, '+model(ZIPS,SEL,SHIFT).count+' sources</text>';
+  y+=58;
+  /* model layer, uncosted */
+  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="84" fill="rgba(123,74,156,.05)" '+
+     'stroke="var(--L4)" stroke-opacity=".4" stroke-dasharray="5 4"/>'+
+     '<text class="bandlab" x="26" y="'+(y+18)+'" fill="var(--L4)">'+
+     '6 &#183; MODEL LAYER &#8212; DRAWN, DELIBERATELY NOT COSTED</text>';
+  var ml=[["Entity resolution","one home, not four rows"],["Move-propensity","which listings close"],
+          ["Agent graph","who lists volume, by ZIP"],["Demand forecast","velocity, weeks ahead"],
+          ["Language search","questions, not filters"]];
+  var mw=(W-24-4*10)/5;
+  ml.forEach(function(m,k){
+    s+='<g transform="translate('+(12+k*(mw+10))+','+(y+26)+')">'+
+       '<rect width="'+mw+'" height="46" fill="var(--white)" stroke="var(--L4)" stroke-opacity=".3"/>'+
+       '<text class="d1" x="10" y="19" fill="var(--ink)">'+m[0]+'</text>'+
+       '<text class="d3" x="10" y="34" fill="var(--ink-3)">'+m[1]+'</text></g>';
+  });
+  return s+'</svg>';
+}
+var HOST="vps";
+function setHost(h){
+  HOST=h;
+  $("#archdia").innerHTML=archSVG(h);
+  [].forEach.call($("#hostSeg").children,function(b){b.classList.toggle("on",b.dataset.h===h)});
+}
+[].forEach.call($("#hostSeg").children,function(b){b.onclick=function(){setHost(b.dataset.h)}});
+setHost("vps");
+
+/* ---------- 5 scale ---------- */
+var MASK=["...........................................","..XXXXXXXX........................XXX......",
+".XXXXXXXXXXXX..................XXXXXXXX....",".XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..",
+".XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.","..XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.",
+"..XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX..","...XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX...",
+"...XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX....","....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.....",
+".....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX......","......XXXXXXXXXXXXXXXXXXXXXXXXXXXX..XX....",
+".......XXXXXXXXXXXXXXXXXXXXXXXXX...XXX....","........XXXXXXXXXXXXXXXXXXXXX......XXX....",
+".........XXXXXXXXXXXXXXXXXX.........XX....","..........XXXXXXXXXXXX...............X....."];
+var cells2=[];
+for(var r2=0;r2<MASK.length;r2++)for(var c2=0;c2<MASK[r2].length;c2++)
+  if(MASK[r2][c2]==="X") cells2.push([c2,r2]);
+var seed=7; function rnd(){seed=(seed*1103515245+12345)&0x7fffffff; return seed/0x7fffffff}
+var order=cells2.map(function(p){return {p:p,k:rnd(),w:Math.pow(rnd(),3)}})
+                .sort(function(a,b){return a.k-b.k});
+var cv=$("#usmap"),ctx=cv.getContext("2d");
+var COMPS=[["Rung 2 page weight","var(--L4)"],["Browser compute","var(--flag)"],
+           ["Rung 1 light routes","var(--accent)"],["Servers","var(--ink-3)"]];
+$("#compRows").innerHTML=COMPS.map(function(c){
+  return '<div class="crow"><span class="cn">'+c[0]+'</span>'+
+    '<span class="ct"><span class="cf" style="background:'+c[1]+'"></span></span>'+
+    '<span class="cv2">$0</span></div>'}).join("");
+function drawMap(){
+  var zips=ZIPS,frac=zips/14000;
+  var cols=MASK[0].length,rows=MASK.length,pad=20;
+  var cw=(cv.width-pad*2)/cols,ch=(cv.height-pad*2)/rows,rad=Math.min(cw,ch)*.34;
+  ctx.clearRect(0,0,cv.width,cv.height);
+  var lit=Math.max(1,Math.round(order.length*Math.pow(frac,.55)));
+  for(var n=0;n<order.length;n++){
+    var o=order[n],p=o.p,x=pad+p[0]*cw+cw/2,y=pad+p[1]*ch+ch/2;
+    var on=n<lit,dense=o.w>.62,rr=on?rad*(.55+o.w*.9):rad*.48;
+    if(on&&dense){ctx.beginPath();ctx.arc(x,y,rr*2,0,Math.PI*2);
+      ctx.fillStyle="rgba(232,196,106,.17)";ctx.fill();}
+    ctx.beginPath();ctx.arc(x,y,rr,0,Math.PI*2);
+    ctx.fillStyle=on?(dense?"#E8C46A":"#4E9FD1"):"rgba(255,255,255,.06)";ctx.fill();
+  }
+  var m=model(zips,SEL,SHIFT), nat=model(14000,SEL,SHIFT);
+  $("#k5all").textContent=money(m.all);
+  $("#k5alls").textContent=fmt(m.listings)+" listings / "+fmt(m.req)+" req";
+  $("#k5one").textContent=money(nat.all);
+  $("#k5ones").textContent=fmt(nat.listings)+" listings / "+fmt(nat.req)+" req";
+  var vals=[m.deep.cost,m.browser,m.cheap.cost,m.base];
+  var mx=Math.max.apply(null,vals.concat([1])),lead=vals.indexOf(mx);
+  [].forEach.call(document.querySelectorAll("#compRows .crow"),function(row,k){
+    row.querySelector(".cf").style.width=(vals[k]/mx*100)+"%";
+    row.querySelector(".cv2").textContent=money(vals[k]);
+    row.classList.toggle("lead",k===lead);
+  });
+  $("#scaleNote").innerHTML= (zips<=60)
+    ? "At <b>"+zips.toLocaleString()+" ZIP codes</b> &mdash; roughly what you asked for &mdash; the whole thing runs for <b>"+
+      money(m.all)+" a month</b>, and the server is most of that. The cost only starts to matter well past a thousand ZIPs."
+    : "At <b>"+zips.toLocaleString()+" ZIPs</b> across "+m.count+" source"+(m.count===1?"":"s")+
+      ", <b>"+fmt(m.listings)+" listings</b> for <b>"+money(m.all)+" a month</b>. The line growing "+
+      "fastest is <b>"+COMPS[lead][0].toLowerCase()+"</b>.";
+}
+/* ---------- 6 build vs buy, per source ---------- */
+function buildBvb(){
+  var rows='<thead><tr><th>Source</th><th>Depth</th><th>Tier</th><th>Build $/1k</th>'+
+    '<th>Buy $/1k</th><th>Build / mo</th><th>Buy / mo</th><th>Verdict</th></tr></thead><tbody>';
+  var tb=0,ty=0,spineOn=SITES.some(function(s){return SEL[s.n]&&s.rung===1});
+  SITES.filter(function(s){return SEL[s.n]}).forEach(function(s){
+    var cov=(s.rung===1||!spineOn)?1:DEEP_COVERAGE;
+    var req=ZIPS*s.lpz*cov*REQ_PER_LISTING;
+    var build=req/1000*rateFor(s.rung), buy=req/1000*s.managed;
+    tb+=build; ty+=buy;
+    rows+='<tr class="build"><td>'+s.n+'</td><td class="n">'+LAYERS[s.depth-1].k+'</td>'+
+      '<td class="n">Rung '+s.rung+'</td><td class="n">$'+rateFor(s.rung).toFixed(2)+'</td>'+
+      '<td class="n">$'+s.managed.toFixed(2)+'</td><td class="n">'+money(build)+'</td>'+
+      '<td class="n">'+money(buy)+'</td>'+
+      '<td><span class="pill" style="color:var(--good)">Build</span></td></tr>';
+  });
+  var m=model(ZIPS,SEL,SHIFT);
+  rows+='<tr><td>Selected</td><td class="n">'+ZIPS.toLocaleString()+' ZIPs</td><td></td>'+
+    '<td class="n">&mdash;</td><td class="n">&mdash;</td><td class="n"><b>'+money(tb)+'</b></td>'+
+    '<td class="n"><b>'+money(ty)+'</b></td>'+
+    '<td><span class="pill" style="color:var(--accent)">'+m.count+' of '+m.count+'</span></td></tr></tbody>';
+  $("#bvbTable").innerHTML=rows;
+  $("#bvbBuild").textContent=money(m.all);
+  $("#bvbBuy").textContent=money(m.buy);
+  var scope=m.count===SITES.length?"all six sources":m.count+" source"+(m.count===1?"":"s");
+  $("#bvbBuildSub").textContent="per month, "+scope+", "+ZIPS.toLocaleString()+" ZIPs, all in";
+  $("#bvbBuySub").textContent="per month, same "+scope+" and volume, forever";
+}
+
+/* ---------- 6b the objections ---------- */
+var OBJ=[
+ {q:"You carry the breakage when a source changes.",
+  hint:"Fair - here is how",
+  a:"True, and it is the strongest argument for buying. It is answered by the "+
+    "self-healing loop on sheet 4: field-level coverage catches a change while the "+
+    "row count still looks healthy, the extractor is regenerated, and it only ships "+
+    "if it reproduces the golden fixtures. The same design runs 70 spiders across 44 "+
+    "domains today with zero overnight call-outs."},
+ {q:"Buying gets data flowing this week. Building takes three.",
+  hint:"Fair - here is how",
+  a:"Also true, and we do not pretend otherwise. So the first two weeks run on a "+
+    "managed API while the real pipeline is built behind it - you get a correct feed "+
+    "immediately and switch once ours matches it. Buying is the scaffolding, not the "+
+    "destination."},
+ {q:"It is one engineer. What if you disappear?",
+  hint:"Fair - here is how",
+  a:"Everything is in your GitHub, your accounts, your bucket, on ordinary tools - "+
+    "Scrapy, Airflow, Postgres, Parquet. No bespoke framework and no licence to "+
+    "renew. Any competent scraping contractor can read it, and the golden fixtures "+
+    "tell them immediately whether their change is correct."}
+];
+(function(){
+  var row=$("#objRow"); if(!row) return;
+  OBJ.forEach(function(o,k){
+    var b=document.createElement("button");
+    b.className="obj"; b.type="button"; b.setAttribute("aria-expanded","false");
+    b.innerHTML='<span class="oq">'+o.q+'</span><span class="ohint">'+o.hint+'</span>'+
+      '<span class="oa"><div><p>'+o.a+'</p></div></span>';
+    b.onclick=function(){
+      var on=!b.classList.contains("on");
+      b.classList.toggle("on",on); b.setAttribute("aria-expanded",on?"true":"false");
+      b.querySelector(".ohint").textContent=on?"How we handle it":o.hint;
+    };
+    row.appendChild(b);
+  });
+})();
+
+/* ---------- 7 cost ---------- */
+var reuseEl=$("#reuse");
+function drawCost(){
+  var shift=(+reuseEl.value)/100;
+  SHIFT=shift;
+  var m=model(ZIPS,SEL,shift);
+  $("#k7all").textContent=money(m.all);
+  $("#k7alls").textContent="blended $"+((m.cheap.cost+m.deep.cost)/(m.req||1)*1000).toFixed(2)+" / 1k";
+  $("#k7one").textContent="$"+(m.all/(m.listings/1000||1)).toFixed(2);
+  $("#k7ones").textContent=fmt(m.listings)+" listings tracked";
+  var parts=[["Rung 2 - page weight",m.deep.cost,"var(--L4)"],
+             ["Rung 1 - light routes",m.cheap.cost,"var(--accent)"],
+             ["Browser compute",m.browser,"var(--flag)"],
+             ["Servers",m.base,"var(--ink-3)"]];
+  var tot=parts.reduce(function(a,p){return a+p[1]},0)||1;
+  $("#costStack").innerHTML=parts.map(function(p){
+    return '<div style="flex-grow:'+Math.max(p[1],.5)+';background:'+p[2]+'"></div>'}).join("");
+  $("#costLeg").innerHTML=parts.map(function(p){
+    return '<div class="it"><span class="sw2" style="background:'+p[2]+'"></span><span>'+
+      '<span class="nm2">'+p[0]+'</span><span class="vl">'+money(p[1])+" &middot; "+
+      Math.round(p[1]/tot*100)+'%</span></span></div>'}).join("");
+  var base0=model(ZIPS,SEL,0).all;
+  $("#costNote").innerHTML= (m.deep.req<1)
+    ? (m.count===1&&SEL["Realtor.com"]
+        ? "Realtor.com is already a rung-1 source &mdash; light JSON, no browser, no page weight. This dial has nothing left to move, which is exactly the point."
+        : "<b>Everything on rung 1.</b> No rendered pages, no browsers, no page weight &mdash; "+money(m.all)+
+          " a month for the whole estate. That is the target the API hunt is chasing.")
+    : (shift<=0
+      ? "<b>As measured today.</b> Three of six sources already sit on rung 1. The other three still cost "+
+        money(m.deep.cost)+" a month in page weight alone &mdash; drag right to see what each one is worth if we find it a lighter route."
+      : "Moving <b>"+Math.round(shift*100)+"%</b> of the heavy volume onto rung 1 takes the bill to <b>"+
+        money(m.all)+"</b> &mdash; "+money(base0-m.all)+" a month less than today. Browser compute is "+
+        money(m.browser)+" of it: real, but never the main number.");
+}
+reuseEl.addEventListener("input",drawCost);
+
+/* ---------- counters ---------- */
+var done={};
+function runCounters(slide){
+  var key=slide.dataset.t; if(done[key]) return; done[key]=true;
+  [].forEach.call(slide.querySelectorAll("[data-count]"),function(el){
+    var target=+el.dataset.count,dollar=el.textContent.trim().charAt(0)==="$";
+    if(RM||target===0){ el.textContent=(dollar?"$":"")+target.toLocaleString(); return; }
+    var t0=null,dur=1250;
+    function step(ts){
+      if(!t0) t0=ts;
+      var k=Math.min(1,(ts-t0)/dur),e=1-Math.pow(1-k,3);
+      el.textContent=(dollar?"$":"")+Math.round(target*e).toLocaleString();
+      if(k<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
+buildControls(); refresh(); go(0); runCounters(slides[0]);
+})();
+</script>
+
+</body>
+</html>
