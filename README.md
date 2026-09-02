@@ -16,9 +16,8 @@ live, from a 25-ZIP pilot to national.
 4. **Pipeline** | named tools, quality gates and the self-healing loop, on self-hosted or AWS
 5. **Scalability** | coverage against cost, broken down by component
 6. **Build vs buy** | priced per source, with the fair objections to building answered
-7. **Supply chain** | the named vendor behind every line of the build cost, split into what we build and what we buy, with a live chart of where the month's money goes
-8. **What moves the bill** | one listing fetched three ways, drawn to scale: 75 KB, 255 KB, 1,200 KB
-9. **Next step** | the pilot, and what the infrastructure costs to run at four coverage steps
+7. **What it costs, and why** | one listing fetched three ways drawn to scale (75 KB, 255 KB, 1,200 KB) beside a live breakdown of where the month's money goes, with the vendor rates underneath. Click a rung to select that tier's sources
+8. **Next step** | the pilot, and what the infrastructure costs to run at four coverage steps
 
 ## Notes on the numbers
 

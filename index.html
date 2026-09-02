@@ -343,7 +343,6 @@ input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6
 
 /* ===== BUILD VS BUY ===== */
 .tw{overflow-x:auto;margin:12px 0 0}
-.provt{margin-top:-4px}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
 th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-3);text-align:left;padding:8px 12px 8px 0;border-bottom:1.5px solid var(--ink);
@@ -396,33 +395,11 @@ tr.build td{background:rgba(31,107,74,.05)}
   letter-spacing:.18em;text-transform:uppercase;padding:4px 9px;border:1.5px solid var(--accent);
   color:var(--accent);rotate:-4deg}
 
-/* ===== SUPPLY CHAIN + SELF-HEALING ===== */
-.provt td{padding-top:4px;padding-bottom:4px}
-.provt tr.grp td{border-bottom:none;padding:6px 0 2px}
-.provt tbody tr.grp:first-child td{padding-top:3px}
-.provt .gl{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
-  font-weight:500}
-.provt tr.grp.build .gl{color:var(--good)} .provt tr.grp.buy .gl{color:var(--accent)}
-.provt .gd{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-3);margin-left:11px}
 /* the coloured edge is the whole point of the sheet: green is ours, navy is rented */
-.provt tbody tr.r-build td:first-child,.provt tbody tr.r-buy td:first-child{padding-left:11px}
-.provt tbody tr.r-build td:first-child{box-shadow:inset 2px 0 0 var(--good)}
-.provt tbody tr.r-buy td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
-.provt td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
-.provt td.rate{font-family:var(--f-mono);font-size:11.5px;color:var(--ink);white-space:nowrap}
-.provt td.sub{font-size:12px;color:var(--ink-2)}
 .tag{display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;
   text-transform:uppercase;padding:2px 6px;border:1px solid currentColor;margin-left:7px;
   vertical-align:1px}
 .tag.free{color:var(--good)} .tag.paid{color:var(--ink-3)} .tag.rung{color:var(--accent)}
-.supnotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule);margin-top:6px}
-@media(max-width:860px){.supnotes{grid-template-columns:1fr}}
-.supnotes>div{background:var(--white);padding:7px 15px}
-.supnotes h4{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);margin:0 0 6px;font-weight:500}
-.supnotes p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
 
 /* the healing chain: a track that draws once the sheet lands, steps lighting along it */
 
@@ -458,13 +435,6 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
    because that zero is the sheet's argument, so it keeps a green edge on an
    empty track rather than reading as a bar that failed to draw. */
 .sc7chart{margin-top:3px}
-.sc7head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;
-  flex-wrap:wrap;margin-bottom:8px}
-.sc7tot{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ink-3);white-space:nowrap;line-height:1.6}
-.sc7tot b{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:16px;
-  letter-spacing:-.028em;color:var(--accent);font-variant-numeric:tabular-nums;
-  display:inline-block;line-height:1;vertical-align:-1px;margin:0 2px}
 .sc7bars{display:flex;flex-direction:column;gap:6px}
 /* 340px holds the longest label ("What we build" plus its three tool names) at
    10.5px mono without ellipsis; the ellipsis only catches a font-load failure. */
@@ -484,7 +454,6 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 /* ===== SHEET 9 (cost): the page-weight ladder =====
    The ladder is fixed reference rather than model output, so the argument still
    reads when the only selected source is rung 1, which is the default state. */
-.pwq{font-size:16.5px;line-height:1.5;color:var(--ink);max-width:none;margin:0 0 12px}
 .pwrow{margin-top:9px}
 .pwhead{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:4px}
 .pwname{font-size:13.5px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
@@ -503,13 +472,6 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   transform:scaleX(0);transform-origin:left;
   transition:transform .85s var(--e-out);transition-delay:calc(var(--d,0)*140ms + 260ms)}
 .slide.on .pwfill{transform:scaleX(1)}
-.pwsub{font-size:12.5px;line-height:1.5;color:var(--ink-2);margin:4px 0 0;max-width:none}
-.pwsub b{color:var(--ink);font-weight:600}
-.pwfoot{display:grid;grid-template-columns:1.18fr .82fr;gap:18px;align-items:start;margin-top:2px}
-@media(max-width:940px){.pwfoot{grid-template-columns:1fr}}
-.pw3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule)}
-.pw3>div{background:var(--white);padding:10px 13px 11px}
 .pwc{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink-3);line-height:1.45;min-height:30px}
 .pwval{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:26px;
@@ -543,6 +505,49 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 .nxinote{font-family:var(--f-mono);font-size:10.5px;line-height:1.55;color:var(--ink-3);
   margin:9px 0 0;max-width:none}
 
+/* ===== 7 MERGED: what it costs, and why =====
+   Left column sets the rate, right column spends it. The two are the same
+   argument, which is why they now share a sheet. */
+.mx2{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:11px;align-items:start}
+@media(max-width:1000px){.mx2{grid-template-columns:1fr;gap:16px}}
+.mxnote{font-family:var(--f-mono);font-size:10.5px;line-height:1.6;color:var(--ink-3);
+  margin:9px 0 0;max-width:none}
+.mxk{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:11px}
+.mxk>div{background:var(--white);padding:9px 13px}
+.mxfoot{font-family:var(--f-mono);font-size:10.5px;line-height:1.6;color:var(--ink-3);
+  margin:10px 0 0;max-width:none}
+
+/* the ladder rungs are buttons: pressing one selects exactly that rung's sources,
+   so the reader can see what a tier is worth instead of being told */
+.pwrow{display:block;width:100%;text-align:left;background:none;border:none;padding:7px 8px;
+  margin:0 0 2px;cursor:pointer;font-family:var(--f-ui);border-radius:2px;
+  transition:background .22s var(--e-out)}
+.pwrow:hover{background:var(--accent-a)}
+.pwrow:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.pwrow.on{background:var(--accent-a);box-shadow:inset 2px 0 0 var(--accent)}
+
+/* the vendor strip: two groups, name and rate on one line each */
+.vs2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:12px}
+@media(max-width:860px){.vs2{grid-template-columns:1fr}}
+.vsg{background:var(--white);padding:9px 14px 11px}
+.vsh{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;padding-bottom:6px;
+  border-bottom:1px solid var(--rule-2);margin-bottom:5px}
+.vst{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:500}
+.vsg.build .vst{color:var(--good)} .vsg.buy .vst{color:var(--accent)}
+.vsm{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3)}
+.vsr{display:grid;grid-template-columns:150px 1fr auto;gap:12px;align-items:baseline;
+  padding:4px 0;border-bottom:1px solid var(--rule-2)}
+.vsr:last-child{border-bottom:none}
+.vsr b{font-size:13px;font-weight:600;color:var(--ink)}
+.vsr span{font-size:12px;color:var(--ink-2)}
+.vsr i{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--ink);
+  white-space:nowrap}
+.vsg.build .vsr i{color:var(--good)}
+
 /* ===== phone ===== one block for the whole deck. It is last in the stylesheet
    on purpose: the 860/940/1180px rules above carry the same specificity, so
    source order is the only thing that lets these win. */
@@ -557,7 +562,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 
   /* --- nav: nine dots and two buttons in 375px ---
      #pos goes first. It is the only thing in the bar that repeats itself - sheet
-     1 carries "Sheet 1 of 9" in the brandline and 2-9 open with "Sheet N" in the
+     1 carries "Sheet 1 of 8" in the brandline and 2-9 open with "Sheet N" in the
      kick - and at 375px it was crushed to 15px while Next sat off-screen at
      x401. flex-basis 0 then divides the remainder into nine equal cells and the
      dots take the bar's full 44px of height instead of 24px. */
@@ -688,13 +693,8 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   .stamp+.bt{padding-right:118px}
   /* only the layer name is allowed to wrap; td.rate keeps its nowrap so a tier
      price still reads as one figure */
-  .provt td:first-child{white-space:normal}
-  .provt td.sub{font-size:11.5px}
   /* the group sub-label trailed off the end of the banner row - drop it onto its
      own line, held to the viewport so it is legible before any swipe */
-  .provt .gd{display:block;margin:3px 0 0;max-width:calc(100vw - 32px)}
-  .provt tbody tr.r-build td:first-child{box-shadow:inset 2px 0 0 var(--good),1px 0 0 var(--rule)}
-  .provt tbody tr.r-buy td:first-child{box-shadow:inset 2px 0 0 var(--accent),1px 0 0 var(--rule)}
   /* 1fr 1fr left each step a 163px measure. One step per row with the badge
      beside the text reads at 259px and is no taller than the 2x2 it replaces. */
 
@@ -727,17 +727,14 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   .sc7v{grid-row:1;grid-column:2}
   .sc7t{grid-row:2;grid-column:1/-1}
   .sc7bars{gap:11px}
-  .sc7head{gap:4px}
   /* --- 9 cost ---
      three money cells at 118px each is not a readout, so one per row. In the
      ladder the right-hand figures drop under the source name rather than being
      pushed to an edge that is no longer there. */
-  .pw3{grid-template-columns:1fr}
   .pwc{min-height:0}
   .pwval{font-size:24px}
   .pwspace{display:none}
   .pwhead{gap:5px 9px}
-  .pwq{font-size:15px}
   .stackbar.pwflat span{font-size:10px;letter-spacing:.12em}
   /* --- 10 next ---
      five stages will not sit side by side at 375px, so the rail comes off and each
@@ -755,6 +752,13 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   /* one step per row, badge beside the text: reads at 259px and is no taller
      than the 2x2 it replaces */
   /* an 88px label track left 178px for the paragraph; stacked, it gets the measure */
+
+  .mx2{grid-template-columns:minmax(0,1fr)}
+  .mxk{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .vs2{grid-template-columns:minmax(0,1fr)}
+  .vsr{grid-template-columns:minmax(0,1fr) auto;row-gap:2px}
+  .vsr span{grid-column:1/-1;font-size:11.5px}
+  .pwrow{padding:8px 6px}
 }
 /* below 460 both tables always overflow, so the hint is always true. Above it
    they fit inside the sheet and a swipe prompt would be a lie. */
@@ -943,109 +947,42 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 </section>
 
 <!-- ========== 7 ========== -->
-<section class="slide" data-t="Supply chain">
- <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What the build is made of</span><b>Named vendors, published rates</b></div>
-  <h2 data-r style="--i:1">Every line of that cost has a vendor behind it.</h2>
-  <div class="ctrlhost" data-r style="--i:2"></div>
-  <p class="dek" data-r style="--i:3;max-width:none;margin-bottom:9px">Building does not mean buying nothing. You still buy bandwidth and compute. But those are commodities, with a dozen sellers and a published price, while access comes from the one vendor who sets it. Sheet 6 picked the column. This is the invoice behind it, split into the half we build and the half we buy.</p>
-  <div class="sc7chart" data-r style="--i:4">
-    <div class="sc7head">
-      <span class="label">Where this month&rsquo;s money goes</span>
-      <span class="sc7tot" id="sc7tot">Sums to <b>$0</b> / mo</span>
-    </div>
-    <div class="sc7bars" id="sc7bars"></div>
-    <p class="sc7note">Bandwidth is modelled at a blended $2.00/GB, between Webshare's $3.50 list and its $1.40 at 3 TB. Delivery and storage sits outside this total: Cloudflare R2 bills $0.015/GB-mo on what lands, with no egress fee. Oxylabs is held for escalation and carries nothing at this volume.</p>
-  </div>
-  <div class="tw" data-r style="--i:5;margin-top:8px"><table class="provt">
-    <thead><tr><th>Layer</th><th>What we&rsquo;d start on</th><th>Rate at our tier</th><th>If it fails or prices up</th></tr></thead>
-    <tbody>
-      <tr class="grp build"><td colspan="4"><span class="gl">What we build</span><span class="gd">Ours to keep &middot; nothing to license &middot; cannot be withdrawn</span></td></tr>
-      <tr class="r-build"><td>TLS &amp; HTTP client<span class="tag rung">Rung 1</span></td>
-        <td>curl_cffi <span class="tag free">Open source</span></td><td class="rate">$0</td>
-        <td class="sub">hrequests or tls-client, same impersonation surface</td></tr>
-      <tr class="r-build"><td>Browser engine<span class="tag rung">Rung 2</span></td>
-        <td>Camoufox <span class="tag free">Open source</span></td><td class="rate">$0</td>
-        <td class="sub">Patchright, rebrowser-playwright</td></tr>
-      <tr class="r-build"><td>State &amp; scheduling</td><td>Postgres + cron, self-hosted <span class="tag free">Open source</span></td>
-        <td class="rate">$0</td><td class="sub">Any managed Postgres; the state store is one ordinary table</td></tr>
-      <tr class="grp buy"><td colspan="4"><span class="gl">What we buy</span><span class="gd">Commodities &middot; published by the gigabyte &middot; many sellers</span></td></tr>
-      <tr class="r-buy"><td>Residential bandwidth</td><td>Webshare</td>
-        <td class="rate">$3.50/GB &rarr; $1.40/GB at 3&nbsp;TB</td>
-        <td class="sub">Decodo $4.00&rarr;$2.00/GB &middot; Rayobyte $3.50&rarr;$0.50/GB at 5&nbsp;TB</td></tr>
-      <tr class="r-buy"><td>Premium residential</td><td>Oxylabs <span class="tag paid">Escalation only</span></td>
-        <td class="rate">$6.00/GB &rarr; $2.50/GB at 1&nbsp;TB</td>
-        <td class="sub">Massive $4.90/GB at 100&nbsp;GB &middot; Bright Data &asymp;$8/GB list</td></tr>
-      <tr class="r-buy"><td>Compute</td><td>Hostinger KVM&nbsp;4 &middot; 4&nbsp;vCPU / 16&nbsp;GB</td>
-        <td class="rate">$29/mo at 4 vCPU, $58 at 8</td>
-        <td class="sub">Hetzner at comparable spec &middot; AWS Fargate $0.0405/vCPU-hr for bursts</td></tr>
-      <tr class="r-buy"><td>Delivery &amp; storage</td><td>Cloudflare R2</td>
-        <td class="rate">$0.015/GB-mo, no egress fee</td>
-        <td class="sub">AWS S3 at $0.023/GB-mo plus egress, or straight to your ms-pool bucket</td></tr>
-    </tbody></table></div>
-  <div class="supnotes" data-r style="--i:6">
-    <div><h4>In your name</h4><p>Each account is contracted by Moovsoon directly. We operate them; we never resell them. There is no margin hidden inside a per-request rate.</p></div>
-    <div><h4>Buying reverses it</h4><p>On the buy path you pay one vendor for access, and there is nowhere else to get it. Here the only single-sourced rows are the free ones, and being open source they cannot be withdrawn or repriced.</p></div>
-    <div><h4>No single vendor</h4><p>Every paid row has a named substitute at a comparable rate. Switching proxy vendor is a config change and a re-run on the same code.</p></div>
-  </div>
- </div>
-</section>
-
-<!-- ========== 8 ========== -->
 <section class="slide" data-t="Cost">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; What moves the bill</span><b>Why one request costs 16x another</b></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What it costs, and why</span><b>Click a rung. Drag the coverage.</b></div>
   <h2 data-r style="--i:1">The bill is set by bytes on the wire.</h2>
-  <p class="pwq" data-r style="--i:2">The question this sheet answers: why does one request cost sixteen times another, and what can we do about it?</p>
-  <div class="pwv" data-r style="--i:3">
-    <div class="label" style="margin-bottom:6px">One listing, three ways to fetch it &#183; same track, drawn to scale against 1,200 KB</div>
-    <div class="pwrow">
-      <div class="pwhead">
-        <span class="pwname">Rung 1 &#183; a light JSON route</span>
-        <span class="pwsrc">Redfin &#183; Crexi &#183; Realtor.com</span>
-        <span class="pwspace"></span>
-        <span class="pwkb">75 KB metered</span>
-        <span class="pwrate">$0.14</span><span class="pwper">per 1,000 requests</span>
-      </div>
-      <div class="pwtrack"><span class="pwfill" style="--w:6.25%;--c:var(--accent);--d:0"></span></div>
-      <p class="pwsub">About 45 KB of JSON on the wire, about 75 KB on the meter once TLS setup and retries are counted. Three of the six sit here.</p>
-    </div>
-    <div class="pwrow">
-      <div class="pwhead">
-        <span class="pwname">Rung 2 &#183; session minted once, then reused</span>
-        <span class="pwsrc">Compass &#183; Homes.com</span>
-        <span class="pwspace"></span>
-        <span class="pwkb">255 KB average</span>
-        <span class="pwrate">$0.49</span><span class="pwper">per 1,000 requests</span>
-      </div>
-      <div class="pwtrack"><span class="pwfill" style="--w:21.25%;--c:var(--L4);--d:1"></span></div>
-      <p class="pwsub">One 1.2 MB browser mint carries nine credentialed follow-ups near 150 KB, which averages to about 255 KB a request.</p>
-    </div>
-    <div class="pwrow">
-      <div class="pwhead">
-        <span class="pwname">Rung 2 &#183; every request scored</span>
-        <span class="pwsrc">Zillow</span>
-        <span class="pwspace"></span>
-        <span class="pwkb">1,200 KB</span>
-        <span class="pwrate">$2.29</span><span class="pwper">per 1,000 requests</span>
-      </div>
-      <div class="pwtrack"><span class="pwfill" style="--w:100%;--c:var(--L5);--d:2"></span></div>
-      <p class="pwsub">A rendered page measured between 0.97 and 1.45 MB in our own captures. Zillow scores every request, so it never averages down.</p>
-    </div>
-  </div>
-  <div class="techbox" data-r style="--i:4"><b>Weight is charged per request and it does not amortise.</b> Session reuse cuts the number of browser mints. Every request still pays its own bytes.</div>
-  <div class="ctrlhost" data-r style="--i:5"></div>
-  <div class="pwfoot" data-r style="--i:6">
+  <div class="ctrlhost" data-r style="--i:2"></div>
+
+  <div class="mx2" data-r style="--i:3">
     <div>
-      <div class="pw3">
-        <div><div class="pwc">Your selection, per month</div>
-          <div class="pwval" id="k7all" style="color:var(--accent)">$0</div>
-          <div class="pwvs" id="k7alls">&#183;</div></div>
-        <div><div class="pwc">Bandwidth per 1,000 listings</div>
-          <div class="pwval" id="k7one">$0</div>
+      <div class="label" style="margin-bottom:7px">One listing, three ways to fetch it &#183; drawn to scale against 1,200 KB</div>
+      <button type="button" class="pwrow" data-rung="1">
+        <div class="pwhead"><span class="pwname">Rung 1 &#183; light JSON route</span>
+          <span class="pwsrc">Redfin &#183; Crexi &#183; Realtor.com</span><span class="pwspace"></span>
+          <span class="pwkb">75 KB</span><span class="pwrate">$0.14</span><span class="pwper">/ 1k</span></div>
+        <div class="pwtrack"><span class="pwfill" style="--w:6.25%;--c:var(--accent);--d:0"></span></div>
+      </button>
+      <button type="button" class="pwrow" data-rung="2r">
+        <div class="pwhead"><span class="pwname">Rung 2 &#183; mint once, then reuse</span>
+          <span class="pwsrc">Compass &#183; Homes.com</span><span class="pwspace"></span>
+          <span class="pwkb">255 KB</span><span class="pwrate">$0.49</span><span class="pwper">/ 1k</span></div>
+        <div class="pwtrack"><span class="pwfill" style="--w:21.25%;--c:var(--L4);--d:1"></span></div>
+      </button>
+      <button type="button" class="pwrow" data-rung="2s">
+        <div class="pwhead"><span class="pwname">Rung 2 &#183; every request scored</span>
+          <span class="pwsrc">Zillow</span><span class="pwspace"></span>
+          <span class="pwkb">1,200 KB</span><span class="pwrate">$2.29</span><span class="pwper">/ 1k</span></div>
+        <div class="pwtrack"><span class="pwfill" style="--w:100%;--c:var(--L5);--d:2"></span></div>
+      </button>
+      <p class="mxnote">45 KB of JSON on the wire, 75 KB metered once TLS setup and retries are counted. One 1.2 MB mint carries nine follow-ups near 150 KB, which averages to 255 KB. Zillow scores every request, so it never averages down. Rendered pages measured 0.97 to 1.45 MB in our own captures.</p>
+    </div>
+    <div>
+      <div class="label" style="margin-bottom:7px">Where this month&rsquo;s money goes</div>
+      <div class="sc7bars" id="sc7bars"></div>
+      <div class="mxk">
+        <div><div class="pwc">Bandwidth per 1,000 listings</div><div class="pwval" id="k7one">$0</div>
           <div class="pwvs" id="k7ones">&#183;</div></div>
-        <div><div class="pwc">National, all in per 1,000</div>
-          <div class="pwval" id="k7nat">$0</div>
+        <div><div class="pwc">National, all in per 1,000</div><div class="pwval" id="k7nat">$0</div>
           <div class="pwvs" id="k7nats">&#183;</div></div>
       </div>
       <div class="tierpick">
@@ -1058,19 +995,31 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
       </div>
       <div class="verdict" id="costNote"></div>
     </div>
-    <div>
-      <div class="label" style="margin:0 0 9px">Where the money goes &#183; same selection at 14,000 ZIPs</div>
-      <div class="stackbar" id="costStack"></div>
-      <div class="stackleg" id="costLeg"></div>
+  </div>
+
+  <div class="vs2" data-r style="--i:5">
+    <div class="vsg build">
+      <div class="vsh"><span class="vst">What we build</span><span class="vsm">$0 &#183; open source &#183; cannot be withdrawn or repriced</span></div>
+      <div class="vsr"><b>curl_cffi</b><span>TLS and HTTP client, rung 1</span><i>$0</i></div>
+      <div class="vsr"><b>Camoufox</b><span>Browser engine, rung 2</span><i>$0</i></div>
+      <div class="vsr"><b>Postgres + cron</b><span>State and scheduling, self-hosted</span><i>$0</i></div>
+    </div>
+    <div class="vsg buy">
+      <div class="vsh"><span class="vst">What we buy</span><span class="vsm">Commodities &#183; published by the gigabyte &#183; many sellers</span></div>
+      <div class="vsr"><b>Webshare</b><span>Residential bandwidth</span><i>$3.50 to $1.40/GB at 3&nbsp;TB</i></div>
+      <div class="vsr"><b>Oxylabs</b><span>Premium residential, escalation only</span><i>$6.00 to $2.50/GB at 1&nbsp;TB</i></div>
+      <div class="vsr"><b>Hostinger KVM</b><span>Compute, 4 vCPU / 16&nbsp;GB</span><i>$29/mo at 4 vCPU, $58 at 8</i></div>
+      <div class="vsr"><b>Cloudflare R2</b><span>Delivery and storage</span><i>$0.015/GB-mo, no egress</i></div>
     </div>
   </div>
+  <p class="mxfoot" data-r style="--i:6">Every account is contracted by Moovsoon directly and never resold, so no per-request rate hides a margin. Bandwidth is modelled at a blended $2.00/GB between Webshare&rsquo;s $3.50 list and its $1.40 at 3&nbsp;TB. Substitutes at comparable rates: Decodo, Rayobyte and Massive on bandwidth, Hetzner or AWS Fargate on compute, S3 on storage, hrequests and Patchright on the open-source rows.</p>
  </div>
 </section>
 
-<!-- ========== 9 ========== -->
+<!-- ========== 8 ========== -->
 <section class="slide" data-t="Next">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 9 &middot; Where this goes</span><b>Two weeks to a measured number</b></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; Where this goes</span><b>Two weeks to a measured number</b></div>
   <h2 data-r style="--i:1">Six sources proven. Twenty-five ZIP codes to prove the price.</h2>
   <div class="closegrid" data-r style="--i:2;margin:14px 0 13px">
     <div><div class="stat" style="color:var(--accent)" data-count="6">0</div>
@@ -1316,7 +1265,7 @@ function refresh(){
       hint.style.left=((+sl.value/100)*(r.width-17)+8.5)+"px";
     }
   });
-  drawMap(); drawCost(); drawSupply(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
+  drawMap(); drawCost(); drawSupply(); if(window.markLadder) markLadder(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
 }
 
 /* ---------- nav ---------- */
@@ -1747,8 +1696,6 @@ function drawSupply(){
     row.querySelector(".sc7f").style.width=(vals[k]>0?Math.max(pc,1.2):0)+"%";
     row.querySelector(".sc7v").textContent=money(vals[k]);
   });
-  $("#sc7tot").innerHTML="Sums to <b>"+money(tot)+"</b> / mo &middot; "+
-    ZIPS.toLocaleString()+" ZIPs &middot; "+m.count+" source"+(m.count===1?"":"s");
 }
 
 /* ---------- 9 cost: what moves the bill ----------
@@ -1767,9 +1714,7 @@ function drawCost(){
   function per1k(x,mm){ return "$"+(x/(mm.listings/1000||1)).toFixed(2) }
   function cents(n){ return n<10?"$"+n.toFixed(2):money(n) }
 
-  $("#k7all").textContent=money(m.all);
-  $("#k7alls").innerHTML=ZIPS.toLocaleString()+" ZIPs &middot; "+fmt(m.listings)+
-    " listings &middot; blended <b>$"+(bw/(m.req||1)*1000).toFixed(2)+"</b> per 1,000 requests";
+  var e7=$("#k7all"); if(e7) e7.textContent=money(m.all);
 
   /* bandwidth is the only line that grows with volume; the box does not, so the
      all-in per-1,000 figure is reported with the scale it belongs to */
@@ -1794,6 +1739,7 @@ function drawCost(){
   function listify(a){ return a.length>1?a.slice(0,-1).join(", ")+" and "+a[a.length-1]:a[0] }
 
   var stack=$("#costStack");
+  if(stack){
   stack.className=heavy?"stackbar":"stackbar pwflat";
   stack.innerHTML=heavy
     ? parts.map(function(p){
@@ -1802,7 +1748,9 @@ function drawCost(){
         ? "Every rung-2 request moved to rung 1 &middot; no page weight left to draw"
         : "No rung-2 source selected &middot; there is no page weight in this bill")+'</span>';
 
-  $("#costLeg").innerHTML=parts.map(function(p){
+  }
+  var leg=$("#costLeg");
+  if(leg) leg.innerHTML=parts.map(function(p){
     var zero=p[1]<0.005, pc=p[1]/tot*100;
     return '<div class="it"><span class="sw2" style="background:'+p[2]+(zero?';opacity:.3':'')+
       '"></span><span><span class="nm2">'+p[0]+'</span><span class="vl">'+
@@ -1853,6 +1801,29 @@ function drawCost(){
       '<div class="nxiv">'+money(m.all)+'</div>'+
       '<div class="nxis">'+st[0].toLocaleString()+' ZIPs &middot; '+fmt(m.listings)+' listings / mo</div></div>');
   });
+})();
+
+/* ---------- 7 ladder: a rung selects exactly its own sources ---------- */
+(function(){
+  var rows=[].slice.call(document.querySelectorAll(".pwrow[data-rung]"));
+  if(!rows.length) return;
+  var GROUP={"1":["Redfin","Crexi","Realtor.com"],"2r":["Compass","Homes.com"],"2s":["Zillow"]};
+  rows.forEach(function(b){
+    b.onclick=function(){
+      var want=GROUP[b.dataset.rung];
+      SITES.forEach(function(x){ SEL[x.n]=want.indexOf(x.n)>-1 });
+      refresh();
+    };
+  });
+  /* the pressed state follows the selection however it was made, so the ladder
+     stays honest when the reader uses the chips instead */
+  window.markLadder=function(){
+    rows.forEach(function(b){
+      var want=GROUP[b.dataset.rung];
+      var on=SITES.every(function(x){ return !!SEL[x.n]===(want.indexOf(x.n)>-1) });
+      b.classList.toggle("on",on);
+    });
+  };
 })();
 
 /* ---------- counters ---------- */
