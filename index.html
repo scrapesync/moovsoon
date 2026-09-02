@@ -481,118 +481,6 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 .sc7row.zero .sc7v{color:var(--good)}
 .sc7note{font-family:var(--f-mono);font-size:10.5px;line-height:1.5;letter-spacing:.02em;
   color:var(--ink-3);margin:8px 0 0;max-width:none}
-/* ===== 8 SELF-HEALING =====
-   Two labelled bands. The first is what runs tonight and carries a solid border;
-   the second is what we build next and carries a dashed one, so the honesty
-   split survives even with the stamps out of view. Nothing here is live, so
-   nothing here needs repainting from refresh(). */
-.shl-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:2px}
-.shl-head p{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink-2);max-width:none}
-.shl-head-b{margin-top:14px;padding-top:12px;border-top:1px solid var(--rule)}
-.shl-stamp{display:inline-block;flex:none;font-family:var(--f-mono);font-weight:500;font-size:10.5px;
-  letter-spacing:.18em;text-transform:uppercase;padding:4px 10px;border:1px solid currentColor;
-  border-radius:2px;line-height:1.35}
-.shl-s-now{color:var(--good)}
-.shl-s-next{color:var(--flag)}
-.shl-m{font-family:var(--f-mono);font-size:.94em;color:var(--ink);background:var(--paper-2);
-  padding:0 4px;border-radius:2px}
-
-.shl-band1{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:10px;align-items:start}
-.shl-chartbox{background:var(--white);border:1px solid var(--rule);border-radius:2px;padding:14px 16px}
-.shl-chartlab{font-family:var(--f-mono);font-weight:500;font-size:10.5px;letter-spacing:.16em;
-  color:var(--ink-3);margin-bottom:9px}
-.shl-plot{overflow-x:auto;overscroll-behavior-x:contain}
-.shl-svg{display:block;width:100%;height:auto}
-
-/* the plot. Ten nights sitting exactly on the frozen baseline, then the eleventh
-   on the floor. Flat is the point: the cliff is the only event in the series. */
-.shl-svg .shl-gl{stroke:var(--rule-2);stroke-width:1;stroke-dasharray:2 4}
-.shl-svg .shl-ax{stroke:var(--rule);stroke-width:1}
-.shl-svg .shl-base{stroke:var(--rule);stroke-width:1;stroke-dasharray:3 4}
-.shl-svg .shl-tx{font-family:var(--f-mono);font-weight:500;font-size:10px;letter-spacing:.14em;
-  fill:var(--ink-3)}
-.shl-svg .shl-an{letter-spacing:.06em}
-.shl-svg .shl-area{fill:var(--accent-a);opacity:0;
-  transition:opacity .6s var(--e-out);transition-delay:.55s}
-.slide.on .shl-svg .shl-area{opacity:1}
-.shl-svg .shl-line{fill:none;stroke:var(--good);stroke-width:1.75;stroke-linecap:round;
-  stroke-dasharray:100;stroke-dashoffset:100;
-  transition:stroke-dashoffset .9s var(--e-out);transition-delay:.3s}
-.slide.on .shl-svg .shl-line{stroke-dashoffset:0}
-.shl-svg .shl-dot{fill:var(--white);stroke:var(--good);stroke-width:1.5;opacity:0;
-  transition:opacity .3s var(--e-out);transition-delay:calc(.4s + var(--s,0)*.07s)}
-.slide.on .shl-svg .shl-dot{opacity:1}
-.shl-svg .shl-cliff{fill:none;stroke:var(--flag);stroke-width:1.75;stroke-linecap:round;
-  stroke-dasharray:100;stroke-dashoffset:100;
-  transition:stroke-dashoffset .55s var(--e-out);transition-delay:1.25s}
-.slide.on .shl-svg .shl-cliff{stroke-dashoffset:0}
-.shl-svg .shl-mark{opacity:0;transition:opacity .35s var(--e-out);transition-delay:1.75s}
-.slide.on .shl-svg .shl-mark{opacity:1}
-.shl-svg .shl-ring{fill:none;stroke:var(--flag);stroke-width:1;opacity:.35}
-.shl-svg .shl-md{fill:var(--flag)}
-.shl-svg .shl-call{opacity:0;transform:translateY(-6px);
-  transition:opacity .4s var(--e-out),transform .5s var(--spring);transition-delay:1.95s}
-.slide.on .shl-svg .shl-call{opacity:1;transform:translateY(0)}
-.shl-svg .shl-callbox{fill:var(--white);stroke:var(--flag);stroke-width:1}
-.shl-svg .shl-lead{fill:none;stroke:var(--flag);stroke-width:1}
-.shl-svg .shl-callk{font-family:var(--f-mono);font-weight:500;font-size:10px;letter-spacing:.14em;
-  fill:var(--flag)}
-.shl-svg .shl-callt{font-family:var(--f-ui);font-weight:600;font-size:12.5px;fill:var(--ink)}
-.shl-svg .shl-nn{fill:var(--flag);opacity:0;
-  transition:opacity .35s var(--e-out);transition-delay:2.05s}
-.slide.on .shl-svg .shl-nn{opacity:1}
-
-.shl-hd{margin:0 0 8px}
-.shl-now>p{font-size:13.5px;line-height:1.55;color:var(--ink-2);max-width:none;margin:0 0 10px}
-.shl-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule)}
-.shl-kpi>div{background:var(--white);padding:9px 12px}
-.shl-kpi b{display:block;font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;
-  font-size:17px;letter-spacing:-.02em;line-height:1.15;color:var(--ink);
-  font-variant-numeric:tabular-nums lining-nums}
-.shl-kpi span{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-3);margin-top:5px;line-height:1.4}
-.shl-lim{margin:12px 0 0;padding:9px 14px;background:var(--paper-2);border-left:2px solid var(--flag);
-  font-size:13.5px;line-height:1.55;color:var(--ink);max-width:none}
-
-/* the chain. Dashed cards, because none of this ships yet. */
-.shl-chain{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:12px}
-.shl-step{position:relative;background:var(--white);border:1px dashed var(--rule);border-radius:2px;
-  padding:13px 15px 14px}
-.shl-step::before,.shl-step::after{content:"";position:absolute;left:100%;top:32px;height:1px;width:16px}
-.shl-step::before{background:var(--rule-2)}
-.shl-step::after{background:var(--accent);transform:scaleX(0);transform-origin:left center;
-  transition:transform .5s var(--e-out);transition-delay:calc(.75s + var(--s,0)*.34s)}
-.slide.on .shl-step::after{transform:scaleX(1)}
-.shl-step.last::before,.shl-step.last::after{display:none}
-.shl-node{display:flex;align-items:center;justify-content:center;width:38px;height:38px;
-  border-radius:50%;background:var(--paper);border:1px solid var(--rule);
-  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:var(--ink-3);
-  transition:background .45s var(--e-out),border-color .45s var(--e-out),color .45s var(--e-out);
-  transition-delay:calc(.6s + var(--s,0)*.34s)}
-.slide.on .shl-node{background:var(--accent);border-color:var(--accent);color:var(--white)}
-.slide.on .shl-step.last .shl-node{background:var(--good);border-color:var(--good)}
-.shl-step b{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--ink);margin:9px 0 4px;font-weight:500}
-.shl-step p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2);max-width:none}
-
-.shl-rule{display:flex;gap:13px;align-items:flex-start;margin-top:11px;padding:9px 16px;
-  background:var(--accent-a);border-left:2px solid var(--accent)}
-.shl-rk{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--accent);flex:none;padding-top:3px;width:88px}
-.shl-rule p{margin:0;font-size:13.5px;line-height:1.55;color:var(--ink);max-width:none}
-
-@media(max-width:1000px){.shl-band1{grid-template-columns:1fr}}
-@media(max-width:860px){
-  /* grid items default to min-width:auto, so a 608px svg widens the track and
-     the whole slide with it. minmax(0,1fr) keeps the scroll inside .shl-plot. */
-  .shl-band1{grid-template-columns:minmax(0,1fr);gap:12px}
-  .shl-chartbox,.shl-now{min-width:0}
-  .shl-kpi{grid-template-columns:1fr}
-  .shl-chain{grid-template-columns:1fr 1fr}
-  .shl-step::before,.shl-step::after{display:none}
-  .shl-kpi{grid-template-columns:1fr 1fr}
-}
 /* ===== SHEET 9 (cost): the page-weight ladder =====
    The ladder is fixed reference rather than model output, so the argument still
    reads when the only selected source is rung 1, which is the default state. */
@@ -636,55 +524,24 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   text-transform:uppercase;color:var(--ink-3);text-align:center;padding:0 14px;line-height:1.6}
 @media(prefers-reduced-motion:reduce){.pwfill{transition:none;transform:scaleX(1)}}
 /* ===== 10 CLOSE: the timeline, the decision row, the folded assumptions ===== */
-/* a rail that draws once the sheet lands, the same trick as the healing chain */
-.nxtl{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.nxs{position:relative}
-.nxs::before,.nxs::after{content:"";position:absolute;left:24px;top:30px;height:1px;
-  width:calc(100% - 10px)}
-.nxs::before{background:var(--rule-2)}
-.nxs::after{background:var(--accent);transform:scaleX(0);transform-origin:left center;
-  transition:transform .5s var(--e-out);transition-delay:calc(.45s + var(--s,0)*.3s)}
-.slide.on .nxs::after{transform:scaleX(1)}
-.nxs.last::before,.nxs.last::after{display:none}
-@media(max-width:940px){.nxtl{grid-template-columns:repeat(2,1fr);row-gap:16px}
-  .nxs::before,.nxs::after{display:none}}
-.nxw{display:block;height:14px;line-height:14px;font-family:var(--f-mono);font-weight:500;
-  font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);
-  white-space:nowrap}
-.nxs.gate .nxw{color:var(--flag)}
-/* the marker sits on the rail; week 3 is the gate, so it reads red and larger */
-.nxn{display:block;width:18px;height:18px;margin:7px 0 9px;border-radius:50%;
-  background:var(--paper);border:1px solid var(--rule);
-  transition:background .4s var(--e-out),border-color .4s var(--e-out),scale .4s var(--spring);
-  transition-delay:calc(.3s + var(--s,0)*.3s)}
-.slide.on .nxn{background:var(--accent);border-color:var(--accent)}
-.slide.on .nxs.gate .nxn{background:var(--flag);border-color:var(--flag);scale:1.2}
-.slide.on .nxs.last .nxn{background:var(--good);border-color:var(--good)}
-.nxs b{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--ink);margin:0 0 4px;font-weight:500}
-.nxs p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2);max-width:none}
-/* the one sentence the decision turns on */
-.nxbig{font-size:15.5px;line-height:1.45;color:var(--ink);font-weight:600;letter-spacing:-.012em;
-  margin:7px 0 9px;max-width:none}
-/* the assumptions, folded away but every word still on the page */
-.nxdisc{margin-top:13px;border-top:1px solid var(--rule)}
-.nxsum{display:flex;align-items:baseline;gap:12px;width:100%;text-align:left;cursor:pointer;
-  background:none;border:0;padding:10px 2px 9px;font-family:var(--f-ui)}
-.nxsum:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.nxsl{font-family:var(--f-mono);font-weight:500;font-size:10.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--accent);flex:none}
-.nxsh{font-size:13px;line-height:1.4;color:var(--ink-3);flex:1;transition:color .2s var(--e-out)}
-.nxsum:hover .nxsh{color:var(--ink-2)}
-.nxsc{font-family:var(--f-mono);font-size:15px;line-height:1;color:var(--accent);flex:none}
-.nxwrap{display:grid;grid-template-rows:0fr;opacity:0;
-  transition:grid-template-rows .42s var(--e-out),opacity .3s var(--e-out)}
-.nxdisc.on .nxwrap{grid-template-rows:1fr;opacity:1}
-.nxwrap>div{overflow:hidden}
-.nxfb{max-height:140px;overflow-y:auto;background:var(--white);border:1px solid var(--rule);
-  padding:10px 14px}
 .nxfb .foot{margin:0;max-width:none}
-.nxhint{font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ink-3);margin:6px 0 2px}
+
+/* ===== 9 CLOSE: the running cost, at four coverage steps =====
+   Read straight out of model() with every source on, so these can never drift
+   from the figures the control bars produce on sheets 4 through 8. */
+.nxinfra{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule)}
+.nxi{background:var(--white);padding:12px 15px 13px}
+.nxi.nat{background:var(--accent-a)}
+.nxil{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:7px}
+.nxi.nat .nxil{color:var(--accent)}
+.nxiv{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:31px;
+  letter-spacing:-.03em;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.nxi.nat .nxiv{color:var(--accent)}
+.nxis{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;color:var(--ink-3);margin-top:7px}
+.nxinote{font-family:var(--f-mono);font-size:10.5px;line-height:1.55;color:var(--ink-3);
+  margin:9px 0 0;max-width:none}
 
 /* ===== phone ===== one block for the whole deck. It is last in the stylesheet
    on purpose: the 860/940/1180px rules above carry the same specificity, so
@@ -700,7 +557,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 
   /* --- nav: nine dots and two buttons in 375px ---
      #pos goes first. It is the only thing in the bar that repeats itself - sheet
-     1 carries "Sheet 1 of 10" in the brandline and 2-9 open with "Sheet N" in the
+     1 carries "Sheet 1 of 9" in the brandline and 2-9 open with "Sheet N" in the
      kick - and at 375px it was crushed to 15px while Next sat off-screen at
      x401. flex-basis 0 then divides the remainder into nine equal cells and the
      dots take the bar's full 44px of height instead of 24px. */
@@ -851,6 +708,12 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   /* --- 9 next ---
      already one column at this width, so the column dividers are ruling down the
      right edge of the page; lay them flat between the rows instead. */
+  /* four 31px figures do not fit 375px, and grid items default to min-width:auto
+     so the figure sets the track. Two zero-min tracks and a smaller figure. */
+  .nxinfra{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .nxi{padding:10px 12px 11px;min-width:0}
+  .nxiv{font-size:25px}
+  .nxis{font-size:10px;letter-spacing:.04em}
   .closegrid>div{padding:13px 0 12px;border-right:none;border-bottom:1px solid var(--rule)}
   .closegrid>div:last-child{border-bottom:none}
   /* 9.5px mono is a desktop footnote; on glass it is texture, not a sentence */
@@ -879,43 +742,19 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   /* --- 10 next ---
      five stages will not sit side by side at 375px, so the rail comes off and each
      stage reads as a marker beside its own text, the same shape .hstep takes. */
-  .nxtl{grid-template-columns:1fr;gap:12px}
-  .nxs{display:grid;grid-template-columns:18px 1fr;column-gap:12px;align-items:start}
   .nxn{grid-column:1;grid-row:1/4;margin:1px 0 0}
   .nxw{grid-column:2;white-space:normal}
-  .nxs b{grid-column:2;margin-top:3px}
-  .nxs p{grid-column:2}
   /* the deck already scrolls at this width, so a scroll box inside a scroll box
      buys nothing; let the footnote run its full length instead */
-  .nxfb{max-height:none;overflow:visible}
-  .nxhint{display:none}
-  .nxsum{flex-wrap:wrap;gap:5px 12px;padding-bottom:11px}
-  .nxsh{flex:1 0 100%}
   /* --- 8 self-healing ---
      the plot cannot go fluid: at 343px a 608-wide viewBox renders its 10px
      labels at 5.6px. It stays a side-scroller at true size, like .dia on 4. */
-  .shl-svg{width:608px;height:178px;max-width:none;flex:none}
-  .shl-plot::after{content:"swipe to follow the batches \2192";display:block;width:max-content;
-    font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-    color:var(--ink-3);padding:7px 4px 1px}
-  .shl-chartbox{padding:13px 14px}
   /* the stamp is the whole point of the band, so it gets its own line rather
      than being squeezed onto one with the sentence it qualifies */
-  .shl-head{gap:8px}
-  .shl-stamp{width:100%;text-align:center}
   /* three cells at 375px leave 105px for "null rate on the field" */
-  .shl-kpi{grid-template-columns:1fr}
   /* one step per row, badge beside the text: reads at 259px and is no taller
      than the 2x2 it replaces */
-  .shl-chain{grid-template-columns:1fr;gap:11px}
-  .shl-step{display:grid;grid-template-columns:38px 1fr;column-gap:12px;align-items:start;
-    padding:12px 14px 13px}
-  .shl-node{grid-row:1/3}
-  .shl-step b{grid-column:2;margin:1px 0 3px}
-  .shl-step p{grid-column:2}
   /* an 88px label track left 178px for the paragraph; stacked, it gets the measure */
-  .shl-rule{display:block}
-  .shl-rk{display:block;width:auto;padding:0 0 4px}
 }
 /* below 460 both tables always overflow, so the hint is always true. Above it
    they fit inside the sheet and a swipe prompt would be a lie. */
@@ -1153,105 +992,9 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 </section>
 
 <!-- ========== 8 ========== -->
-<section class="slide" data-t="Self-healing">
- <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; When a source changes shape</span><b>What catches it, and what fixes it</b></div>
-  <h2 data-r style="--i:1">A 200 OK with an empty field is still a break.</h2>
-  <p class="dek" data-r style="--i:2;max-width:none;margin:0 0 12px">Two things break a feed. The source stops answering, which every monitor catches, and the source keeps answering while a field quietly empties out, which most monitors do not. The second costs more, because the pipeline stays green and the data goes wrong for as long as nobody looks.</p>
-
-  <div class="shl-head" data-r style="--i:3">
-    <span class="shl-stamp shl-s-now">Shipping today &middot; deterministic</span>
-    <p>The schema gate holds any batch where a field breaks its null-rate baseline. The gate runs on every field in the contract, on every source.</p>
-  </div>
-
-  <div class="shl-band1" data-r style="--i:4">
-    <div class="shl-chartbox">
-      <div class="shl-chartlab">HOW THE GATE READS A FIELD &middot; WORKED EXAMPLE</div>
-      <div class="shl-plot">
-        <svg class="shl-svg" viewBox="0 0 608 178" role="img" aria-label="Fill rate for the realtoremail field across eleven nightly batches. It sits on its frozen baseline of 68 percent fill, or 32 percent null, for ten nights, then falls to zero fill and 100 percent null on the eleventh night, where the gate fires and the batch is held.">
-          <line class="shl-gl" x1="52" y1="18" x2="534" y2="18"/>
-          <path class="shl-area" d="M54,62.8 L486,62.8 L534,158 L54,158 Z"/>
-          <line class="shl-base" x1="52" y1="62.8" x2="534" y2="62.8"/>
-          <line class="shl-ax" x1="52" y1="158" x2="534" y2="158"/>
-
-          <text class="shl-tx" x="46" y="22" text-anchor="end">100%</text>
-          <text class="shl-tx" x="46" y="66" text-anchor="end">68%</text>
-          <text class="shl-tx" x="46" y="162" text-anchor="end">0%</text>
-          <text class="shl-tx" x="56" y="55">BASELINE, FROZEN</text>
-          <text class="shl-tx shl-an" x="540" y="66">32% NULL</text>
-
-          <path class="shl-line" pathLength="100" d="M54,62.8 L486,62.8"/>
-          <circle class="shl-dot" style="--s:0" cx="54" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:1" cx="102" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:2" cx="150" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:3" cx="198" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:4" cx="246" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:5" cx="294" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:6" cx="342" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:7" cx="390" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:8" cx="438" cy="62.8" r="3"/>
-          <circle class="shl-dot" style="--s:9" cx="486" cy="62.8" r="3"/>
-
-          <path class="shl-cliff" pathLength="100" d="M486,62.8 L534,158"/>
-          <g class="shl-mark">
-            <circle class="shl-ring" cx="534" cy="158" r="9"/>
-            <circle class="shl-md" cx="534" cy="158" r="4.5"/>
-          </g>
-          <text class="shl-tx shl-an shl-nn" x="540" y="162">100% NULL</text>
-
-          <g class="shl-call">
-            <path class="shl-lead" d="M496,124 L525,150"/>
-            <rect class="shl-callbox" x="270" y="88" width="226" height="48" rx="2"/>
-            <text class="shl-callk" x="284" y="108">GATE FIRED</text>
-            <text class="shl-callt" x="284" y="126">Batch held. On-call paged.</text>
-          </g>
-
-          <text class="shl-tx" x="52" y="172">NIGHT 1</text>
-          <text class="shl-tx" x="293" y="172" text-anchor="middle">ONE POINT PER NIGHTLY BATCH</text>
-          <text class="shl-tx" x="534" y="172" text-anchor="end">NIGHT 11</text>
-        </svg>
-      </div>
-    </div>
-
-    <div class="shl-now">
-      <h3 class="shl-hd">The schema gate</h3>
-      <p>Every field carries a null-rate baseline, frozen from the batches before it. The gate reads each nightly batch against that baseline and holds the whole batch when a field falls outside. This is the break an HTTP check cannot see: the request returned 200, the row count was right, and <span class="shl-m">realtoremail</span> came back empty on every row.</p>
-      <div class="shl-kpi">
-        <div><b>32% &rarr; 100%</b><span>Null rate on the field</span></div>
-        <div><b>Held</b><span>Batch does not ship</span></div>
-        <div><b>Paged</b><span>A person picks it up</span></div>
-      </div>
-      <p class="shl-lim">It catches the break. It does not write the fix.</p>
-    </div>
-  </div>
-
-  <div class="shl-head shl-head-b" data-r style="--i:5">
-    <span class="shl-stamp shl-s-next">Not shipping yet &middot; the next layer</span>
-    <p>The gate already names the break and holds the batch. What we build next proposes the fix, and it has to clear the same gate before anything ships.</p>
-  </div>
-
-  <div class="shl-chain" data-r style="--i:6">
-    <div class="shl-step" style="--s:0"><div class="shl-node">01</div><b>Detect</b>
-      <p>A gate trips: a field breaks its null-rate baseline, or <span class="shl-m">propertyStatus</span> returns a value outside the enum.</p></div>
-    <div class="shl-step" style="--s:1"><div class="shl-node">02</div><b>Diagnose</b>
-      <p>The failing page and the last-good extraction contract go to the model. It rewrites the parse path and leaves the pipeline alone.</p></div>
-    <div class="shl-step" style="--s:2"><div class="shl-node">03</div><b>Prove</b>
-      <p>Replayed against frozen golden fixtures and the same baselines. A fix that cannot reproduce the last-good output is rejected.</p></div>
-    <div class="shl-step last" style="--s:3"><div class="shl-node">04</div><b>Promote</b>
-      <p>Only a proposal that passes ships, with the diff attached. Anything that fails pages a human.</p></div>
-  </div>
-
-  <div class="shl-rule" data-r style="--i:7">
-    <span class="shl-rk">The rule</span>
-    <p>The model never deploys anything it cannot prove against a fixture. Without that constraint the model is rewriting live parsers with nothing checking its work. It is why 70 spiders across 44 domains have not turned an overnight break into a morning call-out.</p>
-  </div>
- </div>
-</section>
-
-<!-- ========== 9 ========== -->
 <section class="slide" data-t="Cost">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 9 &middot; What moves the bill</span><b>Why one request costs 16x another</b></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; What moves the bill</span><b>Why one request costs 16x another</b></div>
   <h2 data-r style="--i:1">The bill is set by bytes on the wire.</h2>
   <p class="pwq" data-r style="--i:2">The question this sheet answers: why does one request cost sixteen times another, and what can we do about it?</p>
   <div class="pwv" data-r style="--i:3">
@@ -1324,10 +1067,10 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
  </div>
 </section>
 
-<!-- ========== 10 ========== -->
+<!-- ========== 9 ========== -->
 <section class="slide" data-t="Next">
  <div class="inner">
-  <div class="kick" data-r style="--i:0"><span>Sheet 10 &middot; Where this goes</span><b>Two weeks to a measured number</b></div>
+  <div class="kick" data-r style="--i:0"><span>Sheet 9 &middot; Where this goes</span><b>Two weeks to a measured number</b></div>
   <h2 data-r style="--i:1">Six sources proven. Twenty-five ZIP codes to prove the price.</h2>
   <div class="closegrid" data-r style="--i:2;margin:14px 0 13px">
     <div><div class="stat" style="color:var(--accent)" data-count="6">0</div>
@@ -1341,24 +1084,9 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   </div>
 
   <div data-r style="--i:3;margin-bottom:14px">
-    <div class="label" style="margin-bottom:8px">Rough shape of the first two months</div>
-    <div class="nxtl">
-      <div class="nxs" style="--s:0"><span class="nxw">Week 0</span><span class="nxn"></span>
-        <b>Sign-off</b>
-        <p>Accounts opened in your name. You pick the 25 ZIP codes.</p></div>
-      <div class="nxs" style="--s:1"><span class="nxw">Weeks 1 to 2</span><span class="nxn"></span>
-        <b>The pilot runs</b>
-        <p>Daily delivery into your schema from the first run, on a managed API while the real pipeline is built behind it.</p></div>
-      <div class="nxs gate" style="--s:2"><span class="nxw">Week 3 &middot; Decision</span><span class="nxn"></span>
-        <b>The numbers land</b>
-        <p>The real cost per thousand and the real reuse count. The price in this deck is confirmed or corrected.</p></div>
-      <div class="nxs" style="--s:3"><span class="nxw">Week 3 onward</span><span class="nxn"></span>
-        <b>The build</b>
-        <p>All six sources scheduled and monitored, on the accounts the pilot already ran on.</p></div>
-      <div class="nxs last" style="--s:4"><span class="nxw">Month 2 onward</span><span class="nxn"></span>
-        <b>Coverage grows</b>
-        <p>ZIP codes go on the dial from the dashboard, and the spend moves with them.</p></div>
-    </div>
+    <div class="label" style="margin-bottom:8px">What the infrastructure costs to run, all six sources</div>
+    <div class="nxinfra" id="nxInfra"></div>
+    <p class="nxinote">Bandwidth, servers and browser compute, on accounts opened in Moovsoon&rsquo;s name. There is no third-party access fee in any of these figures, because there is none to pay.</p>
   </div>
 
   <div class="grid g2" data-r style="--i:4">
@@ -1387,17 +1115,6 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
       </ul></div>
   </div>
 
-  <div class="nxdisc on" id="nxDisc" data-r style="--i:5">
-    <button type="button" class="nxsum" id="nxFootBtn" aria-expanded="true" aria-controls="nxFootBody">
-      <span class="nxsl">Assumptions</span>
-      <span class="nxsh">Where every figure in this deck comes from, what is modelled and what is measured. Click to open.</span>
-      <span class="nxsc" aria-hidden="true">−</span>
-    </button>
-    <div class="nxwrap" id="nxFootBody"><div>
-      <div class="nxfb"><p class="foot">Access confirmed by live collection on 1 September 2026 against all six sources. Per-request rates are production figures published in web-scraping-guide.com. Browser compute is modelled at ~12 seconds and ~1.5 vCPU per session mint. Volume is derived, not assumed: 2.8 requests per listing per month = a daily sweep at ~24 listings per request (1.25), detail fetches on the ~4% that change daily (1.20), and first fetches for new inventory (0.35). Rung-2 page weight is from our own captures (0.97-1.45 MB). Both rungs are priced the same way, as metered bytes times the contracted per-GB rate: rung 1 at 75 KB metered against a 45 KB payload, rung 2 at each source's own weight. Compass and Homes.com are modelled at 255 KB, the average of one 1.2 MB mint and nine 150 KB credentialed follow-ups; Zillow stays at full page weight because it scores every request. The box tier is chosen on the browser pool's in-window peak at one quarter duty with half-box headroom, not on raw request count, because 85% of requests carry no browser. Deep sources are costed at 25% incremental coverage because their inventory overlaps the spine. Every one of these is re-measured in the pilot, and the three that carry the most weight are the 255 KB blend, the 75 KB metered figure and the nightly duty cycle. Infrastructure rates fetched from AWS and Hostinger pricing pages the same day. Buy-side rates are an independent August 2026 benchmark, not a vendor claim.</p></div>
-      <p class="nxhint">Scroll inside the panel for the rest.</p>
-    </div></div>
-  </div>
  </div>
 </section>
 
@@ -2124,15 +1841,18 @@ function drawCost(){
   };
 });
 
-/* ---------- 10 the folded assumptions ---------- */
+
+/* ---------- 9 close: the running cost at four coverage steps ---------- */
 (function(){
-  var d=$("#nxDisc"),b=$("#nxFootBtn"); if(!d||!b) return;
-  b.onclick=function(){
-    var on=!d.classList.contains("on");
-    d.classList.toggle("on",on);
-    b.setAttribute("aria-expanded",on?"true":"false");
-    b.querySelector(".nxsc").textContent=on?"−":"+";
-  };
+  var host=$("#nxInfra"); if(!host) return;
+  var ALL={}; SITES.forEach(function(x){ALL[x.n]=true});
+  [[25,"Pilot"],[500,"Metro"],[3000,"Regional"],[14000,"National"]].forEach(function(st,k){
+    var m=model(st[0],ALL,0);
+    host.insertAdjacentHTML("beforeend",
+      '<div class="nxi'+(k===3?" nat":"")+'"><div class="nxil">'+st[1]+'</div>'+
+      '<div class="nxiv">'+money(m.all)+'</div>'+
+      '<div class="nxis">'+st[0].toLocaleString()+' ZIPs &middot; '+fmt(m.listings)+' listings / mo</div></div>');
+  });
 })();
 
 /* ---------- counters ---------- */
