@@ -548,7 +548,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
  <div class="inner">
   <div class="kick" data-r style="--i:0"><span>Sheet 3 &middot; How the work is priced</span><b>Click a tier</b></div>
   <h2 data-r style="--i:1">Four tiers of effort. Most volume never leaves the first.</h2>
-  <p class="dek" data-r style="--i:2">Cost per thousand requests is set by how deep a source forces us to go. The discipline is in stopping, the moment something works.</p>
+  <p class="dek" data-r style="--i:2">Cost per thousand requests is set by how deep a source forces us to go. We stop at the first tier that works.</p>
   <div data-r style="--i:3"><div class="ladder" id="ladder"></div></div>
   <div class="panel" id="rungDetail" data-r style="--i:4;margin-top:14px;border-left:2px solid var(--accent)"></div>
  </div>
@@ -574,7 +574,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 <section class="slide" data-t="Scale">
  <div class="inner">
   <div class="kick" data-r style="--i:0"><span>Sheet 5 &middot; Scalability</span><b>Drag the handle</b></div>
-  <h2 data-r style="--i:1">Start small. Watch which component actually grows.</h2>
+  <h2 data-r style="--i:1">Start small. Watch which component grows.</h2>
   <div class="ctrlhost" data-r style="--i:2"></div>
   <div class="exp" data-r style="--i:3">
     <div>
@@ -692,13 +692,13 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
     </tbody></table></div>
   <div class="supnotes" data-r style="--i:4">
     <div><h4>In your name</h4><p>Each account is contracted by Moovsoon directly. We operate them; we never resell them. There is no margin hidden inside a per-request rate.</p></div>
-    <div><h4>Buying reverses it</h4><p>On the buy path the invoice is one line, from one vendor, for the one thing you cannot substitute. Here the only single-sourced rows are the free ones, and being open source they cannot be withdrawn or repriced.</p></div>
-    <div><h4>No single vendor</h4><p>Every paid row has a named substitute at a comparable rate. Switching proxy vendor is a config change and a re-run, not a rebuild.</p></div>
+    <div><h4>Buying reverses it</h4><p>On the buy path you pay one vendor for access, and there is nowhere else to get it. Here the only single-sourced rows are the free ones, and being open source they cannot be withdrawn or repriced.</p></div>
+    <div><h4>No single vendor</h4><p>Every paid row has a named substitute at a comparable rate. Switching proxy vendor is a config change and a re-run on the same code.</p></div>
   </div>
 
   <div data-r style="--i:6;margin-top:5px">
     <div class="label" style="margin-bottom:7px">The gap we close next: AI-assisted self-healing</div>
-    <p class="dek" style="margin:0 0 11px;max-width:none">The healing is deterministic today, and it works: the schema gate holds any batch where a field breaks its null-rate baseline. That is the 200 OK with an empty <span style="font-family:var(--f-mono);font-size:13px">realtoremail</span> that no HTTP check catches. What it does not do is write the fix. The next layer does, under the same proof.</p>
+    <p class="dek" style="margin:0 0 11px;max-width:none">The healing is deterministic today, and it works: the schema gate holds any batch where a field breaks its null-rate baseline. That is the 200 OK with an empty <span style="font-family:var(--f-mono);font-size:13px">realtoremail</span> that no HTTP check catches. It does not write the fix. The next layer writes it, under the same proof.</p>
     <div class="heal">
       <div class="healsteps">
         <div class="hstep" style="--s:0"><span class="hn">01</span><b>Detect</b>
@@ -713,7 +713,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
     </div>
     <div class="healrule" data-r style="--i:8">
       <span class="hk">The rule</span>
-      <p>The model never deploys anything it cannot prove against a fixture. Without that constraint you do not have a self-healing crawler, you have an unattended one. It is why 70 spiders across 44 domains have not turned an overnight break into a morning call-out.</p>
+      <p>The model never deploys anything it cannot prove against a fixture. Without that constraint the model is rewriting live parsers with nothing checking its work. It is why 70 spiders across 44 domains have not turned an overnight break into a morning call-out.</p>
     </div>
   </div>
  </div>
@@ -723,9 +723,9 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
 <section class="slide" data-t="Cost">
  <div class="inner">
   <div class="kick" data-r style="--i:0"><span>Sheet 8 &middot; What moves the bill</span><b>Pick a tier mix</b></div>
-  <h2 data-r style="--i:1">The lever is not the browser. It is page weight.</h2>
+  <h2 data-r style="--i:1">Page weight is the lever, not the browser.</h2>
   <div class="ctrlhost" data-r style="--i:2"></div>
-  <p class="dek" data-r style="--i:3;margin:0 0 12px">A rung-1 JSON response is about 45 KB. A rendered rung-2 page measured between 0.97 and 1.45 MB in our own captures, roughly 25 times the traffic for the same listing. That weight is charged on every request and does not amortise, which is why moving a source down a tier beats every other optimisation.</p>
+  <p class="dek" data-r style="--i:3;margin:0 0 12px">A rung-1 JSON response is about 45 KB. A rendered rung-2 page measured between 0.97 and 1.45 MB in our own captures, roughly 25 times the traffic for the same listing. That weight is charged on every request and does not amortise, so moving a source down a tier saves more than any other change.</p>
   <div class="exp" data-r style="--i:4">
     <div>
       <div class="twocost">
@@ -750,7 +750,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
       <div class="stackleg" id="costLeg"></div>
       <div class="panel" style="margin-top:12px;border-left:2px solid var(--accent)">
         <h3>This is the ongoing work</h3>
-        <p style="margin-top:5px;font-size:13.5px">Every source starts on the tier its defence forces. Finding a lighter route moves it down, permanently. Three of six are already there. The buttons show what the remaining three are worth if we keep looking.</p>
+        <p style="margin-top:5px;font-size:13.5px">Every source starts on the tier its defence forces. Find a lighter route and it moves down for good. Three of six are already there. The buttons show what the remaining three are worth if we keep looking.</p>
       </div>
     </div>
   </div>
@@ -829,35 +829,35 @@ var LAYERS=[
 var SITES=[
  {n:"Redfin", v:"Open at the edge", depth:1, rung:1, lpz:15.4, managed:4.90, rec:"Bot-managed",
   blurb:"The cleanest source on the board. Nothing above the network layer is contested.",
-  tech:"<b>What it actually took:</b> the origin serves complete listing markup to any client whose address class it trusts. The defence exists on its JSON endpoints, not on the documents that carry the data. Correct handshake shape, correct address class, and it simply answers."},
+  tech:"<b>What it took:</b> the origin serves complete listing markup to any client whose address class it trusts. The defence exists on its JSON endpoints, not on the documents that carry the data. Get the handshake shape and address class right and it answers."},
  {n:"Crexi", v:"Data path undefended", depth:2, rung:1, lpz:3.1, managed:7.82, rec:"Challenge wall",
   blurb:"The public interface is defended; the data path beside it is not.",
-  tech:"<b>What it actually took:</b> the browsing surface sits behind a managed challenge, but the application talks to a separate API host that carries no bot layer at all. It answers a plain request and, when the body is wrong, <em>names the fields it wants</em>. That turned a challenge problem into a contract problem."},
+  tech:"<b>What it took:</b> the browsing surface sits behind a managed challenge, but the application talks to a separate API host that carries no bot layer at all. It answers a plain request and, when the body is wrong, <em>names the fields it wants</em>. The work became reading its error responses until the body was right."},
  {n:"Realtor.com", v:"Identity-gated route", depth:3, rung:1, lpz:28.9, managed:5.54,
   rec:"Hardest in market",
   blurb:"Its browsing surface carries the toughest proof-of-work system on the market. The route that carries listings does not.",
-  tech:"<b>What it actually took:</b> the document surface runs a proof-of-work VM, and we never touched it. The route the site's own pages call is gated on <em>static client-identity headers</em> instead. No challenge, no token, no browser. Two headers, and the response is structured data. Confirmed from two independent networks."},
+  tech:"<b>What it took:</b> the document surface runs a proof-of-work VM, and we never touched it. The route the site's own pages call is gated on <em>static client-identity headers</em> instead. Two headers get a structured-data response, without a browser or a minted token. Confirmed from two independent networks."},
  {n:"Compass", v:"Session challenge", depth:4, rung:2, lpz:5.2, managed:4.90, rec:"Proof-of-work",
-  blurb:"A genuine engine opens the session once; after that the session is the asset.",
-  tech:"<b>What it actually took:</b> a real browser engine has to execute the challenge script the origin serves, which mints a session credential with a finite lifetime. We do not reimplement that script. A real engine runs it, the way the origin intends. The credential is then reused across many cheap requests, which is what pulls the effective rate down."},
+  blurb:"A real browser mints the session once, then cheap requests reuse it.",
+  tech:"<b>What it took:</b> a real browser engine has to execute the challenge script the origin serves, which mints a session credential with a finite lifetime. We do not reimplement that script. A real engine runs it, the way the origin intends. The credential is then reused across many cheap requests, which is what pulls the effective rate down."},
  {n:"Homes.com", v:"Sensor challenge", depth:4, rung:2, lpz:25.1, managed:4.90,
   rec:"Enterprise-grade",
   blurb:"The heaviest challenge system of the six, and it still resolves at the session tier.",
-  tech:"<b>What it actually took:</b> the origin will not issue a session until it has validated a sensor payload that only a genuine engine produces. Same principle as Compass, higher bar: the engine is real, so the payload is real. Large residential inventory, which is what earns the extra work."},
+  tech:"<b>What it took:</b> the origin will not issue a session until it has validated a sensor payload that only a genuine engine produces. It is the Compass approach against a heavier check, and we do not forge the payload. Large residential inventory, which is what earns the extra work."},
  {n:"Zillow", v:"Behavioural scoring", depth:5, rung:2, lpz:29.5, managed:4.90, rec:"Buy access only",
   blurb:"The only source that judges the whole session rather than the request.",
-  tech:"<b>What it actually took:</b> a first-party sensor scores the session continuously, and the credential it issues is bound to the session that earned it, so nothing transfers and nothing can be minted in bulk. It was budgeted as unreachable without paying a third party. It is not. Largest inventory of the six."}
+  tech:"<b>What it took:</b> a first-party sensor scores the session continuously, and the credential it issues is bound to the session that earned it, so nothing transfers and nothing can be minted in bulk. It was budgeted as unreachable without paying a third party, and we reached it without one. Largest inventory of the six."}
 ];
 
 var RUNGS=[
  {n:0,t:"Reconnaissance",share:null,cost:"no cost",s:"Map the estate before touching it.",
-  d:"Every source is surveyed before a line of collection code is written: which routes exist, which are defended, and which quietly are not. This tier produces no data and is where the largest savings are found. An afternoon here has repeatedly turned a hard source into an easy one. Three of these six were resolved entirely at this tier."},
+  d:"Every source is surveyed before a line of collection code is written: what routes exist, and which of them are defended. This tier produces no data and is where the largest savings are found. An afternoon here has repeatedly turned a hard source into an easy one. Three of these six were resolved entirely at this tier."},
  {n:1,t:"Direct",share:85,cost:"$0.30 / 1k",s:"No browser. Milliseconds per request.",
-  d:"The workhorse tier, and where most of this estate sits. Requests are shaped to be indistinguishable from an ordinary client at the transport and protocol layers: correct handshake, correct header order, correct identity. Nothing is rendered, so it is fast and cheap enough that volume stops being the constraint."},
+  d:"The workhorse tier, and where most of this estate sits. Requests are shaped to be indistinguishable from an ordinary client at the transport and protocol layers, down to handshake shape and header order. Nothing is rendered, so it is fast and cheap enough that volume stops being the constraint."},
  {n:2,t:"Session",share:12,cost:"$3.00 / 1k",s:"A real engine opens the door, once.",
   d:"For sources that require their own code to have run. A genuine browser executes the challenge as intended, and the resulting credential is reused across many cheap requests, so this tier's headline rate is the worst case rather than the average. Note that the browsers themselves are real compute, and that cost is modelled explicitly on sheets 5 and 7 rather than waved away."},
  {n:3,t:"Sustained",share:3,cost:"$8.00 / 1k",s:"For sources that judge the whole session.",
-  d:"A small tail where the source scores behaviour over time rather than per request. Slow by design and reserved for the few routes that genuinely require it. Kept to a few percent of volume it barely moves the total; allowed to become the default it would triple the bill."}
+  d:"A small tail where the source scores behaviour over time rather than per request. Slow by design and reserved for the few routes that require it. At a few percent of volume it barely moves the total. If it became the default the bill would triple."}
 ];
 
 /* ---------- economics ----------
@@ -1172,7 +1172,7 @@ function bandCosts(h){
 /* What this box actually carries before it needs a bigger one. */
 function feasibility(h){
   if(h==="aws") return "No ceiling worth naming. Fargate scales past national on demand. "+
-    "It costs more than the box below national, and less operational worry above it.";
+    "It costs more than the box below national, and takes less looking after above it.";
   var nat=model(14000,SEL,0);
   var vcpu=nat.concurrent*1.5, gb=nat.req*0.35/1024;
   return "Comfortable to about <tspan style='font-weight:600'>7,000 ZIP codes</tspan> on this box. "+
@@ -1305,7 +1305,7 @@ function drawMap(){
     row.classList.toggle("lead",k===lead);
   });
   $("#scaleNote").innerHTML= (zips<=60)
-    ? "At <b>"+zips.toLocaleString()+" ZIP codes</b> , roughly what you asked for, the whole thing runs for <b>"+
+    ? "At <b>"+zips.toLocaleString()+" ZIP codes</b>, roughly your number, the whole thing runs for <b>"+
       money(m.all)+" a month</b>, and the server is most of that. The cost only starts to matter well past a thousand ZIPs."
     : "At <b>"+zips.toLocaleString()+" ZIPs</b> across "+m.count+" source"+(m.count===1?"":"s")+
       ", <b>"+fmt(m.listings)+" listings</b> for <b>"+money(m.all)+" a month</b>. The line growing "+
@@ -1353,8 +1353,7 @@ var OBJ=[
   hint:"Fair. Here is how",
   a:"Also true, and we do not pretend otherwise. So the first two weeks run on a "+
     "managed API while the real pipeline is built behind it, so you get a correct feed "+
-    "immediately and switch once ours matches it. Buying is the scaffolding, not the "+
-    "destination."},
+    "immediately and switch once ours matches it."},
  {q:"It is one engineer. What if you disappear?",
   hint:"Fair. Here is how",
   a:"Everything is in your GitHub, your accounts, your bucket, on ordinary tools: "+
@@ -1402,8 +1401,8 @@ function drawCost(){
   var base0=model(ZIPS,SEL,0).all;
   $("#costNote").innerHTML= (m.deep.req<1)
     ? (m.count===1&&SEL["Realtor.com"]
-        ? "Realtor.com is already a rung-1 source: light JSON, no browser, no page weight. There is nothing left to move here, which is the point."
-        : "<b>Everything on rung 1.</b> No rendered pages, no browsers, no page weight. "+money(m.all)+
+        ? "Realtor.com is already a rung-1 source: light JSON, no browser, no page weight. There is no heavy volume here to move."
+        : "<b>Everything on rung 1.</b> Nothing is rendered anywhere, so there is no page weight at all. "+money(m.all)+
           " a month for the whole estate. That is the target the API hunt is chasing.")
     : (shift<=0
       ? "<b>As measured today.</b> Three of six sources already sit on rung 1. The other three still cost "+
