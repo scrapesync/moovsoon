@@ -143,7 +143,7 @@ strong{color:var(--ink);font-weight:600}
 .ctrl .draglabel{top:-2px;left:auto;right:-4px;font-size:8px}
 /* Sub-tabs: centred, and big enough to read as the primary control they are. */
 .segwrap{display:flex;justify-content:center;align-items:center;gap:16px;flex-wrap:wrap;
-  margin:10px 0 12px}
+  margin:4px 0 8px}
 .seglabel{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink-3)}
 .seg{display:inline-flex;background:var(--paper-2);border:1.5px solid var(--rule);padding:4px;gap:4px}
@@ -264,12 +264,12 @@ strong{color:var(--ink);font-weight:600}
 .slide.on .sharebar i{width:var(--w)}
 
 /* ===== 4 ARCHITECTURE ===== */
-.dia{background:var(--white);border:1px solid var(--rule);padding:8px;overflow-x:auto}
-#archdia svg{height:auto;display:block;width:100%;min-width:1140px;max-height:47vh}
+.dia{background:var(--white);border:1px solid var(--rule);padding:5px;overflow-x:auto}
+#archdia svg{height:auto;display:block;width:100%;min-width:1100px}
 svg text{font-family:var(--f-ui)}
-.d1{font-size:11px;font-weight:700} .d2{font-size:9px} .d3{font-size:8px}
-.dm{font-family:var(--f-mono);font-size:8px}
-.bandlab{font-family:var(--f-mono);font-size:8px;letter-spacing:.2em}
+.d1{font-size:12.5px;font-weight:700} .d2{font-size:10.5px} .d3{font-size:9.5px}
+.dm{font-family:var(--f-mono);font-size:9px}
+.bandlab{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em}
 .flow{stroke-dasharray:4 7;animation:flow 1.9s linear infinite}
 @keyframes flow{to{stroke-dashoffset:-22}}
 .pulse{animation:pulse 2.4s ease-in-out infinite}
@@ -341,6 +341,7 @@ input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6
 
 /* ===== BUILD VS BUY ===== */
 .tw{overflow-x:auto;margin:12px 0 0}
+.provt{margin-top:-4px}
 table{border-collapse:collapse;width:100%;font-size:14px;min-width:640px}
 th{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;
   color:var(--ink-3);text-align:left;padding:8px 12px 8px 0;border-bottom:1.5px solid var(--ink);
@@ -395,6 +396,17 @@ tr.build td{background:rgba(31,107,74,.05)}
 
 /* ===== SUPPLY CHAIN + SELF-HEALING ===== */
 .provt td{padding-top:4px;padding-bottom:4px}
+.provt tr.grp td{border-bottom:none;padding:8px 0 3px}
+.provt tbody tr.grp:first-child td{padding-top:3px}
+.provt .gl{font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:500}
+.provt tr.grp.build .gl{color:var(--good)} .provt tr.grp.buy .gl{color:var(--accent)}
+.provt .gd{font-family:var(--f-mono);font-size:8px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin-left:11px}
+/* the coloured edge is the whole point of the sheet: green is ours, navy is rented */
+.provt tbody tr.r-build td:first-child,.provt tbody tr.r-buy td:first-child{padding-left:11px}
+.provt tbody tr.r-build td:first-child{box-shadow:inset 2px 0 0 var(--good)}
+.provt tbody tr.r-buy td:first-child{box-shadow:inset 2px 0 0 var(--accent)}
 .provt td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
 .provt td.rate{font-family:var(--f-mono);font-size:11.5px;color:var(--ink);white-space:nowrap}
 .provt td.sub{font-size:12px;color:var(--ink-2)}
@@ -403,9 +415,9 @@ tr.build td{background:rgba(31,107,74,.05)}
   vertical-align:1px}
 .tag.free{color:var(--good)} .tag.paid{color:var(--ink-3)} .tag.rung{color:var(--accent)}
 .supnotes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);
-  border:1px solid var(--rule);margin-top:9px}
+  border:1px solid var(--rule);margin-top:6px}
 @media(max-width:860px){.supnotes{grid-template-columns:1fr}}
-.supnotes>div{background:var(--white);padding:9px 15px}
+.supnotes>div{background:var(--white);padding:8px 15px}
 .supnotes h4{font-family:var(--f-mono);font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--accent);margin:0 0 6px;font-weight:500}
 .supnotes p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
@@ -434,7 +446,7 @@ tr.build td{background:rgba(31,107,74,.05)}
 .hstep b{display:block;font-family:var(--f-mono);font-size:9px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--ink);margin:8px 0 4px;font-weight:500}
 .hstep p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink-2)}
-.healrule{display:flex;gap:13px;align-items:flex-start;margin-top:9px;padding:8px 15px;
+.healrule{display:flex;gap:13px;align-items:flex-start;margin-top:7px;padding:8px 15px;
   background:var(--accent-a);border-left:2px solid var(--accent)}
 .healrule .hk{font-family:var(--f-mono);font-size:8px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--accent);flex:none;padding-top:2px;width:88px}
@@ -545,7 +557,7 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
  <div class="inner">
   <div class="kick" data-r style="--i:0"><span>Sheet 4 &middot; The pipeline</span><b>Toggle host and scope</b></div>
   <h2 data-r style="--i:1">Named tools, quality gates, and a crawler that repairs itself.</h2>
-  <p class="dek" data-r style="--i:2">Every box names the actual software, and every band carries its own monthly cost. The four bands sum to the all-in figure &mdash; egress is the per-request access spend, so it is counted once, there.</p>
+  <p class="dek" data-r style="--i:2;max-width:none;margin-bottom:9px">Every box names the actual software, and every band carries its own monthly cost. The bands sum to the all-in figure &mdash; egress is counted once, inside the per-request access spend.</p>
   <div class="segwrap" data-r style="--i:3">
     <span class="seglabel">Host</span>
     <div class="seg" id="hostSeg"><button data-h="vps" class="on">Self-hosted</button>
@@ -649,39 +661,41 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
  <div class="inner">
   <div class="kick" data-r style="--i:0"><span>Sheet 7 &middot; What the build is made of</span><b>Named vendors, published rates</b></div>
   <h2 data-r style="--i:1">Every line of that cost has a vendor behind it.</h2>
-  <p class="dek" data-r style="--i:2">Sheet 6 says building wins. This is what building actually buys. The two hardest pieces &mdash; TLS impersonation and a fingerprint-clean browser &mdash; are open source; the paid layer under them is commodity bandwidth and compute, opened in Moovsoon's name.</p>
+  <p class="dek" data-r style="--i:2;max-width:none;margin-bottom:9px">Building does not mean buying nothing. It means buying bandwidth and compute &mdash; commodities with a dozen sellers and a published price &mdash; instead of buying access from the one vendor who controls it. Sheet 6 picked the column; this is the invoice behind it, split into the half we build and the half we buy.</p>
   <div class="tw" data-r style="--i:3"><table class="provt">
     <thead><tr><th>Layer</th><th>What we&rsquo;d start on</th><th>Rate at our tier</th><th>If it fails or prices up</th></tr></thead>
     <tbody>
-      <tr class="oss"><td>TLS &amp; HTTP client<span class="tag rung">Rung 1</span></td>
+      <tr class="grp build"><td colspan="4"><span class="gl">What we build</span><span class="gd">Ours to keep &middot; nothing to license &middot; cannot be withdrawn</span></td></tr>
+      <tr class="r-build"><td>TLS &amp; HTTP client<span class="tag rung">Rung 1</span></td>
         <td>curl_cffi <span class="tag free">Open source</span></td><td class="rate">$0</td>
         <td class="sub">hrequests, tls-client &mdash; same impersonation surface</td></tr>
-      <tr class="oss"><td>Browser engine<span class="tag rung">Rung 2</span></td>
+      <tr class="r-build"><td>Browser engine<span class="tag rung">Rung 2</span></td>
         <td>Camoufox <span class="tag free">Open source</span></td><td class="rate">$0</td>
         <td class="sub">Patchright, rebrowser-playwright</td></tr>
-      <tr><td>Residential bandwidth</td><td>Webshare</td>
+      <tr class="r-build"><td>State &amp; scheduling</td><td>Postgres + cron, self-hosted <span class="tag free">Open source</span></td>
+        <td class="rate">$0</td><td class="sub">Any managed Postgres; the state store is a table, not a product</td></tr>
+      <tr class="grp buy"><td colspan="4"><span class="gl">What we buy</span><span class="gd">Commodities &middot; published by the gigabyte &middot; many sellers</span></td></tr>
+      <tr class="r-buy"><td>Residential bandwidth</td><td>Webshare</td>
         <td class="rate">$3.50/GB &rarr; $1.40/GB at 3&nbsp;TB</td>
         <td class="sub">Decodo $4.00&rarr;$2.00/GB &middot; Rayobyte $3.50&rarr;$0.50/GB at 5&nbsp;TB</td></tr>
-      <tr><td>Premium residential</td><td>Oxylabs <span class="tag paid">Escalation only</span></td>
+      <tr class="r-buy"><td>Premium residential</td><td>Oxylabs <span class="tag paid">Escalation only</span></td>
         <td class="rate">$6.00/GB &rarr; $2.50/GB at 1&nbsp;TB</td>
         <td class="sub">Massive $4.90/GB at 100&nbsp;GB &middot; Bright Data &asymp;$8/GB list</td></tr>
-      <tr><td>Compute</td><td>Hostinger KVM&nbsp;4 &middot; 4&nbsp;vCPU / 16&nbsp;GB</td>
+      <tr class="r-buy"><td>Compute</td><td>Hostinger KVM&nbsp;4 &middot; 4&nbsp;vCPU / 16&nbsp;GB</td>
         <td class="rate">$29/mo</td>
         <td class="sub">Hetzner at comparable spec &middot; AWS Fargate $0.0405/vCPU-hr for bursts</td></tr>
-      <tr><td>Delivery &amp; storage</td><td>Cloudflare R2</td>
+      <tr class="r-buy"><td>Delivery &amp; storage</td><td>Cloudflare R2</td>
         <td class="rate">$0.015/GB-mo, no egress fee</td>
         <td class="sub">AWS S3 at $0.023/GB-mo plus egress &mdash; or straight to your ms-pool bucket</td></tr>
-      <tr class="oss"><td>State &amp; scheduling</td><td>Postgres + cron, self-hosted <span class="tag free">Open source</span></td>
-        <td class="rate">$0</td><td class="sub">Any managed Postgres; the state store is a table, not a product</td></tr>
     </tbody></table></div>
   <div class="supnotes" data-r style="--i:4">
     <div><h4>In your name</h4><p>Each account is contracted by Moovsoon directly. We operate them; we never resell them. There is no margin hidden inside a per-request rate.</p></div>
-    <div><h4>Three of seven are free</h4><p>The pieces that are hardest to get right are the open-source ones. What you actually pay for is bandwidth and CPU &mdash; commodities with many sellers.</p></div>
+    <div><h4>Buying reverses it</h4><p>On the buy path the invoice is one line, from one vendor, for the one thing you cannot substitute. Here the only single-sourced rows are the free ones &mdash; and being open source, they cannot be withdrawn or repriced.</p></div>
     <div><h4>No single vendor</h4><p>Every paid row has a named substitute at a comparable rate. Switching proxy vendor is a config change and a re-run, not a rebuild.</p></div>
   </div>
 
-  <div data-r style="--i:6;margin-top:10px">
-    <div class="label" style="margin-bottom:9px">The gap we close next &mdash; AI-assisted self-healing</div>
+  <div data-r style="--i:6;margin-top:5px">
+    <div class="label" style="margin-bottom:7px">The gap we close next &mdash; AI-assisted self-healing</div>
     <p class="dek" style="margin:0 0 11px;max-width:none">The healing is deterministic today, and it works: the schema gate holds any batch where a field breaks its null-rate baseline &mdash; the 200 OK with empty <span style="font-family:var(--f-mono);font-size:13px">realtoremail</span> that no HTTP check catches. What it does not do is write the fix. The next layer does, under the same proof.</p>
     <div class="heal">
       <div class="healsteps">
@@ -1165,13 +1179,13 @@ function feasibility(h){
 }
 function archSVG(h){
   var H=HOSTS[h],W=1240,y=12,s='',BC=bandCosts(h),bi=0;
-  s+='<svg width="100%" viewBox="0 0 '+W+' 640" xmlns="http://www.w3.org/2000/svg" role="img">'+
+  s+='<svg width="100%" viewBox="0 0 '+W+' 596" xmlns="http://www.w3.org/2000/svg" role="img">'+
      '<title>Pipeline</title><desc>Five operating bands - control plane, collection including a '+
      'browser pool, egress, a quality gate, and storage - then a self-healing loop and an '+
      'uncosted model layer. Every box names the software that does the job.</desc>';
   H.rows.forEach(function(row){
     var bc=BC[bi++];
-    s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="82" fill="var(--white)" '+
+    s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="73" fill="var(--white)" '+
        'stroke="'+row[1]+'" stroke-opacity=".3"/>'+
        '<text class="bandlab" x="26" y="'+(y+19)+'" fill="'+row[1]+'">'+row[0]+'</text>'+
        '<text class="dm" x="'+(W-116)+'" y="'+(y+19)+'" text-anchor="end" fill="var(--ink-3)">'+
@@ -1182,18 +1196,18 @@ function archSVG(h){
     row[2].forEach(function(c,k){
       var x=12+k*(w+10);
       s+='<g transform="translate('+x+','+(y+26)+')">'+
-        '<rect width="'+w+'" height="48" fill="var(--paper)" stroke="var(--rule)"/>'+
-        '<rect width="2.5" height="48" fill="'+row[1]+'"/>'+
+        '<rect width="'+w+'" height="44" fill="var(--paper)" stroke="var(--rule)"/>'+
+        '<rect width="2.5" height="44" fill="'+row[1]+'"/>'+
         '<text class="d1" x="11" y="20" fill="var(--ink)">'+c[0]+'</text>'+
         '<text class="d3" x="11" y="36" fill="var(--ink-3)">'+c[1]+'</text></g>';
       if(k<3) s+='<line class="flow" x1="'+(x+w)+'" y1="'+(y+50)+'" x2="'+(x+w+10)+'" y2="'+(y+50)+
                  '" stroke="var(--rule)" stroke-width="1.3"/>';
     });
-    y+=92;
+    y+=80;
   });
   /* self-healing loop */
   s+='<g transform="translate(12,'+y+')">'+
-     '<rect width="'+(W-24)+'" height="46" fill="rgba(160,32,33,.05)" stroke="var(--flag)" '+
+     '<rect width="'+(W-24)+'" height="44" fill="rgba(160,32,33,.05)" stroke="var(--flag)" '+
      'stroke-opacity=".45"/>'+
      '<text class="dm" x="14" y="19" fill="var(--flag)">SELF-HEALING LOOP</text>'+
      '<text class="d2" x="14" y="35" fill="var(--ink-2)">detect drift (a field empties while the row '+
@@ -1201,10 +1215,10 @@ function archSVG(h){
      'fixtures &#8594; ship only if they pass</text>'+
      '<text class="dm" x="'+(W-38)+'" y="27" text-anchor="end" fill="var(--flag)" class="pulse">'+
      'NOTHING AUTO-PROMOTES</text></g>';
-  y+=56;
+  y+=50;
   /* host bar */
   var total=BC.reduce(function(a,b){return a+ +b[0].replace(/[^0-9.]/g,"")},0);
-  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="48" fill="var(--paper-2)" stroke="var(--rule)"/>'+
+  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="46" fill="var(--paper-2)" stroke="var(--rule)"/>'+
      '<text class="dm" x="26" y="'+(y+18)+'" fill="var(--ink-2)">'+H.host+'</text>'+
      '<text class="d3" x="26" y="'+(y+35)+'" fill="var(--ink-3)">FEASIBLE TO: '+
        feasibility(h).replace(/<[^>]+>/g,"")+'</text>'+
@@ -1212,9 +1226,9 @@ function archSVG(h){
      'style="font-size:15px">'+money(total)+' / month</text>'+
      '<text class="d3" x="'+(W-26)+'" y="'+(y+37)+'" text-anchor="end" fill="var(--ink-3)">'+
      'all bands, '+ZIPS.toLocaleString()+' ZIPs, '+model(ZIPS,SEL,SHIFT).count+' sources</text>';
-  y+=58;
+  y+=52;
   /* model layer, uncosted */
-  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="84" fill="rgba(123,74,156,.05)" '+
+  s+='<rect x="12" y="'+y+'" width="'+(W-24)+'" height="78" fill="rgba(123,74,156,.05)" '+
      'stroke="var(--L4)" stroke-opacity=".4" stroke-dasharray="5 4"/>'+
      '<text class="bandlab" x="26" y="'+(y+18)+'" fill="var(--L4)">'+
      '6 &#183; MODEL LAYER &#8212; DRAWN, DELIBERATELY NOT COSTED</text>';
@@ -1224,7 +1238,7 @@ function archSVG(h){
   var mw=(W-24-4*10)/5;
   ml.forEach(function(m,k){
     s+='<g transform="translate('+(12+k*(mw+10))+','+(y+26)+')">'+
-       '<rect width="'+mw+'" height="46" fill="var(--white)" stroke="var(--L4)" stroke-opacity=".3"/>'+
+       '<rect width="'+mw+'" height="44" fill="var(--white)" stroke="var(--L4)" stroke-opacity=".3"/>'+
        '<text class="d1" x="10" y="19" fill="var(--ink)">'+m[0]+'</text>'+
        '<text class="d3" x="10" y="34" fill="var(--ink-3)">'+m[1]+'</text></g>';
   });
