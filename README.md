@@ -16,9 +16,10 @@ live, from a 25-ZIP pilot to national.
 4. **Pipeline** | named tools, quality gates and the self-healing loop, on self-hosted or AWS
 5. **Scalability** | coverage against cost, broken down by component
 6. **Build vs buy** | priced per source, with the fair objections to building answered
-7. **Supply chain** | the named vendor behind every line of the build cost, and the AI-assisted self-healing loop that comes next
-8. **What moves the bill** | page weight, and the tier mix that controls it
-9. **Next step** | the pilot
+7. **Supply chain** | the named vendor behind every line of the build cost, split into what we build and what we buy, with a live chart of where the month's money goes
+8. **Self-healing** | the schema gate that catches a 200 OK with an empty field today, and the AI layer that proposes the fix next
+9. **What moves the bill** | one listing fetched three ways, drawn to scale: 75 KB, 255 KB, 1,200 KB
+10. **Next step** | the pilot, with a rough two-month timeline
 
 ## Notes on the numbers
 
