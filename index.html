@@ -479,6 +479,192 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   [data-r]{opacity:1;translate:0;filter:none}
   .site:hover,.rung:hover{translate:0}
 }
+
+/* ===== phone ===== one block for the whole deck. It is last in the stylesheet
+   on purpose: the 860/940/1180px rules above carry the same specificity, so
+   source order is the only thing that lets these win. */
+@media(max-width:620px){
+  /* iOS reports 100vh as the URL-bar-hidden height, so the foot of every sheet
+     and the nav itself sit under Safari's own chrome. dvh is the visible box. */
+  #deck{height:100dvh}
+  /* both clamps land on the desktop values exactly at 620px, so nothing jumps
+     across the breakpoint. h1 goes from three lines to two. */
+  h1{font-size:clamp(31px,8.4vw,38px);max-width:none}
+  h2{font-size:clamp(21px,5.6vw,25px);max-width:none}
+
+  /* --- nav: nine dots and two buttons in 375px ---
+     #pos goes first. It is the only thing in the bar that repeats itself - sheet
+     1 carries "Sheet 1 of 9" in the brandline and 2-9 open with "Sheet N" in the
+     kick - and at 375px it was crushed to 15px while Next sat off-screen at
+     x401. flex-basis 0 then divides the remainder into nine equal cells and the
+     dots take the bar's full 44px of height instead of 24px. */
+  #nav{padding:0 10px;gap:6px}
+  #pos{display:none}
+  .navbtn{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;flex:none}
+  #dots{flex:1 1 auto;min-width:0}
+  .dot{flex:1 1 0;height:44px}
+
+  /* --- the shared control bar: sheets 4, 5, 6, 8 ---
+     grid, not flex, because it makes every flex sizing rule the children carry
+     inert in one move: .chips sizing itself to 651px of max-content, .zipwrap's
+     150px basis, the readout's margin-left:auto. minmax(0,1fr) is the promise
+     that nothing inside may widen the bar again. */
+  .ctrlhost .ctrl{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:11px 12px 13px}
+  /* six pills of unequal width wrap ragged, so give them equal tracks instead.
+     The 140px floor is the real guard: below two of them the row drops to one
+     column rather than clipping Realtor.com, the widest chip at ~132px. */
+  .ctrlhost .chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+  .ctrlhost .chip{min-height:44px}
+  /* the figures still never shrink and never wrap - they are pushed apart
+     instead, and ruled off so the band reads as the result of the two controls
+     stacked above it. */
+  .ctrl .ctrlout{margin:0;justify-content:space-between;border-top:1px solid var(--rule-2);
+    padding-top:10px}
+
+  /* --- both ZIP handles: the four in the bar, and sheet 5's under the map ---
+     margin:0 kills Chrome's UA 2px, which is 4px of real overflow once the input
+     is width:100% inside a pinned grid track. */
+  .zipwrap input[type=range].zipslider{height:44px;margin:0}
+  input[type=range].zipslider::-webkit-slider-thumb{width:26px;height:26px;margin-top:-12.25px}
+  input[type=range].zipslider::-moz-range-thumb{width:24px;height:24px}
+  /* refresh() places the halo with the 17px thumb baked into the sum
+     ((v/100)*(width-17)+8.5) and only ever paints it at value 0, so one flat
+     +4.5px re-centres it on the 26px thumb without touching the JS. */
+  .ctrl .zipwrap .draghint,.mapslider .draghint{top:22px;width:26px;height:26px;margin-left:4.5px}
+  .ctrl .zipwrap .draglabel,.mapslider .draglabel{top:1px;left:38px;right:auto}
+  /* sheet 5's second handle: label and count keep the row, the handle takes its
+     own - which also brings it under the .ticks scale that labels it. */
+  .mapslider{flex-wrap:wrap;gap:6px 12px;margin-top:10px}
+  .mapslider .zipwrap{order:1;flex:1 0 100%}
+  .mapslider .zipval{margin-left:auto}
+
+  /* --- 1 brief ---
+     auto-fit resolves to two 171px cells, which strands the third figure and
+     leaves the middle cell's border-right ruling down the page. Three ledger
+     lines instead: figure left, caption right, all three on one line. */
+  .briefgrid{gap:18px}
+  .scoperow{grid-template-columns:1fr;margin-top:18px}
+  .scoperow>div{display:flex;align-items:baseline;justify-content:space-between;gap:14px;
+    padding:11px 0 10px;border-right:none;border-bottom:1px solid var(--rule)}
+  .scoperow>div:last-child{border-bottom:none}
+  .scoperow .sl{margin-top:0;text-align:right}
+
+  /* --- 2 targets ---
+     .lyr's 96px and 132px tracks give it a ~348px min-content, and the single
+     .t2 column inherits it - that, not .sites, is what dragged this column to
+     392px. Name and signal keep the header line, the description takes the
+     full width, and each rung ends up shorter as well as narrower. */
+  .lyr{grid-template-columns:1fr auto;gap:3px 12px;align-items:baseline}
+  .lyr .ln{grid-row:1;grid-column:1}
+  .lyr .lsig{grid-row:1;grid-column:2}
+  .lyr .ld{grid-row:2;grid-column:1/-1}
+  /* the picker is the way into this sheet - six full-width rows push the panel
+     they drive off the first screen, so pair them up */
+  .sites{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  /* the selected shift carries a button past the content box and puts a sideways
+     scroll inside the slide; let the depth rule thicken instead of the row moving */
+  .site:hover,.site.on{translate:0}
+  .site.on{border-left-width:6px;padding-left:11px}
+  /* the dual dimension carries an inline min-width:158px, leaving 123px for a
+     28px #stName - one column clears it without fighting the inline style */
+  .stackhead{grid-template-columns:1fr;gap:10px}
+  .stackhead .dual{justify-self:end}
+  .stackwrap{padding:14px 16px}
+
+  /* --- 3 method ---
+     scoped to .ladder because sheet 7 carries spans of class "tag rung". The
+     cost column drops to its own content and the monogram to 22px, which buys
+     the middle track 180px - enough to hold "0 - Reconnaissance" on one line.
+     Hover goes because on touch it sticks to the tapped rung and fights .on. */
+  .ladder .rung{grid-template-columns:22px 1fr auto;gap:12px;padding:11px 13px}
+  .ladder .rung:hover{translate:0}
+
+  /* --- 4 pipeline ---
+     the host toggle is the sheet's only control; fill the line so both options
+     are a real target rather than two 42px pills */
+  .segwrap{gap:10px}
+  .segwrap .seg{flex:1}
+  .segwrap .seg button{flex:1;padding:10px 12px;min-height:44px}
+  /* the diagram cannot go fluid - at 343px its 10px labels render at 2.8px - so
+     it stays a side-scroller. Say so, and keep the fling off the slide behind it. */
+  .dia{overscroll-behavior-x:contain}
+  .dia::after{content:"swipe to follow the pipeline \2192";display:block;width:max-content;
+    font-family:var(--f-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-3);padding:7px 4px 3px}
+
+  /* --- 5 scale ---
+     the legend floated over the top fifth of a 176px-tall map, so it stops
+     floating and annotates from above instead */
+  .maplab{position:static;line-height:1.8;margin-bottom:9px}
+  /* the bars ARE this sheet. 190px + 108px of fixed track left the bar 13px, so
+     the name and the figure move to a line above and the bar takes the width. */
+  .comp{gap:15px}
+  .crow{grid-template-columns:1fr auto;gap:4px 10px}
+  .crow .cn{grid-row:1;grid-column:1}
+  .crow .cv2{grid-row:1;grid-column:2}
+  .crow .ct{grid-row:2;grid-column:1/-1}
+
+  /* --- 6 decision, 7 supply ---
+     both tables stay tables. each is read DOWN a column - build/mo against
+     buy/mo, a paid row against its named substitute - and a card per row throws
+     that away. So shrink the scroll instead of removing it, and freeze the
+     column that names the row. */
+  .tw{background:var(--paper);overscroll-behavior-x:contain}
+  .tw table{min-width:0;font-size:12.5px;line-height:1.4;border-collapse:separate;border-spacing:0}
+  .tw th{font-size:10px;padding:6px 9px 6px 0}
+  .tw td{padding:4px 9px 4px 0;vertical-align:top}
+  .tw .n{font-size:11.5px}
+  .tw .tag{white-space:nowrap}
+  /* a colspan cell IS the row, so there is nothing to freeze it against */
+  .tw th:first-child,.tw td:first-child:not([colspan]){position:sticky;left:0;z-index:1;
+    background:var(--paper);box-shadow:1px 0 0 var(--rule)}
+  /* a frozen cell needs an opaque tint - the row's translucent green would let
+     the scrolled columns show through it */
+  #bvbTable tr.build td:first-child{background:color-mix(in srgb,var(--good) 5%,var(--paper))}
+  /* the stamp is out of flow, so the label beneath has to reserve its corner */
+  .stamp+.bt{padding-right:118px}
+  /* only the layer name is allowed to wrap; td.rate keeps its nowrap so a tier
+     price still reads as one figure */
+  .provt td:first-child{white-space:normal}
+  .provt td.sub{font-size:11.5px}
+  /* the group sub-label trailed off the end of the banner row - drop it onto its
+     own line, held to the viewport so it is legible before any swipe */
+  .provt .gd{display:block;margin:3px 0 0;max-width:calc(100vw - 32px)}
+  .provt tbody tr.r-build td:first-child{box-shadow:inset 2px 0 0 var(--good),1px 0 0 var(--rule)}
+  .provt tbody tr.r-buy td:first-child{box-shadow:inset 2px 0 0 var(--accent),1px 0 0 var(--rule)}
+  /* 1fr 1fr left each step a 163px measure. One step per row with the badge
+     beside the text reads at 259px and is no taller than the 2x2 it replaces. */
+  .healsteps{grid-template-columns:1fr;gap:11px}
+  .hstep{display:grid;grid-template-columns:38px 1fr;column-gap:12px;align-items:start}
+  .hstep .hn{grid-row:1/3}
+  .hstep b{grid-column:2;margin:1px 0 3px}
+  .hstep p{grid-column:2}
+  /* an 88px label track left 178px for the paragraph; stacked, it gets the measure */
+  .healrule{display:block}
+  .healrule .hk{display:block;width:auto;padding:0 0 4px}
+
+  /* --- 8 cost ---
+     five tier buttons at 8px 13px are 34px tall and 317px wide against a 288px
+     box at 320px. Their own line, equal tracks, and a real target height. */
+  .tierpick{gap:9px}
+  .tierpick .seg{flex:1 0 100%}
+  .tierpick .seg button{flex:1;padding:12px 4px;min-height:44px}
+
+  /* --- 9 next ---
+     already one column at this width, so the column dividers are ruling down the
+     right edge of the page; lay them flat between the rows instead. */
+  .closegrid>div{padding:13px 0 12px;border-right:none;border-bottom:1px solid var(--rule)}
+  .closegrid>div:last-child{border-bottom:none}
+  /* 9.5px mono is a desktop footnote; on glass it is texture, not a sentence */
+  .foot{font-size:10.5px;line-height:1.75}
+}
+/* below 460 both tables always overflow, so the hint is always true. Above it
+   they fit inside the sheet and a swipe prompt would be a lie. */
+@media(max-width:460px){
+  .tw::after{content:"\2190  swipe the table \2192";display:block;position:sticky;left:0;
+    margin-top:4px;font-family:var(--f-mono);font-size:10px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-3)}
+}
 </style>
 
 </head>
