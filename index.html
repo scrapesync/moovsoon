@@ -337,6 +337,41 @@ input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6
 .crow.lead .cv2{color:var(--flag)}
 /* the slider that sits directly under the map */
 .mapslider{display:flex;align-items:center;gap:14px;margin-top:14px}
+.pmwrap{margin-top:14px}
+.pmhead{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:11px}
+.pmleg{display:flex;gap:14px;flex-wrap:wrap;margin-left:auto}
+.pml{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+.pml i{width:11px;height:11px;border-radius:3px;display:inline-block}
+.pmrow{display:grid;grid-template-columns:132px 1fr 96px;gap:14px;align-items:center;
+  margin-bottom:9px}
+.pmn{font-size:13px;color:var(--ink-1);font-weight:500;display:flex;align-items:baseline;gap:7px}
+.pmn i{font-family:var(--f-mono);font-size:9px;color:var(--ink-3);font-style:normal}
+.pmbar{height:22px;background:var(--rule);border-radius:4px;overflow:hidden;display:flex}
+.pmseg{height:100%;transition:width .45s cubic-bezier(.22,.9,.28,1);min-width:0}
+.pmv{font-family:var(--f-mono);font-size:12px;text-align:right;color:var(--ink-2);
+  font-variant-numeric:tabular-nums}
+.pmoff{opacity:.28}
+.pmagent{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;
+  padding-top:12px;border-top:1px solid var(--rule)}
+.pmab{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;padding:5px 10px;
+  border:1px solid var(--rule);background:transparent;color:var(--ink-2);cursor:pointer;
+  border-radius:4px}
+.pmab:hover{border-color:var(--ink-3)}
+.pmab.on{background:var(--mv-amber);border-color:var(--mv-amber);color:#1a1206}
+.pmnote{font-size:12px;color:var(--ink-3);line-height:1.5;margin-top:9px}
+@media(max-width:700px){.pmrow{grid-template-columns:96px 1fr 74px;gap:9px}
+  .pmn{font-size:12px}.pmv{font-size:11px}}
+.spgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);margin-top:13px}
+.spcell{background:var(--bg);padding:11px 13px}
+.spn{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:21px;
+  letter-spacing:-.02em;line-height:1.05;font-variant-numeric:tabular-nums;color:var(--mv-teal)}
+.spk{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:5px;line-height:1.35}
+.spnote{font-size:12.5px;color:var(--ink-2);line-height:1.55;margin-top:10px}
+.spnote b{color:var(--ink-1)}
+@media(max-width:760px){.spgrid{grid-template-columns:1fr 1fr}}
 .verdict{background:var(--accent-a);border-left:2px solid var(--accent);padding:12px 15px;
   margin-top:13px;font-size:13.5px;color:var(--ink-2);line-height:1.55}
 .verdict b{color:var(--ink)}
@@ -838,6 +873,33 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   <h2 data-r style="--i:1">Four tiers of effort. Most volume never leaves the first.</h2>
   <p class="dek" data-r style="--i:2">Cost per thousand requests is set by how deep a source forces us to go. We stop at the first tier that works.</p>
   <div data-r style="--i:3"><div class="ladder" id="ladder"></div></div>
+        <div class="ctrlhost" data-r style="--i:4;margin-top:16px"></div>
+        <div class="pmwrap" data-r style="--i:5">
+          <div class="pmhead">
+            <span class="label">Requests a month by page type, per source</span>
+            <span class="pmleg">
+              <span class="pml"><i style="background:var(--accent)"></i>LPV list</span>
+              <span class="pml"><i style="background:var(--L4)"></i>DPV detail</span>
+              <span class="pml"><i style="background:var(--mv-amber)"></i>Agent</span>
+            </span>
+          </div>
+          <div id="pmRows"></div>
+          <div class="pmagent">
+            <span class="label" style="letter-spacing:.14em">Agent pages per ZIP</span>
+            <button class="pmab" data-ag="0" type="button">0</button>
+            <button class="pmab on" data-ag="12" type="button">12</button>
+            <button class="pmab" data-ag="30" type="button">30</button>
+            <button class="pmab" data-ag="60" type="button">60</button>
+            <span class="pmnote" style="margin:0">not yet measured &#183; set it live</span>
+          </div>
+          <div class="pmnote">A listing costs <b>1.25 list views</b> and <b>1.55 detail views</b> a month:
+            one sweep at about 24 listings per request, detail fetches on the 4% that change daily, and first
+            fetches for new inventory. Those two come out of the crawl design and are the same figures the
+            price is built on. <b>Agent pages are the one thing here nothing has measured yet</b>, so the
+            control above applies one flat figure per ZIP to every source. Real agent inventory will not be
+            flat: Crexi carries commercial brokers rather than residential agents, and the rosters overlap
+            heavily between the other five. The pilot replaces this button with a counted number.</div>
+        </div>
   <div class="panel" id="rungDetail" data-r style="--i:4;margin-top:14px;border-left:2px solid var(--accent)"></div>
  </div>
 </section>
@@ -897,6 +959,16 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
   <div data-r style="--i:4;margin-top:16px">
     <div class="label" style="margin-bottom:10px">Monthly cost by component. Drag the handle and watch which one moves</div>
     <div class="comp" id="compRows"></div>
+      <div class="label" style="margin:22px 0 0">How fast the records come back, at this coverage</div>
+      <div class="spgrid">
+        <div class="spcell"><div class="spn" id="sp1">0</div><div class="spk">Listings<br>per month</div></div>
+        <div class="spcell"><div class="spn" id="sp2">0</div><div class="spk">Requests<br>per month</div></div>
+        <div class="spcell"><div class="spn" id="sp3">0</div><div class="spk">Requests / sec<br>average</div></div>
+        <div class="spcell"><div class="spn" id="sp4">0</div><div class="spk">Per batch<br>two a day</div></div>
+      </div>
+      <div class="spnote">One list request comes back with about <b>24 listings</b> on it, so a national feed is
+        <b>under one request a second</b> rather than thousands. Throughput is not the constraint here; the pacing is
+        deliberate, and a daily batch is minutes of work rather than hours.</div>
   </div>
 </section>
 
@@ -1265,7 +1337,49 @@ function refresh(){
       hint.style.left=((+sl.value/100)*(r.width-17)+8.5)+"px";
     }
   });
-  drawMap(); drawCost(); drawSupply(); if(window.markLadder) markLadder(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
+  /* ---------- page-type mix, sheet 3 ----------
+   The 2.80 requests per listing decomposes exactly as the README states:
+   1.25 list views (a sweep at ~24 listings per request) and 1.55 detail views
+   (1.20 on the ~4% that change daily, plus 0.35 first fetches for new inventory).
+   Agent pages are NOT derived from anything measured; AGENTS_PER_ZIP is an
+   openly declared input so the reader can set it rather than inherit a guess. */
+var LPV_PER_LISTING=1.25, DPV_PER_LISTING=1.55, AGENTS_PER_ZIP=12;
+function drawPageMix(){
+  var host=$("#pmRows"); if(!host) return;
+  var spineOn=SITES.some(function(s){return SEL[s.n]&&s.rung===1});
+  var rows=SITES.map(function(s){
+    var on=!!SEL[s.n];
+    var cov=(s.rung===1||!spineOn)?1:DEEP_COVERAGE;
+    var L=ZIPS*s.lpz*cov;
+    var lpv=L*LPV_PER_LISTING, dpv=L*DPV_PER_LISTING;
+    /* agent pages scale with territory, not with listing count */
+    var ag=on?ZIPS*AGENTS_PER_ZIP*(s.rung===1?1:DEEP_COVERAGE):0;
+    return {n:s.n,rung:s.rung,on:on,lpv:on?lpv:0,dpv:on?dpv:0,ag:ag,
+            tot:on?(lpv+dpv+ag):0};
+  });
+  var mx=Math.max.apply(null,rows.map(function(r){return r.tot}).concat([1]));
+  host.innerHTML=rows.map(function(r){
+    var w=r.tot/mx*100;
+    var p=function(v){return r.tot?(v/r.tot*100):0};
+    return '<div class="pmrow'+(r.on?'':' pmoff')+'">'+
+      '<span class="pmn">'+r.n+' <i>R'+r.rung+'</i></span>'+
+      '<span class="pmbar" style="width:'+(r.on?w:2)+'%">'+
+        '<span class="pmseg" style="width:'+p(r.lpv)+'%;background:var(--accent)"></span>'+
+        '<span class="pmseg" style="width:'+p(r.dpv)+'%;background:var(--L4)"></span>'+
+        '<span class="pmseg" style="width:'+p(r.ag)+'%;background:var(--mv-amber)"></span>'+
+      '</span>'+
+      '<span class="pmv">'+(r.on?fmt(Math.round(r.tot)):"off")+'</span>'+
+    '</div>';
+  }).join("");
+}
+[].forEach.call(document.querySelectorAll(".pmab"),function(b){
+  b.onclick=function(){
+    AGENTS_PER_ZIP=+b.dataset.ag;
+    [].forEach.call(document.querySelectorAll(".pmab"),function(o){o.classList.toggle("on",o===b)});
+    drawPageMix();
+  };
+});
+drawMap(); drawCost(); drawSupply(); drawPageMix(); if(window.markLadder) markLadder(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
 }
 
 /* ---------- nav ---------- */
@@ -1590,6 +1704,14 @@ function drawMap(){
   $("#k5alls").textContent=fmt(m.listings)+" listings / "+fmt(m.req)+" req";
   $("#k5one").textContent=money(nat.all);
   $("#k5ones").textContent=fmt(nat.listings)+" listings / "+fmt(nat.req)+" req";
+    /* Throughput, from the same model rather than a second set of numbers.
+       Requests per second is the monthly figure spread evenly; the batch figure
+       is the same total over two collection windows a day. */
+    var perSec=m.req/(30*86400), perBatch=m.req/60;
+    $("#sp1").textContent=fmt(Math.round(m.listings));
+    $("#sp2").textContent=fmt(Math.round(m.req));
+    $("#sp3").textContent=perSec<0.01?perSec.toFixed(3):perSec.toFixed(2);
+    $("#sp4").textContent=fmt(Math.round(perBatch));
   var vals=[m.deep.cost,m.browser,m.cheap.cost,m.base];
   var mx=Math.max.apply(null,vals.concat([1])),lead=vals.indexOf(mx);
   [].forEach.call(document.querySelectorAll("#compRows .crow"),function(row,k){
