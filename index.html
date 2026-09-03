@@ -352,6 +352,18 @@ input[type=range]:focus-visible{outline:2px solid var(--accent);outline-offset:6
 .pmv{font-family:var(--f-mono);font-size:12px;text-align:right;color:var(--ink-2);
   font-variant-numeric:tabular-nums}
 .pmoff{opacity:.28}
+.pmtime{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;
+  margin-top:14px;padding:13px 15px;border:1px solid var(--rule);background:var(--panel,transparent)}
+.pmtbig{font-family:var(--f-disp);font-variation-settings:'WONK' 0;font-weight:600;font-size:30px;
+  letter-spacing:-.03em;line-height:1;color:var(--mv-teal);font-variant-numeric:tabular-nums}
+.pmtk{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:6px;max-width:190px;line-height:1.4}
+.pmtctl{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}
+.pmtctl .label{min-width:112px}
+.pmtbn{font-family:var(--f-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mv-amber);margin-top:2px}
+@media(max-width:700px){.pmtime{grid-template-columns:1fr;gap:12px}.pmtk{max-width:none}
+  .pmtctl .label{min-width:0;flex-basis:100%}}
 .pmagent{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:14px;
   padding-top:12px;border-top:1px solid var(--rule)}
 .pmab{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;padding:5px 10px;
@@ -892,13 +904,37 @@ li{margin-bottom:4px;font-size:13px;color:var(--ink-2)}
             <button class="pmab" data-ag="60" type="button">60</button>
             <span class="pmnote" style="margin:0">not yet measured &#183; set it live</span>
           </div>
+          <div class="pmtime">
+            <div>
+              <div class="pmtbig" id="pmT">0</div>
+              <div class="pmtk">to finish one full pass<br>at this coverage</div>
+            </div>
+            <div>
+              <div class="pmtctl"><span class="label">Parallel workers</span>
+                <button class="pmab" data-w="10" type="button">10</button>
+                <button class="pmab on" data-w="25" type="button">25</button>
+                <button class="pmab" data-w="50" type="button">50</button>
+                <button class="pmab" data-w="100" type="button">100</button></div>
+              <div class="pmtctl"><span class="label">Per request</span>
+                <button class="pmab" data-l="0.3" type="button">0.3 s</button>
+                <button class="pmab on" data-l="0.6" type="button">0.6 s</button>
+                <button class="pmab" data-l="1" type="button">1.0 s</button></div>
+              <div class="pmtbn" id="pmB"></div>
+            </div>
+          </div>
           <div class="pmnote">A listing costs <b>1.25 list views</b> and <b>1.55 detail views</b> a month:
             one sweep at about 24 listings per request, detail fetches on the 4% that change daily, and first
             fetches for new inventory. Those two come out of the crawl design and are the same figures the
             price is built on. <b>Agent pages are the one thing here nothing has measured yet</b>, so the
             control above applies one flat figure per ZIP to every source. Real agent inventory will not be
             flat: Crexi carries commercial brokers rather than residential agents, and the rosters overlap
-            heavily between the other five. The pilot replaces this button with a counted number.</div>
+            heavily between the other five. The pilot replaces this button with a counted number.<br><br>
+            <b>On the clock:</b> the batch volume above and the <b>12 second session mint</b> are both
+            from the model that prices this deck. <b>Per-request latency through a residential proxy is not
+            measured</b>, which is why it is a button rather than a number. Cheap requests and browser mints
+            run at the same time, so a pass takes the longer of the two, and it is
+            <b>the browser tier that decides</b> at every setting. That is also why the server is sized on the
+            browser peak rather than on request count.</div>
         </div>
   <div class="panel" id="rungDetail" data-r style="--i:4;margin-top:14px;border-left:2px solid var(--accent)"></div>
  </div>
@@ -1372,14 +1408,52 @@ function drawPageMix(){
     '</div>';
   }).join("");
 }
+/* Time to finish one pass. Two of the three inputs are real: the batch volume comes
+   from the same crawl design as the price, and the 12s session mint is the model's own
+   SESSION_SECONDS. The third, per-request latency through a residential proxy, is NOT
+   measured, which is why it is a button rather than a constant. Cheap requests and
+   browser mints run concurrently, so the pass takes the longer of the two, and naming
+   which one is longer is the useful part. */
+var WORKERS=25, LATENCY=0.6;
+function fmtDur(sec){
+  if(sec<90) return Math.max(1,Math.round(sec))+" sec";
+  if(sec<5400) return Math.round(sec/60)+" min";
+  var h=sec/3600; return (h<10?h.toFixed(1):Math.round(h))+" hr";
+}
+function drawPassTime(){
+  var el=$("#pmT"); if(!el) return;
+  var spineOn=SITES.some(function(s){return SEL[s.n]&&s.rung===1});
+  var r1=0,r2=0;
+  SITES.forEach(function(s){
+    if(!SEL[s.n]) return;
+    var cov=(s.rung===1||!spineOn)?1:DEEP_COVERAGE;
+    var L=ZIPS*s.lpz*cov;
+    var per=L*(REQ_PER_LISTING/30/2)+ZIPS*AGENTS_PER_ZIP*cov/60;
+    if(s.rung===1) r1+=per; else r2+=per;
+  });
+  var mints=r2/10, follow=r2-mints;
+  var browsers=Math.max(2,Math.round(WORKERS/5));
+  var cheapSec=(r1+follow)*LATENCY/WORKERS;
+  var mintSec=mints*SESSION_SECONDS/browsers;
+  var tot=Math.max(cheapSec,mintSec);
+  el.textContent=fmtDur(tot);
+  $("#pmB").textContent = (r2<=0) ? "no browser tier selected"
+    : (mintSec>=cheapSec ? "bottleneck: the browser tier, "+browsers+" engines"
+                         : "bottleneck: the cheap tier, "+WORKERS+" workers");
+}
 [].forEach.call(document.querySelectorAll(".pmab"),function(b){
   b.onclick=function(){
-    AGENTS_PER_ZIP=+b.dataset.ag;
-    [].forEach.call(document.querySelectorAll(".pmab"),function(o){o.classList.toggle("on",o===b)});
-    drawPageMix();
+    var grp = b.dataset.ag!==undefined?"ag":(b.dataset.w!==undefined?"w":"l");
+    if(grp==="ag") AGENTS_PER_ZIP=+b.dataset.ag;
+    if(grp==="w")  WORKERS=+b.dataset.w;
+    if(grp==="l")  LATENCY=+b.dataset.l;
+    [].forEach.call(document.querySelectorAll(".pmab"),function(o){
+      if(o.dataset[grp]!==undefined) o.classList.toggle("on",o===b);
+    });
+    drawPageMix(); drawPassTime();
   };
 });
-drawMap(); drawCost(); drawSupply(); drawPageMix(); if(window.markLadder) markLadder(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
+drawMap(); drawCost(); drawSupply(); drawPassTime(); drawPageMix(); if(window.markLadder) markLadder(); if($("#archdia").innerHTML) setHost(HOST); buildBvb();
 }
 
 /* ---------- nav ---------- */
